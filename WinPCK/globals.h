@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// globals.h: WinPCK 全局头文件
-// 界面类的全局头文件
+// globals.h: WinPCK global header file
+// Global header file of interface class
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -25,11 +25,11 @@ using namespace std;
 #define _USE_CUSTOMDRAW_
 
 #define	THIS_NAME			"WinPCK "
-#define	THIS_DESC			L"完美世界系列游戏PCK文件包综合查看器 " 
-#define	THIS_AUTHOR			L"程序编写: stsm/liqf/李秋枫\r\n" \
+#define	THIS_DESC			L"Perfect World series game PCK file package comprehensive viewer" 
+#define	THIS_AUTHOR			L"Programming: stsm/liqf/Li Qiufeng\r\n" \
 							"E-Mail: stsm85@126.com "
-#define THIS_UESDLIB		L"本软件开源，源代码地址：\r\nhttps://github.com/stsm85\r\n\r\n" \
-							"使用开源库：\r\n" \
+#define THIS_UESDLIB		L"This software is open source, source code address：\r\nhttps://github.com/stsm85\r\n\r\n" \
+							"Use open source libraries：\r\n" \
 							"VC LTL(Copyright (C) Chuyu-Team)\r\n" \
 							"libdeflate(Copyright (C) 2016 Eric Biggers)\r\n" \
 							"zlib(Copyright (C) 1995-2011 Mark Adler)\r\n" \
@@ -52,8 +52,8 @@ using namespace std;
 
 #define	TEXT_INVALID_PATHCHAR			"\\/:*?\"<>|"
 
-#define	TEXT_FILE_FILTER				TEXT(	"PCK压缩文件(*.pck;*.zup)\0*.pck;*.zup\0")	\
-										TEXT(	"所有文件\0*.*\0\0")
+#define	TEXT_FILE_FILTER				TEXT(	"PCK compressed file(*.pck;*.zup)\0*.pck;*.zup\0")	\
+										TEXT(	"All files\0*.*\0\0")
 
 #define IMGLIST_FOLDER	0
 #define IMGLIST_FILE	1

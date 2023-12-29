@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// miscpicdlg.h: WinPCK 界面线程部分
-// 对话框代码，解码dds、tga的模块
+// miscpicdlg.h: WinPCK interface thread part
+// Dialog code, module for decoding dds and tga
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 #include <windows.h>
@@ -18,15 +18,15 @@
 //#define	FMT_TGA			2
 
 
-#define	TEXT_SAVE_FILTER		L"PNG文件(*.png)\0*.png\0\0"
+#define	TEXT_SAVE_FILTER		L"PNG file(*.png)\0*.png\0\0"
 
-#define	TEXT_SHOWPIC_ERROR		"图像显示失败！"
-#define	TEXT_SAVE_DDS_ERROR		"打开文件失败！"
-#define	TEXT_DDS_NOT_SUPPORT	"不支持此类型！"
-#define	TEXT_NOT_DEFINE			"未定义的格式！"
+#define	TEXT_SHOWPIC_ERROR		"Image display failed！"
+#define	TEXT_SAVE_DDS_ERROR		"fail to open the file！"
+#define	TEXT_DDS_NOT_SUPPORT	"This type is not supported！"
+#define	TEXT_NOT_DEFINE			"undefined format！"
 
-#define	TEXT_PNG_OUTOFMEMORY	"内存溢出"
-#define	TEXT_MALLOC_FAIL		"申请内存失败！"
+#define	TEXT_PNG_OUTOFMEMORY	"memory overflow"
+#define	TEXT_MALLOC_FAIL		"Failed to apply for memory！"
 
 
 #define	FMTTGA_A1R5G5B5		16
@@ -64,39 +64,39 @@ typedef union _CMYRGB{
 
 typedef struct _TGAHEAD {
 
-	BYTE	byteTgaInfoSize;		//图像信息字段（见本子表的后面）的字符数
-									//本字段是 1 字节无符号整型，指出了图像格式区别字段长度
-									//其取值范围是 0 到 255 ，当它为 0 时表示没有图像的
-									//信息字段。
-	BYTE	byteColorTable;			//颜色表的类型
-									//该字段为表示对应格式 1 的图像而包含一个二进制 1
-	BYTE	byteTgaType;			//图像类型码
-									//该字段总为 1 ， 这也是此类型为格式 1 的原因
-	//颜色表规格,如果颜色表类型字段为 0 则被忽略；否则描述如下
-	UINT16	wColorTableOffset;		//颜色表首址
-	UINT16	wColorTableSize;		//颜色表的长度
-	BYTE	byteColorTableBits;		//颜色表表项的位（bit）数
-	//图像规格
-	UINT16	wXOffset;				//图像 x 坐标起始位置
-	UINT16	wYOffset;				//图像 y 坐标起始位置
-	UINT16	wWidth;					//图像宽度
-	UINT16	wHeight;				//图像高度
-	BYTE	byteBitsPerPixel;		//图像每像素存储占用位（bit）数
-	//图像描述符字节
-	BYTE	byteAttrBitsPerPixel:4;	//bits 3-0 - 每像素对应的属性位的位数；
-									//对于 TGA 16，该值为 0 或 1，
-									//对于 TGA 24，该值为 0，
-									//对于 TGA 32，该值为 8
-	BYTE	byteTgaOtherConfig:4;	//bit 4    - 保留，必须为 0
-									//bit 5    - 屏幕起始位置标志
-									//0 = 原点在左下角
-									//1 = 原点在左上角
-									//对于 truevision 图像必须为 0
-									//bits 7-6 - 交叉数据存储标志
-									//	00 = 无交叉
-									//	01 = 两路奇/偶交叉
-									//	10 = 四路交叉
-									//	11 = 保留
+	BYTE	byteTgaInfoSize;		//The number of characters in the image information field (see later in this subtable)
+									//This field is a 1-byte unsigned integer, indicating the length of the image format difference field
+									//The value range is 0 to 255. When it is 0, it means there is no image.
+									//Information field.
+	BYTE	byteColorTable;			//Color table type
+									//This field contains a binary 1 to represent the image corresponding to format 1
+	BYTE	byteTgaType;			//Image type code
+									//This field is always 1, which is why this type is format 1
+	//Color table specifications, if the color table type field is 0, it is ignored; otherwise, the description is as follows
+	UINT16	wColorTableOffset;		//Color table first address
+	UINT16	wColorTableSize;		//The length of the color table
+	BYTE	byteColorTableBits;		//The number of bits in the color table entry
+	//Image specifications
+	UINT16	wXOffset;				//Image x coordinate starting position
+	UINT16	wYOffset;				//Image y coordinate starting position
+	UINT16	wWidth;					//image width
+	UINT16	wHeight;				//image height
+	BYTE	byteBitsPerPixel;		//The number of bits occupied by each pixel of the image
+	//image descriptor bytes
+	BYTE	byteAttrBitsPerPixel:4;	//bits 3-0 - the number of attribute bits corresponding to each pixel;
+									//For TGA 16, this value is 0 or 1,
+									//For TGA 24, this value is 0,
+									//For TGA 32, the value is 8
+	BYTE	byteTgaOtherConfig:4;	//bit 4 - reserved, must be 0
+									//bit 5 - Screen starting position flag
+									//0 = origin is in the lower left corner
+									//1 = origin is in the upper left corner
+									//For truevision image must be 0
+									//bits 7-6 - Cross data storage flag
+									// 00 = no crossover
+									// 01 = two-way odd/even crossover
+									// 10 = four-way intersection
+									// 11 = reserved
 } TGAHEAD, *LPTGAHEAD;
 
 //typedef struct _BMPHEAD {

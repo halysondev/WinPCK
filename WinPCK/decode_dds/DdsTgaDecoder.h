@@ -15,46 +15,46 @@ public:
 	BOOL	DecodeDDS(LPBYTE _In_data, UINT32 _in_bufsize, LPBYTE &_out_data, UINT &_out__picWidth, UINT &_out_picHeight, LPSTR _out_szFormatDdsTga);
 	BOOL	DecodeTGA(LPBYTE _In_data, UINT32 _in_bufsize, LPBYTE &_out_data, UINT &_out__picWidth, UINT &_out_picHeight, LPSTR _out_szFormatDdsTga);
 
-	//返回stride的值
+	//Returns the value of stride
 	UINT	GetStride();
-	//返回图像的宽和高
+	//Returns the width and height of the image
 	UINT	GetWidth();
 	UINT	GetHeight();
-	//返回图像的m_decodedDIBFormat
+	//Returns the m_decodedDIBFormat of the image
 	PixelFormat GetPixelFormat();
 
 protected:
 
-	//图片的宽和高
+	//Image width and height
 	UINT		m_picWidth, m_picHeight;
-	//图片类型dds,tga,other
+	//Image typedds,tga,other
 	//enum { FMT_DDS, FMT_TGA, FMT_RAW} m_picFormat;
 	//PICFORMAT	m_picFormat;
-	//显示的图片的具体格式
+	//The specific format of the image displayed
 	LPSTR		m_lpszPictureFormat;
-	//类内部使用的原始的图片文件数据，当类型为RAW时，指向hGlobal的内存
+	//The original image file data used inside the class, when the type is RAW, points to the memory of hGlobal
 	LPBYTE		m_resBufferInClass;
-	//传入的文件的数据的大小
+	//The size of the data passed in the file
 	UINT32		m_bufsize;
-	//已经解码的图片的DIB数据（DDS，TGA）
+	//DIB data of the decoded picture (DDS, TGA)
 	char*		m_DecodedDIBData;
-	//已经解码的图片的DIB数据（DDS，TGA）的大小
+	//The size of the DIB data (DDS, TGA) of the decoded picture
 	DWORD		m_dwDdsTgaToDIBDataSize;
 	//
 	PixelFormat	m_decodedDIBFormat;
-	//一行像素一共多少个字节
+	//How many bytes are there in one row of pixels?
 	UINT		m_bytesPerLine;
-	//一行像素一共多少个像素点
+	//How many pixels are there in one row of pixels?
 	UINT		m_bytesPerPixel;
-	//图片一行像素的数据在内存对齐后的大小(align=4byte)
+	//The size of one row of pixel data in the image after alignment in memory (align=4byte)
 	UINT		m_stride;
 
-	//获取到dds,tga的内部DIB的格式，顺便计算一下stride(图片一行像素的数据在内存对齐后的大小),...在dds格式时传入D3DFORMAT，tga格式时传入tga格式（int ,FMTTGA_A1R5G5B5...)
+	//Obtain the format of the internal DIB of dds and tga, and calculate the stride (the size of a row of pixel data in the image after memory alignment),... pass in D3DFORMAT when in dds format, and pass in tga format (int, FMTTGA_A1R5G5B5...)
 	PixelFormat DetectDdsFormatAndAllocByFormat(D3DFORMAT fmt);
 	PixelFormat DetectTgaFormatAndAllocByFormat(int fmt);
 	BOOL CalaStride_DetectDIBFormat_AllocByFormat(UINT16 wWidth, UINT16 wHeight, PixelFormat pixelFormat);
 	BOOL GetDDSFormatStringAndDecodeEntry(D3DFORMAT fmt, LPSTR lpszPictureFormat, void(CDdsTgaDecoder::* &decode_dds_dxtN)(LPBYTE));
-	//从dds,tga的数据创建DIB的数据
+	//Create DIB data from dds, tga data
 	BOOL CreateBmpBufferByDds();
 	BOOL CreateBmpBufferByTga();
 

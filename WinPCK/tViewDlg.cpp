@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// tViewDlg.cpp: WinPCK 界面线程部分
-// 对话框代码
+// tViewDlg.cpp: WinPCK interface thread part
+// Dialog code
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2017.12.26
 //////////////////////////////////////////////////////////////////////
 
@@ -46,26 +46,26 @@ BOOL TViewDlg::EvCreate(LPARAM lParam)
 		switch (textType = TextDataType(lpszTextShow, dwSize)) {
 
 		case TEXT_TYPE_UCS2:
-			swprintf_s(szTitle, MAX_PATH, L"文本查看 - %s (Unicode)", lpszFile);
+			swprintf_s(szTitle, MAX_PATH, L"text view - %s (Unicode)", lpszFile);
 			SetDlgItemTextW(IDC_RICHEDIT_VIEW, (wchar_t *)lpszTextShow);
 			break;
 
 		case TEXT_TYPE_UTF8:
-			swprintf_s(szTitle, MAX_PATH, L"文本查看 - %s (UTF-8)", lpszFile);
+			swprintf_s(szTitle, MAX_PATH, L"text view - %s (UTF-8)", lpszFile);
 			{
 				CU82Ucs cU82U;
 				SetDlgItemTextW(IDC_RICHEDIT_VIEW, cU82U.GetString(lpszTextShow));
 			}
 			break;
 		case TEXT_TYPE_ANSI:
-			swprintf_s(szTitle, MAX_PATH, L"文本查看 - %s", lpszFile);
+			swprintf_s(szTitle, MAX_PATH, L"text view - %s", lpszFile);
 			SetDlgItemTextA(IDC_RICHEDIT_VIEW, (char *)lpszTextShow);
 			break;
 		case TEXT_TYPE_RAW:
 			if (VIEW_RAW_MAX_BUFFER < dwSize)
 				dwSize = VIEW_RAW_MAX_BUFFER;
 
-			swprintf_s(szTitle, MAX_PATH, L"文本查看 - %s (RAW)", lpszFile);
+			swprintf_s(szTitle, MAX_PATH, L"text view - %s (RAW)", lpszFile);
 			ShowRaw((LPBYTE)lpszTextShow, dwSize);
 			break;
 		}
@@ -75,7 +75,7 @@ BOOL TViewDlg::EvCreate(LPARAM lParam)
 
 	} else {
 
-		swprintf_s(szTitle, MAX_PATH, L"文本查看 - %s", lpszFile);
+		swprintf_s(szTitle, MAX_PATH, L"text view - %s", lpszFile);
 	}
 
 	SetWindowTextW(szTitle);

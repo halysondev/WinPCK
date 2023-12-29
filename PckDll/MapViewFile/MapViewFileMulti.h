@@ -50,19 +50,19 @@ public:
 
 	DWORD	Read(LPVOID buffer, DWORD dwBytesToRead);
 
-	//获取当前文件的磁盘名
+	//Get the disk name of the current file
 	const char*	GetFileDiskName();
 
-	//返回cell数量和大小
+	//Return the number and size of cells
 	DWORD	GetCellCount();
 	DWORD	GetCellSize();
 
 protected:
-	//当前文件指针位置
+	//Current file pointer position
 	UNQWORD	m_uqwCurrentPos;
-	//当前已打开文件总大小
+	//Total size of currently opened files
 	UNQWORD m_uqwFullSize;
-	//当前可用文件的最大大小
+	//The maximum size of currently available files
 	UNQWORD m_uqwMaxSize;
 
 	std::vector<FILE_CELL>	m_file_cell;
@@ -118,10 +118,10 @@ private:
 
 	BOOL	AddFile(CMapViewFileWrite *lpWrite, QWORD qwMaxSize, LPCWSTR lpszFilename);
 
-	//qwCurrentPckFilesize为已经存在的文件大小，qwToAddSpace是需要扩大的大小，返回值为（qwCurrentPckFilesize + 可以再扩大的最大大小）
+	//qwCurrentPckFilesize is the size of the existing file, qwToAddSpace is the size that needs to be expanded, and the return value is (qwCurrentPckFilesize + the maximum size that can be expanded)
 	QWORD	GetExpanedPckFilesize(QWORD qwDiskFreeSpace, QWORD qwToAddSpace, QWORD qwCurrentPckFilesize);
 
-	//压缩重建、压缩写入空间不够时扩展空间
+	//Compress and rebuild, expand space when compressed writing space is insufficient
 	BOOL	IsNeedExpandWritingFile(
 		QWORD dwWritingAddressPointer,
 		QWORD dwFileSizeToWrite);

@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// PckClassFileDisk.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 主要计算写入文件的初始大小，磁盘空间等
+// PckClassFileDisk.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Mainly calculate the initial size of the written file, disk space, etc.
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.31
 //////////////////////////////////////////////////////////////////////
 
@@ -16,11 +16,11 @@
 #include "PckClassFileDisk.h"
 
 
-//创建时，剩余文件的空间量不够时，添加量
+//When creating, if the amount of remaining file space is not enough, add the amount
 #define	PCK_STEP_ADD_SIZE				(64*1024*1024)
-//创建时，剩余文件的空间量小于此值时，扩展数据
+//When the amount of space remaining in the file is less than this value when created, the data is expanded.
 #define	PCK_SPACE_DETECT_SIZE			(4*1024*1024)
-//创建时，剩余文件的空间量小于此值(PCK_SPACE_DETECT_SIZE)时，扩展数据的值
+//The value of the extended data when the amount of remaining file space is less than this value (PCK_SPACE_DETECT_SIZE) when created
 //#define PCK_RENAME_EXPAND_ADD			(16*1024*1024)
 
 #define ZLIB_AVG_RATIO					0.6
@@ -53,15 +53,15 @@ void GetDriverNameFromFilename(const T* lpszFilename, T lpszDiskName[])
 	lpszDiskName[3] = '\0';
 }
 
-//qwCurrentPckFilesize为已经存在的文件大小，qwToAddSpace是需要扩大的大小，返回值为（qwCurrentPckFilesize + 可以再扩大的最大大小）
+//qwCurrentPckFilesize is the size of the existing file, qwToAddSpace is the size that needs to be expanded, and the return value is (qwCurrentPckFilesize + the maximum size that can be expanded)
 QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(QWORD qwDiskFreeSpace, QWORD qwToAddSpace, QWORD qwCurrentPckFilesize)
 {
-	//计算大概需要多大空间qwTotalFileSize
+	//Calculate how much space is required qwTotalFileSize
 	QWORD	qwTotalFileSizeTemp = qwToAddSpace;
 
 	if(-1 != qwDiskFreeSpace) {
 
-		//如果申请的空间小于磁盘剩余空间，则申请文件空间大小等于剩余磁盘空间
+		//If the requested space is less than the remaining disk space, the requested file space size is equal to the remaining disk space.
 		if(qwDiskFreeSpace < qwTotalFileSizeTemp)
 			qwTotalFileSizeTemp = qwDiskFreeSpace;
 	}
@@ -70,10 +70,10 @@ QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(QWORD qwDiskFreeSpace, QWORD
 
 }
 
-//重命名时需要的文件的大小
+//The size of the file required when renaming
 QWORD CPckClassFileDisk::GetPckFilesizeRename(const wchar_t * lpszFilename, QWORD qwCurrentPckFilesize)
 {
-	//查看磁盘空间
+	//Check disk space
 	TCHAR szDiskName[4];
 	ULARGE_INTEGER lpfree;
 	GetDriverNameFromFilename(lpszFilename, szDiskName);
@@ -90,7 +90,7 @@ QWORD CPckClassFileDisk::GetPckFilesizeRename(const wchar_t * lpszFilename, QWOR
 
 QWORD CPckClassFileDisk::GetPckFilesizeRebuild(const wchar_t * lpszFilename, QWORD qwPckFilesize)
 {
-	//查看磁盘空间
+	//Check disk space
 	TCHAR szDiskName[4];
 	ULARGE_INTEGER lpfree;
 	GetDriverNameFromFilename(lpszFilename, szDiskName);
@@ -107,7 +107,7 @@ QWORD CPckClassFileDisk::GetPckFilesizeRebuild(const wchar_t * lpszFilename, QWO
 
 QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(LPCSTR lpszFilename, QWORD qwToCompressFilesize, QWORD qwCurrentPckFilesize)
 {
-	//查看磁盘空间
+	//Check disk space
 	char szDiskName[4];
 	ULARGE_INTEGER lpfree;
 	GetDriverNameFromFilename<char>(lpszFilename, szDiskName);
@@ -123,10 +123,10 @@ QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(LPCSTR lpszFilename, QWORD q
 }
 #pragma endregion
 #pragma region Open file,enum
-//文件打开、遍历操作等
+//File opening, traversal operations, etc.
 QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(LPCWSTR lpszFilename, QWORD qwToCompressFilesize, QWORD qwCurrentPckFilesize)
 {
-	//查看磁盘空间
+	//Check disk space
 	wchar_t szDiskName[4];
 	ULARGE_INTEGER lpfree;
 	GetDriverNameFromFilename<wchar_t>(lpszFilename, szDiskName);
@@ -142,7 +142,7 @@ QWORD CPckClassFileDisk::GetPckFilesizeByCompressed(LPCWSTR lpszFilename, QWORD 
 
 }
 
-//////////////////////////以下是程序过程中需要调用的过程///////////////////////////////
+//////////////////////////The following are the procedures that need to be called during the program///////////////////////////////
 VOID CPckClassFileDisk::EnumFile(LPWSTR szFilename, BOOL IsPatition, DWORD &dwFileCount, vector<FILES_TO_COMPRESS> *lpFileLinkList, QWORD &qwTotalFileSize, size_t nLen)
 {
 
@@ -214,7 +214,7 @@ BOOL CPckClassFileDisk::EnumAllFilesByPathList(const vector<wstring> &lpszFilePa
 		size_t nLen = (size_t)(wcsrchr(szPathMbsc, L'\\') - szPathMbsc) + 1;
 
 		if(FILE_ATTRIBUTE_DIRECTORY == (FILE_ATTRIBUTE_DIRECTORY & GetFileAttributesW(szPathMbsc))) {
-			//文件夹
+			//folder
 			EnumFile(szPathMbsc, FALSE, _out_FileCount, lpFileLinkList, _out_TotalFileSize, nLen);
 		} else {
 

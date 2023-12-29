@@ -9,10 +9,10 @@
 #include <mutex>
 
 
-//获取文件方式
+//Get file method
 typedef enum { DATA_FROM_FILE, DATA_FROM_PCK } PCK_DATA_SOURCE;
 
-//获取文件返回值
+//Get file return value
 typedef enum { FD_OK, FD_END, FD_ERR, FD_CANCEL } FETCHDATA_RET;
 
 typedef std::function<FETCHDATA_RET(PCKINDEXTABLE&)> FETCHDATA_FUNC;
@@ -29,9 +29,9 @@ typedef struct _DataFetchMethod
 	uint32_t						dwProcessIndex;
 	uint32_t						dwTotalIndexCount;
 	int								iStripFlag;
-	//（界面线程中当前显示的）节点对应的pck中的文件路径
+	// The file path in pck corresponding to the node (currently displayed in the interface thread)
 	wchar_t							szCurrentNodeString[MAX_PATH_PCK_260];
-	//其长度
+	//its length
 	int								nCurrentNodeStringLen;
 
 }DATA_FETCH_METHOD, *LPDATA_FETCH_METHOD;
@@ -48,9 +48,9 @@ typedef struct _ThreadParams
 	uint64_t					dwAddressStartAt;
 
 	//int							threadnum;
-	//预计的压缩文件大小
+	//Estimated compressed file size
 	uint64_t					qwCompressTotalFileSize;
-	//写入数据的目标数量,一般=mt_dwFileCount，添加时=重压缩时的有效文件数量
+	//The target number of written data, generally =mt_dwFileCount, when adding = the number of effective files during heavy compression
 	uint32_t					dwFileCountOfWriteTarget;
 }THREAD_PARAMS, *LPTHREAD_PARAMS;
 
@@ -89,17 +89,17 @@ private:
 	std::mutex				m_LockReadFileMap;
 #if PCK_DEBUG_OUTPUT
 	std::mutex				m_LockThreadID;
-	int						m_threadID = 0;		//线程ID
+	int						m_threadID = 0;		//Thread ID
 #endif
 
 private:
 #if PCK_DEBUG_OUTPUT
-	uint32_t				m_dwCurrentQueuePosPut = 0, m_dwCurrentQueuePosGet = 0;				//当前队列位置
+	uint32_t				m_dwCurrentQueuePosPut = 0, m_dwCurrentQueuePosGet = 0;				//Current queue position
 #endif
 
 protected:
-	uint64_t				mt_dwAddressQueue;												//全局压缩过程的写文件的位置，只由Queue控制
-	uint64_t				mt_dwAddressNameQueue;											//读出的pck文件的压缩文件名索引起始位置
+	uint64_t				mt_dwAddressQueue;												//The location of the written file in the global compression process is only controlled by Queue.
+	uint64_t				mt_dwAddressNameQueue;											//The starting position of the compressed file name index of the read pck file
 
 private:
 	std::mutex					m_LockQueue, m_LockMaxMemory;
@@ -119,18 +119,18 @@ private:
 	void CompressThread(FETCHDATA_FUNC GetUncompressedData);
 	void WriteThread(LPTHREAD_PARAMS threadparams);
 
-	//压缩时内存使用
+	//Memory usage when compressing
 	FETCHDATA_RET	detectMaxToAddMemory(DWORD dwMallocSize);
 	FETCHDATA_RET	detectMaxAndAddMemory(LPBYTE &_out_buffer, DWORD dwMallocSize);
 	void	freeMaxToSubtractMemory(DWORD dwMallocSize);
 	void	freeMaxAndSubtractMemory(LPBYTE &_out_buffer, DWORD dwMallocSize);
 
-	//压缩数据队列
+	//Compressed data queue
 
 	BOOL	putCompressedDataQueue(PCKINDEXTABLE &lpPckFileIndexToCompress);
 	BOOL	getCompressedDataQueue(LPBYTE &lpBuffer, PCKINDEXTABLE_COMPRESS &lpPckIndexTable);
 
-	//在多线程运算中获取压缩好的源数据
+	//Obtain compressed source data in multi-threaded operations
 	FETCHDATA_RET		GetUncompressedDataFromFile(LPDATA_FETCH_METHOD lpDataFetchMethod, PCKINDEXTABLE &pckFileIndex);
 	FETCHDATA_RET		GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD lpDataFetchMethod, PCKINDEXTABLE &pckFileIndex);
 

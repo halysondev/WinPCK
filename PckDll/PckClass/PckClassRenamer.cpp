@@ -1,12 +1,12 @@
 #include "PckClassWriteOperator.h"
 
-//重命名文件
+//Rename file
 BOOL CPckClassWriteOperator::RenameFilename()
 {
 	m_zlib.init_compressor(m_lpPckParams->dwCompressLevel);
 	Logger.i(TEXT_LOG_RENAME);
 
-	//以下是创建一个文件，用来保存压缩后的文件
+	//The following is to create a file to save the compressed file
 	CMapViewFileMultiPckWrite cFileWrite(m_PckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
 	if(!cFileWrite.OpenPck(m_PckAllInfo.szFilename, OPEN_EXISTING)) {
@@ -25,7 +25,7 @@ BOOL CPckClassWriteOperator::RenameFilename()
 		return FALSE;
 	}
 
-	//写文件索引
+	//Write file index
 	QWORD dwAddress = m_PckAllInfo.dwAddressOfFileEntry;
 
 	WriteAllIndex(&cFileWrite, &m_PckAllInfo, dwAddress);

@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// Raw2HexString.cpp: WinPCK 辅助函数部分
-// 将二进制数据转换为二进制文本
+// Raw2HexString.cpp: WinPCK auxiliary function part
+// Convert binary data to binary text
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -70,14 +70,14 @@ CRaw2HexString::CRaw2HexString(uint8_t* lpbuf, size_t rawlength, __int64 iShowSt
 	lpbuffer += LINE_STRLEN;
 
 	for(i = BYTES_PER_LINE;i < nFullLine;i += BYTES_PER_LINE) {
-		//复制文字显示区
+		//Copy text display area
 		memcpy(raw16, &lpbuf[i - BYTES_PER_LINE], BYTES_PER_LINE);
 
-		//打印地址
+		//Print address
 		sprintf(lpbuffer, ADDRESS_FMTSTR, i - BYTES_PER_LINE + iShowStartAddr);
 		lpbuffer += ADDRESS_STRLEN;
 
-		//打印hex区
+		//Print hex area
 		for(int j = 0;j < BYTES_PER_LINE;++j) {
 
 			memcpy(lpbuffer, lpszByte2Raw[raw16[j]], BYTEHEX_STRLEN);
@@ -85,19 +85,19 @@ CRaw2HexString::CRaw2HexString(uint8_t* lpbuf, size_t rawlength, __int64 iShowSt
 
 		}
 
-		//文字显示区 特殊字符过滤
+		//Text display area special character filtering
 		for(int j = 0;j < BYTES_PER_LINE;j++) {
 			if(0x20 > raw16[j])
 				raw16[j] = '.';
 		}
 
-		//把处理完的数据复制到目标缓冲区
+		//Copy the processed data to the target buffer
 		memcpy(lpbuffer, raw16, DATAHEX_STRLEN);
 		lpbuffer += DATAHEX_STRLEN;
 
 	}
 
-	//处理余下的部分
+	//deal with the rest
 	int nLeftBytes = rawlength & 0xf;
 
 	if(0 != nLeftBytes) {

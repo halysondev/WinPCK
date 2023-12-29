@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// CDictHash.h: 用于解析完美世界公司的zup文件中的数据
-// 解码zup的base64字典哈希表
+// CDictHash.h: used to parse the data in the zup file of Perfect World Company
+// Decode zup's base64 dictionary hash table
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 

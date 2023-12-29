@@ -3,11 +3,11 @@
 #include "pck_default_vars.h"
 #include "PckModelStripDefines.h"
 
-//显示列表的回调函数
+//callback function to display list
 typedef void(*SHOW_LIST_CALLBACK)(void*, int32_t, const wchar_t *, int32_t, uint64_t, uint64_t, void*);
 typedef int32_t(*FeedbackCallback)(void* pTag, int32_t eventId, size_t wParam, ssize_t lParam);
 
-//日志回显回调函数
+//Log echo callback function
 typedef void(*ShowLogA)(const char log_level, const char *str);
 typedef void(*ShowLogW)(const char log_level, const wchar_t *str);
 

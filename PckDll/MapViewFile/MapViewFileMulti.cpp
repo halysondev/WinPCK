@@ -169,11 +169,11 @@ LPBYTE CMapViewFileMulti::View(QWORD dwAddress, DWORD dwSize, BOOL isReadOnly)
 		if(0 > iCellIDMidCount)
 			return NULL;
 
-		//计算一下各个文件需要的大小
+		//Calculate the required size of each file
 		size_t sizeBegin = m_file_cell[iCellIDBegin].qwCellAddressEnd - dwAddress;
 		size_t sizeEnd = dwAddress + dwSize - m_file_cell[iCellIDEnd].qwCellAddressBegin;
 
-		//申请内存
+		//Apply for memory
 		LPBYTE lpCrossBuffer = NULL, lpCrossBufferPtr;
 		if(NULL == (lpCrossBuffer = (LPBYTE)malloc(dwSize))) {
 			return NULL;

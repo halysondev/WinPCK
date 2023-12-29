@@ -17,7 +17,7 @@ BOOL CPckClassHeadTailWriter::WriteHeadAndTail(CMapViewFileMultiPckWrite *lpWrit
 	if(isRenewAddtional)
 		strcpy(lpPckAllInfo->szAdditionalInfo, PCK_ADDITIONAL_INFO);
 
-	//写pckTail
+	//Write pckTail
 	if (!lpWrite->Write2(dwAddress, m_PckAllInfo.lpSaveAsPckVerFunc->FillTailData(lpPckAllInfo), m_PckAllInfo.lpSaveAsPckVerFunc->dwTailSize)) {
 		
 		Logger_el(TEXT_VIEWMAP_FAIL);
@@ -26,7 +26,7 @@ BOOL CPckClassHeadTailWriter::WriteHeadAndTail(CMapViewFileMultiPckWrite *lpWrit
 
 	dwAddress += m_PckAllInfo.lpSaveAsPckVerFunc->dwTailSize;
 
-	//写pckHead
+	//Write pckHead
 	lpPckAllInfo->qwPckSize = dwAddress;
 
 	assert(0 != lpPckAllInfo->qwPckSize);
@@ -38,7 +38,7 @@ BOOL CPckClassHeadTailWriter::WriteHeadAndTail(CMapViewFileMultiPckWrite *lpWrit
 
 	lpWrite->UnMaping();
 
-	//这里将文件大小重新设置一下
+	//Reset the file size here
 	lpWrite->SetFilePointer(dwAddress, FILE_BEGIN);
 	lpWrite->SetEndOfFile();
 	return TRUE;

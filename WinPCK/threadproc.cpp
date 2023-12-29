@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// threadproc.cpp: WinPCK 界面线程部分
-// 压缩、解压、更新等大用时过程，需多线程调用 
+// threadproc.cpp: WinPCK interface thread part
+// Time-consuming processes such as compression, decompression, and updating require multi-threaded calls
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 // 2012.10.10
 //////////////////////////////////////////////////////////////////////
@@ -38,21 +38,21 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 	*szFilenameToSave = 0;
 
 	if (bHasPckOpened) {
-		//此时没有打开文件，这时的操作相当于新建文档
+		//There is no file open at this time. The operation at this time is equivalent to creating a new document.
 		pThis->m_currentNodeOnShow = NULL;
 
 		if (1 == pThis->m_lpszFilePath.size()) {
 			GetPckFileNameBySource(szFilenameToSave, pThis->m_lpszFilePath[0].c_str(), FALSE);
 		}
 
-		//选择保存的文件名
+		//Select the saved file name
 		int nSelectFilter = SaveFile(pThis->hWnd, szFilenameToSave, L"pck", pThis->BuildSaveDlgFilterString());
 		if (0 > nSelectFilter) {
 			pck_close();
 			return;
 		}
 
-		//设定目标pck的版本
+		//Set the version of the target pck
 		if(WINPCK_OK != pck_setVersion(nSelectFilter))
 			return;
 
@@ -63,7 +63,7 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 		swprintf_s(szPrintf, GetLoadStrW(IDS_STRING_RENEWING), wcsrchr(pThis->m_Filename, L'\\') + 1);
 	}
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_ADD, FALSE);
@@ -81,7 +81,7 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 
 	if (WINPCK_OK == pck_UpdatePckFileSubmit(szFilenameToSave, pThis->m_currentNodeOnShow)) {
 
-		//计时结束
+		//End of timer
 		timer.stop();
 
 		if (pck_isLastOptSuccess()) {
@@ -97,23 +97,23 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 		}
 
 
-		//整合报告
-		// 打印报告
-		// pck包中原有文件 %d 个\r\n
-		// 新加入文件 %d 个，其中重复文件名 %d 个\r\n
-		// 使用原数据地址 %d 个，新数据地址 %d 个\r\n
-		// 通过成的新pck文件共 %d 个文件\r\n
+		// Integrated reporting
+		// Print report
+		// There are %d original files in the pck package\r\n
+		// %d new files added, %d of which have duplicate file names\r\n
+		// Use original data addresses %d, new data addresses %d\r\n
+		// A total of %d new pck files were passed\r\n
 
 		if (0 != pck_getUpdateResult_PrepareToAddFileCount()) {
 
 			swprintf_s(szPrintf,
-				L"此更新过程数据如下：\r\n"
-				L"PCK 包中原有文件数： %d\r\n"
-				L"计划更新文件数： %d\r\n"
-				L"实际更新文件数： %d\r\n"
-				L"重名文件数： %d\r\n"
-				L"未更新文件数： %d\r\n"
-				L"更新后 PCK 包中文件数： %d",
+				L"The data for this update process is as follows：\r\n"
+				L"Number of original files in the PCK package： %d\r\n"
+				L"Number of files planned to be updated： %d\r\n"
+				L"Actual number of updated files： %d\r\n"
+				L"Number of files with duplicate names： %d\r\n"
+				L"Number of files not updated： %d\r\n"
+				L"The number of files in the PCK package after the update： %d",
 				pck_getUpdateResult_OldFileCount(),
 				pck_getUpdateResult_PrepareToAddFileCount(),
 				pck_getUpdateResult_ChangedFileCount(),
@@ -121,7 +121,7 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 				pck_getUpdateResult_PrepareToAddFileCount() - pck_getUpdateResult_ChangedFileCount(),
 				pck_getUpdateResult_FinalFileCount());
 
-			pThis->MessageBoxW(szPrintf, L"更新报告", MB_OK | MB_ICONINFORMATION);
+			pThis->MessageBoxW(szPrintf, L"update report", MB_OK | MB_ICONINFORMATION);
 
 			pck_logI(szPrintf);
 		}
@@ -155,7 +155,7 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 		pThis->SendMessage(WM_CLOSE, 0, 0);
 	}
 
-	//还原Drop状态
+	//Restore Drop status
 	pThis->m_lpszFilePath.clear();
 	DragAcceptFiles(pThis->hWnd, TRUE);
 
@@ -172,7 +172,7 @@ VOID TInstDlg::RenamePckFile(VOID *pParam)
 
 	_stprintf_s(szPrintf, GetLoadStr(IDS_STRING_RENEWING), _tcsrchr(pThis->m_Filename, TEXT('\\')) + 1);
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_RENAME, FALSE);
@@ -184,7 +184,7 @@ VOID TInstDlg::RenamePckFile(VOID *pParam)
 
 	if (WINPCK_OK == pck_RenameSubmit()) {
 
-		//计时结束
+		//End of timer
 		timer.stop();
 		_stprintf_s(szPrintf, GetLoadStr(IDS_STRING_RENEWOK), timer.getElapsedTime());
 
@@ -239,14 +239,14 @@ VOID TInstDlg::RebuildPckFile(VOID	*pParam)
 	_tcscpy(lpszFileTitle, TEXT("Rebuild_"));
 	_tcscat_s(szFilenameToSave, _tcsrchr(pThis->m_Filename, TEXT('\\')) + 1);
 
-	//弹出选项对话框
-	//调用对话框
+	//Pop up options dialog box
+	//call dialog
 	BOOL  bNeedRecompress;
 	TRebuildOptDlg	dlg(szScriptFile, &bNeedRecompress, pThis);
 	if (IDCANCEL == dlg.Exec())
 		return;
 
-	//选择保存的文件名
+	//Select the saved file name
 	int nSelectFilter = SaveFile(pThis->hWnd, szFilenameToSave, TEXT("pck"), pThis->BuildSaveDlgFilterString(), pck_getVersion());
 	if (0 > nSelectFilter) {
 		return;
@@ -255,7 +255,7 @@ VOID TInstDlg::RebuildPckFile(VOID	*pParam)
 	if (WINPCK_OK != pck_setVersion(nSelectFilter))
 		return;
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_REBUILD, FALSE);
@@ -268,7 +268,7 @@ VOID TInstDlg::RebuildPckFile(VOID	*pParam)
 
 	if (WINPCK_OK == pck_RebuildPckFileWithScript(szScriptFile, szFilenameToSave, bNeedRecompress)) {
 
-		//计时结束
+		//End of timer
 		timer.stop();
 
 		if (pck_isLastOptSuccess()) {
@@ -329,14 +329,14 @@ VOID TInstDlg::StripPckFile(VOID *pParam)
 	_tcscpy(lpszFileTitle, TEXT("Striped_"));
 	_tcscat_s(szFilenameToSave, _tcsrchr(pThis->m_Filename, TEXT('\\')) + 1);
 
-	//弹出选项对话框
-	//调用对话框
+	//Pop up options dialog box
+	//call dialog
 	int stripFlag;
 	TStripDlg	dlg(&stripFlag, pThis);
 	if (IDCANCEL == dlg.Exec())
 		return;
 
-	//选择保存的文件名
+	//Select the saved file name
 	int nSelectFilter = SaveFile(pThis->hWnd, szFilenameToSave, TEXT("pck"), pThis->BuildSaveDlgFilterString(), pck_getVersion());
 	if (0 > nSelectFilter) {
 		return;
@@ -345,7 +345,7 @@ VOID TInstDlg::StripPckFile(VOID *pParam)
 	if (WINPCK_OK != pck_setVersion(nSelectFilter))
 		return;
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_REBUILD, FALSE);
@@ -358,7 +358,7 @@ VOID TInstDlg::StripPckFile(VOID *pParam)
 
 	if (WINPCK_OK == pck_StripPck(szFilenameToSave, stripFlag)) {
 
-		//计时结束
+		//End of timer
 		timer.stop();
 
 		if (pck_isLastOptSuccess()) {
@@ -405,7 +405,7 @@ VOID TInstDlg::CreateNewPckFile(VOID	*pParam)
 
 	CStopWatch	timer;
 
-	//选择目录
+	//Select directory
 	if (!OpenFilesVistaUp(pThis->hWnd, pThis->m_CurrentPath))
 		return;
 
@@ -413,16 +413,16 @@ VOID TInstDlg::CreateNewPckFile(VOID	*pParam)
 
 	GetPckFileNameBySource(szFilenameToSave, pThis->m_CurrentPath, TRUE);
 
-	//选择保存的文件名
+	//Select the saved file name
 	int nSelectFilter = SaveFile(pThis->hWnd, szFilenameToSave, TEXT("pck"), pThis->BuildSaveDlgFilterString());
 	if (0 > nSelectFilter)
 		return;
 
-	//设定目标pck的版本
+	//Set the version of the target pck
 	if (WINPCK_OK != pck_setVersion(nSelectFilter))
 		return;
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_NEW, FALSE);
@@ -442,7 +442,7 @@ VOID TInstDlg::CreateNewPckFile(VOID	*pParam)
 
 	if (WINPCK_OK == pck_UpdatePckFileSubmit(szFilenameToSave, pThis->m_currentNodeOnShow)) {
 
-		//计时结束
+		//End of timer
 		timer.stop();
 
 		if (pck_isLastOptSuccess()) {
@@ -483,7 +483,7 @@ VOID TInstDlg::ToExtractAllFiles(VOID	*pParam)
 
 	CStopWatch	timer;
 
-	//开始计时
+	//start the timer
 	timer.start();
 
 	pThis->EnbaleButtons(ID_MENU_UNPACK_ALL, FALSE);
@@ -495,7 +495,7 @@ VOID TInstDlg::ToExtractAllFiles(VOID	*pParam)
 	pThis->SetTimer(WM_TIMER_PROGRESS_100, TIMER_PROGRESS, NULL);
 
 	if (WINPCK_OK == pck_ExtractAllFiles(pThis->m_CurrentPath)) {
-		//计时结束
+		//End of timer
 		timer.stop();
 		_stprintf_s(szPrintf, GetLoadStr(IDS_STRING_EXPOK), timer.getElapsedTime());
 
@@ -537,7 +537,7 @@ VOID TInstDlg::ToExtractSelectedFiles(VOID	*pParam)
 		if (NULL != (lpFileEntryArray = (const PCK_UNIFIED_FILE_ENTRY **)malloc(sizeof(PCK_UNIFIED_FILE_ENTRY *) * uiSelectCount))) {
 			TCHAR		szPrintf[64];
 
-			//取lpNodeToShow
+			//Get lpNodeToShow
 			int	nCurrentItemCount = ListView_GetItemCount(hList);
 
 			LVITEM item;
@@ -549,7 +549,7 @@ VOID TInstDlg::ToExtractSelectedFiles(VOID	*pParam)
 
 			uiSelectCount = 0;
 
-			//从1开始，跳过..目录
+			//Start at 1, skip ..directories
 			for (item.iItem = 1; item.iItem < nCurrentItemCount; item.iItem++) {
 				ListView_GetItem(hList, &item);
 
@@ -563,7 +563,7 @@ VOID TInstDlg::ToExtractSelectedFiles(VOID	*pParam)
 
 			if (0 == uiSelectCount)return;
 
-			//开始计时
+			//start the timer
 			timer.start();
 
 			pThis->EnbaleButtons(ID_MENU_UNPACK_SELECTED, FALSE);
@@ -577,7 +577,7 @@ VOID TInstDlg::ToExtractSelectedFiles(VOID	*pParam)
 			lpFileEntryArrayPtr = lpFileEntryArray;
 
 			if (WINPCK_OK == pck_ExtractFilesByEntrys(lpFileEntryArray, uiSelectCount, pThis->m_CurrentPath)) {
-				//计时结束
+				//End of timer
 				timer.stop();
 				_stprintf_s(szPrintf, GetLoadStr(IDS_STRING_EXPOK), timer.getElapsedTime());
 
@@ -641,7 +641,7 @@ VOID TInstDlg::DeleteFileFromPckFile(VOID	*pParam)
 
 		if (0 == uiSelectCount)return;
 
-		//开始计时
+		//start the timer
 		timer.start();
 
 		pThis->EnbaleButtons(ID_MENU_DELETE, FALSE);
@@ -654,7 +654,7 @@ VOID TInstDlg::DeleteFileFromPckFile(VOID	*pParam)
 
 
 		if (WINPCK_OK == pck_RenameSubmit()) {
-			//计时结束
+			//End of timer
 			timer.stop();
 			_stprintf_s(szPrintf, GetLoadStr(IDS_STRING_RENEWOK), timer.getElapsedTime());
 
@@ -683,7 +683,7 @@ VOID TInstDlg::DeleteFileFromPckFile(VOID	*pParam)
 	return;
 }
 
-//从拖入的源文件名推出预保存的pck文件名
+//Push the pre-saved pck file name from the dragged source file name
 VOID GetPckFileNameBySource(LPWSTR dst, LPCWSTR src, BOOL isDirectory)
 {
 	int szPathToCompressLen;

@@ -1,13 +1,13 @@
 
 //////////////////////////////////////////////////////////////////////
-// PckControlCenterOperation.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件,界面与PCK类的数据交互，控制中心
+// PckControlCenterOperation.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Header file, data interaction between interface and PCK class, control center
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.10.10
 //////////////////////////////////////////////////////////////////////
 
@@ -40,7 +40,7 @@ FMTPCK	CPckControlCenter::GetPckTypeFromFilename(const wchar_t * lpszFile)
 
 BOOL CPckControlCenter::Open(const wchar_t * lpszFile)
 {
-	//判断文件格式
+	//Determine file format
 	FMTPCK emunFileFormat = GetPckTypeFromFilename(lpszFile);
 
 	while(1) {
@@ -64,7 +64,7 @@ BOOL CPckControlCenter::Open(const wchar_t * lpszFile)
 
 			m_lpPckRootNode = m_lpClassPck->GetPckPathNode();
 
-			//打开成功，刷新标题
+			//Open successfully, refresh title
 			pFeedbackCallBack(pTag, PCK_FILE_OPEN_SUCESS, NULL, (ssize_t)(m_lpClassPck->GetPckVersion()->name));
 			return TRUE;
 
@@ -90,10 +90,10 @@ void CPckControlCenter::Close()
 
 	m_emunFileFormat = FMTPCK_UNKNOWN;
 
-	//清空参数
+	//Clear parameters
 	Reset();
 
-	//关闭文件，刷新标题
+	//Close the file and refresh the title
 	pFeedbackCallBack(pTag, PCK_FILE_CLOSE, NULL, NULL);
 }
 
@@ -135,7 +135,7 @@ BOOL CPckControlCenter::RenameSubmit()
 
 #pragma region 预览解压文件
 
-//预览文件
+//Preview file
 BOOL CPckControlCenter::GetSingleFileData(LPCENTRY lpFileEntry, char *buffer, size_t sizeOfBuffer)
 {
 	if ((NULL == m_lpClassPck) || (NULL == lpFileEntry))
@@ -150,7 +150,7 @@ BOOL CPckControlCenter::GetSingleFileData(LPCENTRY lpFileEntry, char *buffer, si
 	return m_lpClassPck->GetSingleFileData(lpPckFileIndexTable, buffer, sizeOfBuffer);
 }
 
-//解压文件
+//unzip files
 BOOL CPckControlCenter::ExtractFiles(const PCK_UNIFIED_FILE_ENTRY **lpFileEntryArray, int nEntryCount, LPCWSTR lpszDestDirectory)
 {
 	if (NULL == m_lpClassPck)
@@ -168,8 +168,8 @@ BOOL CPckControlCenter::ExtractAllFiles(LPCWSTR lpszDestDirectory)
 }
 #pragma endregion
 
-#pragma region 重建pck文件
-//重建pck文件
+#pragma region Rebuild pck file
+//Rebuild pck file
 BOOL CPckControlCenter::TestScript(LPCWSTR lpszScriptFile)
 {
 	CPckClassRebuildFilter cScriptFilter;
@@ -187,7 +187,7 @@ BOOL CPckControlCenter::RebuildPckFile(LPCWSTR lpszScriptFile, LPCWSTR szRebuild
 
 #pragma endregion
 
-#pragma region 游戏精简
+#pragma region Game streamlined
 BOOL CPckControlCenter::StripPck(LPCWSTR lpszStripedPckFile, int flag)
 {
 	if (NULL == m_lpClassPck)
@@ -199,7 +199,7 @@ BOOL CPckControlCenter::StripPck(LPCWSTR lpszStripedPckFile, int flag)
 
 #pragma endregion
 
-#pragma region 多个文件列表进行压缩时使用的vector操作
+#pragma region Vector operation used when compressing multiple file lists
 void CPckControlCenter::StringArrayReset()
 {
 	lpszFilePathToAdd.clear();
@@ -212,7 +212,7 @@ void CPckControlCenter::StringArrayAppend(LPCWSTR lpszFilePath)
 
 #pragma endregion
 
-#pragma region 新建/更新pck文件
+#pragma region Create/update pck file
 
 BOOL CPckControlCenter::UpdatePckFileSubmit(LPCWSTR szPckFile, LPCENTRY lpFileEntry)
 {
@@ -228,8 +228,8 @@ BOOL CPckControlCenter::UpdatePckFileSubmit(LPCWSTR szPckFile, LPCENTRY lpFileEn
 	return rtn;
 }
 
-#pragma region 删除节点
-//删除一个节点
+#pragma region Delete node
+//Delete a node
 BOOL CPckControlCenter::DeleteEntry(LPCENTRY lpFileEntry)
 {
 	if ((NULL == m_lpClassPck) || (NULL == lpFileEntry))
@@ -244,7 +244,7 @@ BOOL CPckControlCenter::DeleteEntry(LPCENTRY lpFileEntry)
 	return TRUE;
 }
 
-//提交
+//submit
 BOOL CPckControlCenter::DeleteEntrySubmit()
 {
 	return RenameSubmit();
@@ -253,7 +253,7 @@ BOOL CPckControlCenter::DeleteEntrySubmit()
 #pragma endregion
 
 
-#pragma region 版本相关
+#pragma region Version related
 
 BOOL CPckControlCenter::SetPckVersion(int verID)
 {
@@ -265,7 +265,7 @@ int	CPckControlCenter::GetPckVersion()
 	return m_lpClassPck->GetPckVersion()->id;
 }
 
-//获取当前配置名称
+//Get the current configuration name
 LPCWSTR	CPckControlCenter::GetCurrentVersionName()
 {
 	if (NULL == m_lpClassPck)

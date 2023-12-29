@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// listViewFunc.cpp: WinPCK 界面线程ListView部分
-// ListView控件相关操作
+// listViewFunc.cpp: WinPCK interface thread ListView part
+// ListView control related operations
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2019.12.25
 //////////////////////////////////////////////////////////////////////
 #include "tlib.h"
@@ -156,7 +156,7 @@ BOOL TInstDlg::EvNotifyListView(const NMHDR *pNmHdr)
 
 void TInstDlg::ListView_Init()
 {
-	//const LPTSTR	lpszID_LIST[] =	{TEXT("文件名"), TEXT("实标大小"), TEXT("压缩大小"), TEXT("压缩率")/*, TEXT("未知2")*/};
+	//const LPTSTR	lpszID_LIST[] =	{TEXT("file name"), TEXT("Actual size"), TEXT("Compressed size"), TEXT("Compression ratio")/*, TEXT("Unknown 2")*/};
 	const LPTSTR	lpszID_LIST[] = { 
 		GetLoadStr(IDS_STRING_LISTHEAD1), 
 		GetLoadStr(IDS_STRING_LISTHEAD2), 
@@ -167,7 +167,7 @@ void TInstDlg::ListView_Init()
 	InitListView(GetDlgItem(IDC_LIST), lpszID_LIST, iID_LIST_cx, ifmt);
 
 #ifdef _USE_CUSTOMDRAW_
-	//ListView所用的画刷
+	//The brush used by ListView
 	const COLORREF		colorHB[] = { 
 		FILL_COLOR_GREEN,
 		FILL_COLOR_GRAY,
@@ -197,7 +197,7 @@ void TInstDlg::ListView_Init()
 		}
 	}
 
-	//ListView所用的图标
+	//Icons used by ListView
 	hIconList[0] = LoadIcon(TApp::GetInstance(), MAKEINTRESOURCE(IDI_ICON_DIR));
 	hIconList[1] = LoadIcon(TApp::GetInstance(), MAKEINTRESOURCE(IDI_ICON_FILE));
 	//hIconList[2] = LoadIcon(TApp::GetInstance(), MAKEINTRESOURCE(IDI_ICON_FILE));
@@ -230,16 +230,16 @@ int CALLBACK ListViewCompareProc(LPARAM lParam1, LPARAM lParam2, LPARAM lParamSo
 	int iLastSort = dwSortStat & 0xffff;
 	int iResult;
 
-	//如果是上级目录(".."目录)
+	//If it is the upper-level directory (".." directory)
 	if (PCK_ENTRY_TYPE_DOTDOT == (PCK_ENTRY_TYPE_DOTDOT & (lpFileEntry1->entryType | lpFileEntry2->entryType)))
 		return 0;
 
-	//如果存在目录和文件比较
+	//If directory and file comparison exist
 	if (PCK_ENTRY_TYPE_FOLDER == (PCK_ENTRY_TYPE_FOLDER & (lpFileEntry1->entryType ^ lpFileEntry2->entryType)))
 		return 0;
 
 	switch (iLastSort) {
-		//文件名
+		//file name
 	case 0:
 		iResult = wcsicmp(lpFileEntry1->szName, lpFileEntry2->szName);
 		break;
@@ -368,7 +368,7 @@ BOOL TInstDlg::ListView_EndLabelEdit(const NMLVDISPINFO* pNmHdr)
 				return FALSE;
 		}
 
-		//调用修改
+		//call modification
 		//pck_setMTMemoryUsed(m_PckHandle, 0);
 		_beginthread(RenamePckFile, 0, this);
 
@@ -389,16 +389,16 @@ BOOL TInstDlg::EvDrawItemListView(const DRAWITEMSTRUCT *lpDis)
 	TCHAR						szStrPrintf[MAX_PATH];
 
 	//LPPCK_PATH_NODE				lpNodeToShow = NULL;
-	/////////////////一些变量的初始化//////////////////
+	/////////////////Initialization of some variables//////////////////
 	//LPDRAWITEMSTRUCT lpDis = (LPDRAWITEMSTRUCT)lParam; 
-	//lpDis->CtlID;					控件ID
-	//lpDis->CtlType;				控件类型，ODT_LISTVIEW;ODT_HEADER;ODT_TAB;
-	//lpDis->hDC;					控件HDC
-	//lpDis->hwndItem;				控件HWND
-	//lpDis->itemAction;			动作类型？？？
-	//lpDis->itemData;				DATA，listview第0个subitem的字串
-	//lpDis->itemID;				ListView第多少行的数据
-	//lpDis->itemState;				状态，ODS_SELECTED（选中）ODS_FOCUS（）ODS_CHECKED（）
+	//lpDis->CtlID;					Control ID
+	//lpDis->CtlType;				Control type，ODT_LISTVIEW;ODT_HEADER;ODT_TAB;
+	//lpDis->hDC;					Control HDC
+	//lpDis->hwndItem;				Control HWND
+	//lpDis->itemAction;			Action type? ? ?
+	//lpDis->itemData;				DATA, the string of the 0th subitem of listview
+	//lpDis->itemID;				How many rows of data does ListView have?
+	//lpDis->itemState;				Status, ODS_SELECTED (checked) ODS_FOCUS () ODS_CHECKED ()
 	//lpDis->rcItem;
 
 	//hWndListView = lpDis->hwndItem;
@@ -406,8 +406,8 @@ BOOL TInstDlg::EvDrawItemListView(const DRAWITEMSTRUCT *lpDis)
 	rcfillrect = lpDis->rcItem;
 	hdc = lpDis->hDC;
 
-	/////////////得到 ListView Header 的数量/////////////////
-	iColumnCount = Header_GetItemCount(hWndHeader);////////////////此处有待优化
+	/////////////Get the number of ListView Header/////////////////
+	iColumnCount = Header_GetItemCount(hWndHeader);////////////////This needs to be optimized
 
 	/////////////////////////////////////////////////////
 	if(lpDis->CtlType == ODT_LISTVIEW) {
@@ -461,7 +461,7 @@ BOOL TInstDlg::EvDrawItemListView(const DRAWITEMSTRUCT *lpDis)
 			rc = rcfillrect;
 			rc.right -= 5;
 
-			//修正位置
+			//Correct position
 			//if(1 == lpDis->CtlID)
 			//{
 			if(0 == item.iSubItem)
@@ -491,7 +491,7 @@ void TInstDlg::InsertList(CONST HWND hWndList, CONST INT iIndex, CONST UINT uiMa
 	va_list	ap;
 	va_start(ap, nColCount);
 
-	item.iItem = iIndex;			//从0开始
+	item.iItem = iIndex;			//Start from 0
 	item.iImage = iImage;
 	item.iSubItem = 0;
 	item.mask = LVIF_TEXT | uiMask;
@@ -504,7 +504,7 @@ void TInstDlg::InsertList(CONST HWND hWndList, CONST INT iIndex, CONST UINT uiMa
 	item.mask = LVIF_TEXT;
 
 	for(item.iSubItem = 1; item.iSubItem < nColCount; item.iSubItem++) {
-		//item.iItem = iIndex;			//从0开始
+		//item.iItem = iIndex;			//Start from 0
 		//item.iSubItem = i;
 		item.pszText = va_arg(ap, wchar_t*);
 

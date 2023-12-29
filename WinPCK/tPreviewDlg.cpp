@@ -42,7 +42,7 @@ PICFORMAT CPriviewInDlg::GetPicFormatFromFilename(LPCWSTR lpszFilename)
 		//_tcscpy_s(szExt, lpszFileExt);
 		wcsncpy(szExt, lpszFileExt, sizeof(szExt)/sizeof(wchar_t) - 1);
 
-		//转化lpszFileExt为小写,当strlen(lpszFileExt) > 6 时报错，修改
+		//Convert lpszFileExt to lowercase, when strlen(lpszFileExt) > 6, an error will be reported, modify
 		if(4 == wcslen(szExt)) {
 			_wcslwr_s(szExt, 6);
 
@@ -72,7 +72,7 @@ BOOL CPriviewInDlg::Show(const PCK_UNIFIED_FILE_ENTRY* const lpPckFileIndexToSho
 		if(NULL == (lpszFileTitle = wcsrchr(lpszFilename, L'/')))
 			lpszFileTitle = lpszFilename - 1;
 
-	//把前面的'\\'或'/'去掉
+	//Remove the preceding '\\' or '/'
 	lpszFileTitle++;
 #pragma endregion
 

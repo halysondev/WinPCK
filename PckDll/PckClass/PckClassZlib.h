@@ -36,7 +36,7 @@ public:
 	int decompress(void *dest, ulong_t *destLen, const void *source, uint32_t sourceLen);
 	int decompress_part(void *dest, ulong_t  *destLen, const void *source, uint32_t sourceLen, uint32_t fullDestLen);
 
-	//获取数据压缩后的大小，如果源大小小于一定值就不压缩
+	//Get the compressed size of the data. If the source size is less than a certain value, it will not be compressed.
 	unsigned long GetCompressBoundSizeByFileSize(ulong_t &dwFileClearTextSize, ulong_t &dwFileCipherTextSize, uint32_t dwFileSize);
 
 private:

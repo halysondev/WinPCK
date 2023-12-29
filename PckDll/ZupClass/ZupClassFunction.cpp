@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ZupClassFunction.cpp: 用于解析完美世界公司的zup文件中的数据，并显示在List中
-// 头文件
+// ZupClassFunction.cpp: used to parse the data in the zup file of Perfect World Company and display it in the List
+// head File
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.5.23
 //////////////////////////////////////////////////////////////////////
 
@@ -19,7 +19,7 @@ _inline void CZupClass::DecodeDict(LPZUP_FILENAME_DICT lpZupDict)
 {
 	char			szUTF8str[MAX_PATH_PCK];
 
-	//base64解码
+	//base64 decoding
 	DWORD	dwRealLen = lpZupDict->realstrlength;
 	base64_decode(lpZupDict->realbase64str, dwRealLen, szUTF8str);
 
@@ -61,7 +61,7 @@ void CZupClass::DecodeFilename(char *_dst, wchar_t *_wdst, char *_src)
 	char	*__srcbufptr;
 
 	memset(_dst + 8, 0, MAX_PATH_PCK - 8);
-	//复制"element\"
+	//Copy "element\"
 	//memcpy(_dst, _src, 8);
 	//_dst -> _wdst
 
@@ -84,7 +84,7 @@ void CZupClass::DecodeFilename(char *_dst, wchar_t *_wdst, char *_src)
 
 		*__srcbufptr = 0;
 
-		//在dict中查找base64
+		//Find base64 in dict
 		LPZUP_FILENAME_DICT	lpZupDict;
 
 		if(NULL != (lpZupDict = m_lpDictHash->find(__srcbuf))) {
@@ -109,13 +109,13 @@ BOOL CZupClass::BuildZupBaseDict()
 	LPPCKINDEXTABLE	lpPckIndexTable = m_PckAllInfo.lpPckIndexTable;
 
 	for(uint32_t i = 0;i < m_PckAllInfo.dwFileCount;i++) {
-		//以element\开头的都需要解码
-		//其他直接复制
+		//Everything starting with element\ needs to be decoded
+		//Other direct copies
 		//"element\" = 0x6d656c65, 0x5c746e656d656c65
 		//0x2D76 = "v-"
 		if(0x2D76 == *(uint16_t*)lpPckIndexTable->cFileIndex.szFilename) {
 			//wID = atoul(lpNode->szName + 2, NULL, 10);
-			//读取inc文件
+			//Read inc file
 			char	*_incbuf = (char*)malloc(lpPckIndexTable->cFileIndex.dwFileClearTextSize+1);
 
 			if(NULL == _incbuf) {

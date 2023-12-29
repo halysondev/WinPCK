@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////
-// PckClass.h: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件
+// PckClass.h: used to parse the data in the pck file of Perfect World Company and display it in the List
+// head File
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -23,7 +23,7 @@ class CPckClass :
 	public virtual CPckClassWriteOperator,
 	public virtual CPckClassVersionDetect
 {
-//函数
+//function
 public:
 	CPckClass(LPPCK_RUNTIME_PARAMS inout);
 	virtual ~CPckClass();
@@ -36,12 +36,12 @@ public:
 	BOOL	ExtractAllFiles(const wchar_t *lpszDestDirectory);
 
 private:
-	//解压文件
+	//unzip files
 	BOOL	ExtractFiles(const PCKINDEXTABLE **lpIndexToExtract, int nFileCount);
 	BOOL	ExtractFiles(const PCK_PATH_NODE **lpNodeToExtract, int nFileCount);
 
 public:
-	//预览文件
+	//Preview file
 	virtual BOOL	GetSingleFileData(const PCKINDEXTABLE* const lpPckFileIndexTable, char *buffer, size_t sizeOfBuffer = 0);
 protected:
 	virtual BOOL	GetSingleFileData(LPVOID lpvoidFileRead, const PCKINDEXTABLE* const lpPckFileIndexTable, char *buffer, size_t sizeOfBuffer = 0);

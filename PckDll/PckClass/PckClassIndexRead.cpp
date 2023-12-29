@@ -15,7 +15,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 		return FALSE;
 	}
 
-	//开始读文件
+	//Start reading file
 	BYTE	*lpFileBuffer;
 	if(NULL == (lpFileBuffer = cRead.View(m_PckAllInfo.dwAddressOfFileEntry, cRead.GetFileSize() - m_PckAllInfo.dwAddressOfFileEntry))) {
 		Logger_el(TEXT_VIEWMAP_FAIL);
@@ -25,15 +25,15 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 	LPPCKINDEXTABLE lpPckIndexTable = m_PckAllInfo.lpPckIndexTable;
 	BOOL			isLevel0;
 	DWORD			byteLevelKey;
-	//存放每条文件索引的头部的两个DWORD压缩数据长度信息
+	//Stores two DWORD compressed data length information in the header of each file index
 	DWORD			dwFileIndexTableCryptedDataLength[2];
 	DWORD			dwFileIndexTableClearDataLength = m_PckAllInfo.lpDetectedPckVerFunc->dwFileIndexSize;
 	DWORD			IndexCompressedFilenameDataLengthCryptKey[2] = { \
 		m_PckAllInfo.lpDetectedPckVerFunc->cPckXorKeys.IndexCompressedFilenameDataLengthCryptKey1, \
 		m_PckAllInfo.lpDetectedPckVerFunc->cPckXorKeys.IndexCompressedFilenameDataLengthCryptKey2 };
 
-	//pck是压缩时，文件名的压缩长度不会超过0x100，所以当
-	//开始一个字节，如果0x75，就没有压缩，如果是0x74就是压缩的	0x75->FILEINDEX_LEVEL0
+	//When pck is compressed, the compressed length of the file name will not exceed 0x100, so when
+	//Start a byte. If it is 0x75, there is no compression. If it is 0x74, it is compressed. 0x75->FILEINDEX_LEVEL0
 	//cRead.SetFilePointer(m_PckAllInfo.dwAddressOfFileEntry, FILE_BEGIN);
 
 	byteLevelKey = (*(DWORD*)lpFileBuffer) ^ IndexCompressedFilenameDataLengthCryptKey[0];
@@ -42,7 +42,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 	if(isLevel0) {
 
 		for(DWORD i = 0;i < m_PckAllInfo.dwFileCount;i++) {
-			//先复制两个压缩数据长度信息
+			//First copy the two compressed data length information
 			memcpy(dwFileIndexTableCryptedDataLength, lpFileBuffer, 8);
 
 			*(QWORD*)dwFileIndexTableCryptedDataLength ^= *(QWORD*)IndexCompressedFilenameDataLengthCryptKey;
@@ -82,7 +82,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 
 #if PCK_V2031_ENABLE
 			/*
-			新诛仙索引大小改成了288，新加了4字节内容
+			The new Zhuxian index size has been changed to 288, and 4 bytes of new content have been added.
 			PCKFILEINDEX_V2030->
 			*/
 			PCKFILEINDEX_V2031* testnewindex = (PCKFILEINDEX_V2031*)pckFileIndexBuf;

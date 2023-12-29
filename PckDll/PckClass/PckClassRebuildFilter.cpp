@@ -1,10 +1,10 @@
 //////////////////////////////////////////////////////////////////////
-// PckClassRebuildFilter.cpp: 用于解析过滤脚本
+// PckClassRebuildFilter.cpp: used to parse filter scripts
 //
-// 此程序由 李秋枫/stsm/liqf 编写，部分代码改写自RapidCRC
+// This program is written by Li Qiufeng/stsm/liqf, and part of the code is adapted from RapidCRC
 //
-// 此代码开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.15
 //////////////////////////////////////////////////////////////////////
 #include <stdlib.h>
@@ -25,7 +25,7 @@ CPckClassRebuildFilter::~CPckClassRebuildFilter()
 	Logger.OutputVsIde(__FUNCTION__"\r\n");
 }
 
-#pragma region 读取文件并转换为Unicode
+#pragma region Read file and convert to Unicode
 
 BOOL CPckClassRebuildFilter::OpenScriptFileAndConvBufToUcs2(const wchar_t * lpszScriptFile)
 {
@@ -34,7 +34,7 @@ BOOL CPckClassRebuildFilter::OpenScriptFileAndConvBufToUcs2(const wchar_t * lpsz
 	
 	CTextUnitsW	cText2Line;
 
-	//读取文件所有字符
+	//Read all characters from file
 	if (nullptr == (lpBufferToRead = (char*)cFileRead.OpenMappingViewAllRead(lpszScriptFile))) 
 		return FALSE;
 
@@ -51,7 +51,7 @@ BOOL CPckClassRebuildFilter::OpenScriptFileAndConvBufToUcs2(const wchar_t * lpsz
 BOOL CPckClassRebuildFilter::ParseOneLine(FILEOP * pFileOp, LPCWSTR lpszLine)
 {
 	wchar_t szOperator[16] = { 0 };
-	//首先检查16个字符内有没有空格或tab
+	//First check if there are any spaces or tabs within the 16 characters
 	const wchar_t *lpszCell = lpszLine, *lpszSearch = lpszLine;
 	size_t count = 0;
 
@@ -71,14 +71,14 @@ BOOL CPckClassRebuildFilter::ParseOneLine(FILEOP * pFileOp, LPCWSTR lpszLine)
 	if(!isValid)
 		return FALSE;
 
-	//解析szOperator
+	//Parse szOperator
 	const wchar_t *lpszOpPos = wcsstr(szOperators, szOperator);
 	if(NULL == lpszOpPos)
 		return FALSE;
 
 	pFileOp->op = SCRIPTOP((lpszOpPos - szOperators) / 8);
 
-	//过滤掉剩下的空格和tab
+	//Filter out remaining spaces and tabs
 	while((' ' == *lpszSearch) || ('\t' == *lpszSearch))
 		lpszSearch++;
 
@@ -90,7 +90,7 @@ BOOL CPckClassRebuildFilter::ParseOneLine(FILEOP * pFileOp, LPCWSTR lpszLine)
 
 	wcscpy(pFileOp->szFilename, lpszSearch);
 
-	////检查文件名是否正确
+	////Check if the file name is correct
 	//if(OP_CheckFile == pFileOp->op) {
 
 	//	if(0 == _tcsicmp(lpszFileName, pFileOp->szFilename))
@@ -103,7 +103,7 @@ BOOL CPckClassRebuildFilter::ParseOneLine(FILEOP * pFileOp, LPCWSTR lpszLine)
 	return TRUE;
 }
 
-//分解脚本中的目录
+//Decompose directories in scripts
 void CPckClassRebuildFilter::SepratePaths(FILEOP * pFileOp)
 {
 	wcscpy(pFileOp->szFilenameBuffer, pFileOp->szFilename);
@@ -117,7 +117,7 @@ void CPckClassRebuildFilter::SepratePaths(FILEOP * pFileOp)
 	while(*lpszSearch) {
 
 		wchar_t *test = wcschr(lpszSearch, L'\\');
-		//这里没有考虑存在\\双斜杠的情况
+		//The presence of \\double slashes is not considered here.
 		if((L'\\' == *lpszSearch) || (L'/' == *lpszSearch)) {
 			*lpszSearch = 0;
 			++lpszSearch;
@@ -136,7 +136,7 @@ LPPCK_PATH_NODE CPckClassRebuildFilter::LocationFileIndex(LPWSTR *lpszPaths, LPP
 	if((NULL == lpszSearchDir) || (NULL == lpNode))
 		return NULL;
 
-	//直接跳过..目录
+	//Skip directly to the .. directory
 	LPPCK_PATH_NODE lpNodeSearch = lpNode->next;
 
 	while(1) {
@@ -146,7 +146,7 @@ LPPCK_PATH_NODE CPckClassRebuildFilter::LocationFileIndex(LPWSTR *lpszPaths, LPP
 
 		if(0 == wcsicmp(lpszSearchDir, lpNodeSearch->szName)) {
 
-			//是否已经匹配完
+			//Whether it has been matched
 			if(NULL == *(lpszPaths + 1)) {
 
 				return lpNodeSearch;
@@ -180,7 +180,7 @@ void CPckClassRebuildFilter::MarkFilterFlagToFileIndex(LPPCKINDEXTABLE	lpPckInde
 	m_EditedNode.push_back(lpPckIndexTable);
 }
 
-//将一行脚本内容应用到查找到的文件列表中
+//Applies a line of script content to the list of found files
 void CPckClassRebuildFilter::MarkFilterFlagToNode(LPPCK_PATH_NODE lpNode, SCRIPTOP op)
 {
 	lpNode = lpNode->child->next;
@@ -199,12 +199,12 @@ void CPckClassRebuildFilter::MarkFilterFlagToNode(LPPCK_PATH_NODE lpNode, SCRIPT
 }
 
 
-#pragma region ApplyScript2IndexList,将脚本内容应用到文件列表中
+#pragma region ApplyScript2IndexList, applies the script content to the file list
 
-//将脚本内容应用到文件列表中
+//Apply script contents to file list
 BOOL CPckClassRebuildFilter::ApplyScript2IndexList(LPPCK_PATH_NODE lpRootNode)
 {
-	//解析过程是否发生了错误
+	//Whether an error occurred during the parsing process
 	BOOL bHasErrorHappend = FALSE;
 	m_EditedNode.clear();
 
@@ -214,15 +214,15 @@ BOOL CPckClassRebuildFilter::ApplyScript2IndexList(LPPCK_PATH_NODE lpRootNode)
 
 		if(OP_CheckFile != pFileOp->op) {
 
-			//分解脚本中的目录
+			//Decompose directories in scripts
 			SepratePaths(pFileOp);
 
-			//定位文件索引
+			//Locate file index
 			LPPCK_PATH_NODE lpFoundNode = LocationFileIndex(pFileOp->lpszSepratedPaths, lpRootNode->child);
 
 			if(NULL == lpFoundNode) {
 
-				Logger.w(UCSTEXT("已解析脚本失败在: %s, 跳过..."), pFileOp->szFilename);
+				Logger.w(UCSTEXT("Parsed script failed at: %s, skipping..."), pFileOp->szFilename);
 				bHasErrorHappend = TRUE;
 
 			} else {
@@ -247,7 +247,7 @@ BOOL CPckClassRebuildFilter::ParseScript(const wchar_t * lpszScriptFile)
 {
 
 	if (!OpenScriptFileAndConvBufToUcs2(lpszScriptFile)) {
-		Logger.w("读取脚本失败");
+		Logger.w("Failed to read script");
 		return FALSE; 
 	}
 
@@ -256,9 +256,9 @@ BOOL CPckClassRebuildFilter::ParseScript(const wchar_t * lpszScriptFile)
 
 	for (int i = 0; i < m_ScriptLines.size(); i++) {
 
-		//过滤注释行
+		//Filter comment lines
 		if (L';' != m_ScriptLines[i].at(0)) {
-			//一行脚本分为两部分，操作和文件名
+			//A one-line script is divided into two parts, the operation and the file name
 			if (ParseOneLine(pFileOp, m_ScriptLines[i].c_str())) {
 
 				m_FirstFileOp.push_back(FILEOP{ 0 });
@@ -267,18 +267,18 @@ BOOL CPckClassRebuildFilter::ParseScript(const wchar_t * lpszScriptFile)
 			}
 			else {
 
-				Logger.w("脚本解析失败在行%d: %ls, 跳过...", i, m_ScriptLines[i].c_str());
+				Logger.w("Script parsing failed at line %d: %ls, skipping...", i, m_ScriptLines[i].c_str());
 
 				return FALSE;
 			}
 		}
 	}
 
-	Logger.i("解析脚本成功");
+	Logger.i("Parsing script successful");
 	return TRUE;
 }
 
-//清除掉重建包时所需要读取的过滤信息
+//Clear the filter information that needs to be read when rebuilding the package
 void CPckClassRebuildFilter::ResetRebuildFilterInIndexList()
 {
 	for(DWORD i = 0;i < m_EditedNode.size();++i) {
@@ -292,20 +292,20 @@ void CPckClassRebuildFilter::ResetRebuildFilterInIndexList()
 	}
 }
 
-//应用脚本内容
+//Apply script content
 BOOL CPckClassRebuildFilter::Apply(LPPCK_PATH_NODE lpRootNode)
 {
 	BOOL rtn = FALSE;
 
-	//将数据应用于tree中
+	//Apply data to tree
 	rtn = ApplyScript2IndexList(lpRootNode);
 
 	if (!rtn) {
 		ResetRebuildFilterInIndexList();
-		Logger.i("应用脚本失败");
+		Logger.i("Apply script failed");
 	}
 	else {
-		Logger.i("应用脚本成功");
+		Logger.i("Apply script successfully");
 	}
 
 	return rtn;
@@ -327,7 +327,7 @@ BOOL CPckClassRebuildFilter::TestScript(const wchar_t * lpszScriptFile)
 
 BOOL CPckClassRebuildFilter::ModelTextureCheck(LPCWSTR lpszFilename)
 {
-	//路径规则，*\textures\*.dds
+	//Path rules, *\textures\*.dds
 
 	LPCWSTR constTexturePath = L"\\textures\\";
 	LPCWSTR constDdsExt = L".dds";
@@ -361,8 +361,8 @@ void CPckClassRebuildFilter::StripModelTexture(LPPCKINDEXTABLE lpPckIndexHead, D
 
 	int nDetectOffset = 0;
 #if 0
-	//检测pck目录中的文件夹是否以pck文件名开头
-	//如gfx.pck中根目录为gfx且只有一个
+	//Detect whether the folder in the pck directory starts with the pck file name
+	//For example, the root directory in gfx.pck is gfx and there is only one
 	LPPCK_PATH_NODE lpRootNodeFirstDir = lpRootNode->next;
 	int nRootDirCount = 0;
 	vector<wstring> sRootDirs;
@@ -377,7 +377,7 @@ void CPckClassRebuildFilter::StripModelTexture(LPPCKINDEXTABLE lpPckIndexHead, D
 		lpRootNodeFirstDir = lpRootNodeFirstDir->next;
 	}
 
-	//只有3个不到的根目录，取根目录名,对比文件名
+	//There are less than 3 root directories, take the root directory name and compare the file names
 	if (3 > nRootDirCount) {
 		wchar_t szFileTitle[MAX_PATH];
 		wchar_t* lpszExt = nullptr;
@@ -389,7 +389,7 @@ void CPckClassRebuildFilter::StripModelTexture(LPPCKINDEXTABLE lpPckIndexHead, D
 			*lpszExt = 0;
 		}
 
-		//对比
+		//Compared
 		for (int i = 0; i < sRootDirs.size(); i++) {
 
 			if (nullptr != wcsstr(szFileTitle, sRootDirs[i].c_str())) {

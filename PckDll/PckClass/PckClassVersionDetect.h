@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// PckClassVersionDetect.h: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 版本相关的检测以及数据的写入、读取
+// PckClassVersionDetect.h: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Version-related detection and data writing and reading
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2017.6.27
 //////////////////////////////////////////////////////////////////////
 #pragma once
@@ -81,7 +81,7 @@ public:
 	CPckClassVersionDetect();
 	~CPckClassVersionDetect();
 
-	//设置版本
+	//Set version
 	const	PCK_KEYS*	GetPckVersion();
 	BOOL	SetSavePckVersion(int verID);
 	static	const	wchar_t*	GetPckVersionNameById(int id);
@@ -90,7 +90,7 @@ public:
 	static	int		AddPckVersion(int AlgorithmId, int Version);
 
 protected:
-	//检测pck的版本并写入到iDetectedPckID，同时读取文件头和尾
+	//Detect the pck version and write it to iDetectedPckID, and read the file header and tail at the same time
 	BOOL	DetectPckVerion(LPCWSTR lpszPckFile);
 
 private:
@@ -99,15 +99,15 @@ private:
 	static const PCK_KEYS				cPckSPKeys[];
 	static const PCK_VERSION_FUNC		cPckSPVersionFunc[];
 
-	//填充版本信息
+	//Fill in version information
 	static void		FillGeneralVersionInfo();
 	static void		FillSpecialVersionInfo();
 	static int		FillUnknownVersionInfo(DWORD AlgorithmId, DWORD Version);
 
-	//PCK版本判断
+	//PCK version judgment
 	static void		SetAlgorithmId(DWORD id, LPPCK_VERSION_FUNC lpPckVersionFunc);
 
-	//文件头、尾的数据填写和数据写入
+	//Data filling and data writing at the beginning and end of the file
 	static void*	FillHeadData_V2020(void *param);
 	static void*	FillHeadData_V2030(void *param);
 
@@ -119,7 +119,7 @@ private:
 	static void*	FillIndexData_V2030(void *param, void *pckFileIndexBuf);
 	static void*	FillIndexData_VXAJH(void *param, void *pckFileIndexBuf);
 
-	//数据从lpIndex -> param
+	//Data from lpIndex -> param
 	static BOOL		PickIndexData_V2020(void *param, void* lpIndex);
 	static BOOL		PickIndexData_V2030(void *param, void* lpIndex);
 	static BOOL		PickIndexData_VXAJH(void *param, void* lpIndex);

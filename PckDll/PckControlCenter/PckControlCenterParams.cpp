@@ -1,21 +1,21 @@
 //////////////////////////////////////////////////////////////////////
-// PckControlCenterParams.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件,界面与PCK类的数据交互，控制中心
+// PckControlCenterParams.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Header file, data interaction between interface and PCK class, control center
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.10.10
 //////////////////////////////////////////////////////////////////////
 
 #include "PckControlCenter.h"
 #include <thread>
 
-#pragma region 线程控制
+#pragma region thread control
 
-//线程运行参数
+//Thread running parameters
 BOOL CPckControlCenter::isThreadWorking()
 {
 	return cParams.cVarParams.bThreadRunning;
@@ -29,7 +29,7 @@ void CPckControlCenter::ForceBreakThreadWorking()
 #pragma endregion
 
 
-#pragma region 线程任务信息
+#pragma region Thread task information
 //
 int CPckControlCenter::GetLastErrorMsg()
 {
@@ -43,14 +43,14 @@ BOOL CPckControlCenter::isLastOptSuccess()
 
 #pragma endregion
 
-#pragma region 内存占用
-//内存占用
+#pragma region Memory usage
+//Memory usage
 uint32_t CPckControlCenter::getMTMemoryUsed()
 {
 	return cParams.cVarParams.dwMTMemoryUsed;
 }
 
-//内存值
+//memory value
 void CPckControlCenter::setMTMaxMemory(uint32_t dwMTMaxMemory)
 {
 	if ((0 < dwMTMaxMemory) && (getMaxMemoryAllowed() >= dwMTMaxMemory)) {
@@ -66,7 +66,7 @@ uint32_t CPckControlCenter::getMTMaxMemory()
 	return cParams.dwMTMaxMemory;
 }
 
-//最大内存getDefaultMaxMemoryAllowed
+//Maximum memory getDefaultMaxMemoryAllowed
 uint32_t CPckControlCenter::getMaxMemoryAllowed()
 {
 	return MT_MAX_MEMORY;
@@ -74,7 +74,7 @@ uint32_t CPckControlCenter::getMaxMemoryAllowed()
 
 #pragma endregion
 
-#pragma region 线程数
+#pragma region Threads
 
 
 uint32_t CPckControlCenter::getMaxThread()
@@ -87,7 +87,7 @@ void CPckControlCenter::setMaxThread(uint32_t dwThread)
 	cParams.dwMTThread = dwThread;
 }
 
-//线程默认参数
+//Thread default parameters
 uint32_t CPckControlCenter::getMaxThreadUpperLimit()
 {
 	return (thread::hardware_concurrency() + ((thread::hardware_concurrency() + (thread::hardware_concurrency() & 1)) >> 1));
@@ -95,9 +95,9 @@ uint32_t CPckControlCenter::getMaxThreadUpperLimit()
 
 #pragma endregion
 
-#pragma region 压缩等级
+#pragma region Compression level
 
-//压缩等级
+//Compression level
 uint32_t CPckControlCenter::getCompressLevel()
 {
 	return cParams.dwCompressLevel;
@@ -108,8 +108,8 @@ void CPckControlCenter::setCompressLevel(uint32_t dwCompressLevel)
 	cParams.dwCompressLevel = dwCompressLevel;
 }
 
-//压缩等级默认参数
-//参数默认值
+//Compression level default parameters
+//Parameter default value
 uint32_t CPckControlCenter::getDefaultCompressLevel()
 {
 	return Z_DEFAULT_COMPRESS_LEVEL;
@@ -123,7 +123,7 @@ uint32_t CPckControlCenter::getMaxCompressLevel()
 #pragma endregion
 
 
-#pragma region 进度相关
+#pragma region Progress related
 
 uint32_t CPckControlCenter::getUIProgress()
 {
@@ -147,7 +147,7 @@ uint32_t CPckControlCenter::getUIProgressUpper()
 
 #pragma endregion
 
-#pragma region 打印添加/新增文件结果
+#pragma region Print the results of adding/adding files
 
 uint32_t CPckControlCenter::GetUpdateResult_OldFileCount()
 {

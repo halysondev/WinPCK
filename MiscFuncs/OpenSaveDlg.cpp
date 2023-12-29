@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// OpenSaveDlg.cpp: WinPCK 辅助函数部分
-// 显示文件打开、保存对话框
+// OpenSaveDlg.cpp: WinPCK auxiliary function part
+// Display file open and save dialog boxes
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -66,7 +66,7 @@ BOOL OpenFilesVistaUp(HWND hwnd, TCHAR lpszPathName[MAX_PATH])
 
 
 /******************************************************
-只打开一个文件
+Open only one file
 ******************************************************/
 
 BOOL OpenSingleFile(HWND hWnd, TCHAR * lpszFileName, LPCTSTR lpstrFilter, DWORD nFilterIndex)
@@ -123,15 +123,15 @@ BOOL OpenFiles(HWND hWnd, vector<wstring> &lpszFilePathArray)
 	ZeroMemory(&ofn, sizeof(OPENFILENAME));
 	ofn.lStructSize = sizeof(OPENFILENAME);
 	ofn.hwndOwner = hWnd;
-	ofn.lpstrFilter = TEXT("所有文件\0*.*\0\0");
+	ofn.lpstrFilter = TEXT("All files\0*.*\0\0");
 	ofn.lpstrFile = szBuffer;
 	ofn.nMaxFile = MAX_BUFFER_SIZE_OFN;
 	ofn.Flags = OFN_ALLOWMULTISELECT | OFN_EXPLORER | OFN_ENABLESIZING | OFN_FILEMUSTEXIST;
 
 	if(!GetOpenFileName(&ofn)) {
 		if(CommDlgExtendedError() == FNERR_BUFFERTOOSMALL) {
-			MessageBox(hWnd, TEXT("选择的文件太多. 缓冲区无法装下所有文件的文件名。"),
-				TEXT("缓冲区不够"), MB_OK);
+			MessageBox(hWnd, TEXT("Too many files were selected. The buffer cannot hold all the file names."),
+				TEXT("Not enough buffer"), MB_OK);
 		}
 		free(szBuffer);
 		return FALSE;
@@ -142,12 +142,12 @@ BOOL OpenFiles(HWND hWnd, vector<wstring> &lpszFilePathArray)
 	// if first part of szBuffer is a directory the user selected multiple files
 	// otherwise szBuffer is filename + path
 	if(GetFileAttributes(szBuffer) & FILE_ATTRIBUTE_DIRECTORY) {
-		// szBuffer 中第一个部分是目录 
-		// 其他部分是 FileTitle
+		// The first part in szBuffer is the directory
+		// The other parts are FileTitle
 
 		szBufferPart = szBuffer + ofn.nFileOffset;
 
-		//根目录下时目录名中会带'\'
+		//When in the root directory, the directory name will contain'\'
 		if(4 == ofn.nFileOffset) {
 			ofn.nFileOffset--;
 			szBuffer[2] = 0;
@@ -164,13 +164,13 @@ BOOL OpenFiles(HWND hWnd, vector<wstring> &lpszFilePathArray)
 			lpszFilePathArray.push_back(szFullPath);
 		}
 
-	} else { // 中选中了一个文件
+	} else { // A file is selected in
 
 		lpszFilePathArray.push_back(szBuffer);
 
 	}
 
-	// 删除缓冲区
+	// delete buffer
 	free(szBuffer);
 
 	return TRUE;
@@ -179,7 +179,7 @@ BOOL OpenFiles(HWND hWnd, vector<wstring> &lpszFilePathArray)
 int SaveFile(HWND hWnd, char * lpszFileName, LPCSTR lpszDefaultExt , LPCSTR lpstrFilter, DWORD nFilterIndex)
 {
 	/*
-	nFilterIndex 的base index是1，所以输入时要+1，输出要-1
+	The base index of nFilterIndex is 1, so the input is +1 and the output is -1.
 	*/
 
 	OPENFILENAMEA ofn;
@@ -194,7 +194,7 @@ int SaveFile(HWND hWnd, char * lpszFileName, LPCSTR lpszDefaultExt , LPCSTR lpst
 	ofn.lpstrDefExt = lpszDefaultExt;
 	ofn.nFilterIndex = nFilterIndex + 1;
 
-	//计算lpstrDefExt的字符值
+	//Calculate the character value of lpstrDefExt
 
 
 	if(!GetSaveFileNameA(&ofn)) {
@@ -207,7 +207,7 @@ int SaveFile(HWND hWnd, char * lpszFileName, LPCSTR lpszDefaultExt , LPCSTR lpst
 int SaveFile(HWND hWnd, wchar_t * lpszFileName, LPCWSTR lpszDefaultExt, LPCWSTR lpstrFilter, DWORD nFilterIndex)
 {
 	/*
-	nFilterIndex 的base index是1，所以输入时要+1，输出要-1
+	The base index of nFilterIndex is 1, so the input is +1 and the output is -1.
 	*/
 	OPENFILENAMEW ofn;
 
@@ -237,7 +237,7 @@ BOOL BrowseForFolderByPath(HWND hWnd, TCHAR * lpszPathName)
 
 	cBI.hwndOwner = hWnd;
 	cBI.pidlRoot = 0;
-	cBI.lpszTitle = TEXT("请选择目录");
+	cBI.lpszTitle = TEXT("Please select a directory");
 	cBI.lpfn = BFFCALLBACK(&BFFCallBack);
 
 	cBI.lParam = (LPARAM)lpszPathName;

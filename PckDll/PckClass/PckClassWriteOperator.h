@@ -15,7 +15,7 @@ public:
 
 	friend class CPckThreadRunner;
 
-	//重建pck文件
+	//Rebuild pck file
 	virtual BOOL	RebuildPckFile(const wchar_t * lpszScriptFile, const wchar_t * szRebuildPckFile, BOOL bUseRecompress);
 
 protected:
@@ -23,19 +23,19 @@ protected:
 	BOOL	RecompressPckFile(const wchar_t * szRecompressPckFile, int isStripMode = PCK_STRIP_NONE);
 
 public:
-#pragma region 游戏精简
+#pragma region Game streamlined
 	virtual BOOL	StripPck(const wchar_t * lpszStripedPckFile, int flag);
 #pragma endregion
 
 #pragma region PckClassAppendFiles.cpp
 public:
-	//新建、更新pck文件
+	//Create and update pck files
 	virtual BOOL	UpdatePckFile(const wchar_t * szPckFile, const vector<wstring> &lpszFilePath, const PCK_PATH_NODE* lpNodeToInsert);
 #pragma endregion
 #pragma region PckClassRenamer.cpp
 
 public:
-	//重命名文件
+	//Rename file
 	virtual BOOL	RenameFilename();
 
 #pragma endregion

@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// DdsTgaDecoderDetectFormat.cpp: 检测数据类型
-// 解码dds、tga的模块
+// DdsTgaDecoderDetectFormat.cpp: Detect data type
+// Module for decoding dds and tga
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -45,25 +45,25 @@ PixelFormat CDdsTgaDecoder::DetectDdsFormatAndAllocByFormat(D3DFORMAT fmt)
 	case D3DFMT_R8G8B8:
 
 		m_decodedDIBFormat = PixelFormat24bppRGB;
-		//bytesPerLine = picWidth * 3;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth * 3;	//The dds file must be 4-byte aligned
 		break;
 
 	case D3DFMT_A1R5G5B5:
 
 		m_decodedDIBFormat = PixelFormat16bppARGB1555;
-		//bytesPerLine = picWidth <<1;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth <<1;	//The dds file must be 4-byte aligned
 		break;
 
 	case D3DFMT_X1R5G5B5:
 
 		m_decodedDIBFormat = PixelFormat16bppRGB555;
-		//bytesPerLine = picWidth <<1;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth <<1;	//The dds file must be 4-byte aligned
 		break;
 
 	case D3DFMT_R5G6B5:
 
 		m_decodedDIBFormat = PixelFormat16bppRGB565;
-		//bytesPerLine = picWidth <<1;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth <<1;	//The dds file must be 4-byte aligned
 		break;
 
 	default:
@@ -79,12 +79,12 @@ PixelFormat CDdsTgaDecoder::DetectTgaFormatAndAllocByFormat(int fmt)
 	switch(fmt) {
 	case FMTTGA_A1R5G5B5:
 		m_decodedDIBFormat = PixelFormat16bppRGB555;
-		//bytesPerLine = picWidth <<1;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth <<1;	//The dds file must be 4-byte aligned
 		break;
 
 	case FMTTGA_R8G8B8:
 		m_decodedDIBFormat = PixelFormat24bppRGB;
-		//bytesPerLine = picWidth * 3;	//dds文件一定是4字节对齐的
+		//bytesPerLine = picWidth * 3;	//The dds file must be 4-byte aligned
 		break;
 
 	case FMTTGA_A8R8G8B8:

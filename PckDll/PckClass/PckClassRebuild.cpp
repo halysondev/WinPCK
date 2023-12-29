@@ -19,7 +19,7 @@ CPckClassWriteOperator::~CPckClassWriteOperator()
 
 /********************************
 *
-*公共函数
+*public function
 *
 ********************/
 
@@ -35,7 +35,7 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * lpszScriptFile, cons
 
 BOOL CPckClassWriteOperator::StripPck(const wchar_t * lpszStripedPckFile, int flag)
 {
-	//首先过滤*\textures\*.dds
+	//filter first*\textures\*.dds
 	CPckClassRebuildFilter cScriptFilter;
 
 	if (PCK_STRIP_DDS & flag) {
@@ -61,25 +61,25 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 	DWORD	dwValidFileCount = ReCountFiles();
 	QWORD	dwTotalFileSizeAfterRebuild = GetPckFilesizeRebuild(szRebuildPckFile, m_PckAllInfo.qwPckSize);
 
-	//构造头和尾时需要的参数
+	//Parameters required when constructing the head and tail
 	PCK_ALL_INFOS		pckAllInfo;
-	//构造头和尾时需要的参数
+	//Parameters required when constructing the head and tail
 	memcpy(&pckAllInfo, &m_PckAllInfo, sizeof(PCK_ALL_INFOS));
 	wcscpy_s(pckAllInfo.szNewFilename, szRebuildPckFile);
 
-	//线程标记
+	//Thread tag
 	SetThreadFlag(TRUE);
 
-	//设置界面进度条总值
+	//Set the total value of the interface progress bar
 	SetParams_ProgressUpper(dwValidFileCount);
 
-	//打开源文件 
+	//Open source file 
 	CMapViewFileMultiPckRead	cFileRead;
 	if(!cFileRead.OpenPckAndMappingRead(pckAllInfo.szFilename)) 
 		return FALSE;
 
-	//打开目标文件 
-	//以下是创建一个文件，用来保存重建后的文件
+	//Open target file 
+	//The following is to create a file to save the reconstructed file
 	CMapViewFileMultiPckWrite	cFileWrite(pckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
 	if(!cFileWrite.OpenPckAndMappingWrite(szRebuildPckFile, CREATE_ALWAYS, dwTotalFileSizeAfterRebuild))
@@ -87,7 +87,7 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 
 	vector<PCKINDEXTABLE_COMPRESS> cPckIndexTable(dwValidFileCount);
 
-	//不使用Enum进行遍历处理，改用_PCK_INDEX_TABLE
+	//Do not use Enum for traversal processing, use _PCK_INDEX_TABLE instead
 
 	LPPCKINDEXTABLE lpPckIndexTableSource = pckAllInfo.lpPckIndexTable;
 	pckAllInfo.dwFileCountToAdd = 0;
@@ -107,7 +107,7 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 		LPBYTE lpBufferToRead;
 
 		DWORD dwNumberOfBytesToMap = lpPckIndexTableSource->cFileIndex.dwFileCipherTextSize;
-		DWORD dwSrcAddress = lpPckIndexTableSource->cFileIndex.dwAddressOffset;	//保存原来的地址
+		DWORD dwSrcAddress = lpPckIndexTableSource->cFileIndex.dwAddressOffset;	//Save original address
 
 		if (0 != dwNumberOfBytesToMap) {
 
@@ -121,14 +121,14 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 
 		}
 
-		//写入此文件的PckFileIndex文件压缩信息并压缩
-		lpPckIndexTableSource->cFileIndex.dwAddressOffset = dwAddress;	//此文件的压缩数据起始地址
+		//Write the PckFileIndex file compression information to this file and compress it
+		lpPckIndexTableSource->cFileIndex.dwAddressOffset = dwAddress;	//The starting address of the compressed data of this file
 
-		dwAddress += dwNumberOfBytesToMap;	//下一个文件的压缩数据起始地址
+		dwAddress += dwNumberOfBytesToMap;	//The starting address of the compressed data of the next file
 
 		FillAndCompressIndexData(&cPckIndexTable[pckAllInfo.dwFileCountToAdd], &lpPckIndexTableSource->cFileIndex);
 
-		lpPckIndexTableSource->cFileIndex.dwAddressOffset = dwSrcAddress;	//还原原来的地址
+		lpPckIndexTableSource->cFileIndex.dwAddressOffset = dwSrcAddress;	//Restore original address
 
 		++lpPckIndexTableSource;
 		++(pckAllInfo.dwFileCountToAdd);
@@ -139,15 +139,15 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 	pckAllInfo.dwFileCountOld = pckAllInfo.dwFileCount = 0;
 	pckAllInfo.lpPckIndexTableToAdd = &cPckIndexTable;
 
-	//关闭读文件
-	//写文件索引
+	//Close reading file
+	//Write file index
 	pckAllInfo.dwAddressOfFileEntry = dwAddress;
 
 	WriteAllIndex(&cFileWrite, &pckAllInfo, dwAddress);
 
 	WriteHeadAndTail(&cFileWrite, &pckAllInfo, dwAddress);
 
-	//线程标记
+	//Thread tag
 	SetThreadFlag(FALSE);
 
 	Logger.i(TEXT_LOG_WORKING_DONE);
@@ -156,7 +156,7 @@ BOOL CPckClassWriteOperator::RebuildPckFile(const wchar_t * szRebuildPckFile)
 }
 
 
-//重压缩文件
+//Heavy compressed files
 BOOL CPckClassWriteOperator::RecompressPckFile(const wchar_t * szRecompressPckFile, int iStripMode)
 {
 
@@ -174,22 +174,22 @@ BOOL CPckClassWriteOperator::RecompressPckFile(const wchar_t * szRecompressPckFi
 	m_zlib.init_compressor(m_lpPckParams->dwCompressLevel);
 #pragma endregion
 
-	//构造头和尾时需要的参数
+	//Parameters required when constructing the head and tail
 	PCK_ALL_INFOS		pckAllInfo;
 	memcpy(&pckAllInfo, &m_PckAllInfo, sizeof(PCK_ALL_INFOS));
 	wcscpy_s(pckAllInfo.szNewFilename, szRecompressPckFile);
 
-	//设置界面进度条总值
+	//Set the total value of the interface progress bar
 	SetParams_ProgressUpper(dwNoDupFileCount);
 
-	//打开源文件 
+	//Open source file 
 	if(!cFileRead.OpenPckAndMappingRead(pckAllInfo.szFilename))
 		return FALSE;
 
 #pragma region 创建目标文件
 	CMapViewFileMultiPckWrite cFileWriter(pckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
-	//OPEN_ALWAYS，新建新的pck(CREATE_ALWAYS)或更新存在的pck(OPEN_EXISTING)
+	//OPEN_ALWAYS, create a new pck (CREATE_ALWAYS) or update an existing pck (OPEN_EXISTING)
 	if(!cFileWriter.OpenPckAndMappingWrite(pckAllInfo.szNewFilename, CREATE_ALWAYS, dwTotalFileSizeAfterRebuild))
 		return FALSE;
 
@@ -209,7 +209,7 @@ BOOL CPckClassWriteOperator::RecompressPckFile(const wchar_t * szRecompressPckFi
 	cThreadParams.pckParams = m_lpPckParams;
 	cThreadParams.dwFileCountOfWriteTarget = dwNoDupFileCount;
 
-	//写文件索引
+	//Write file index
 	pckAllInfo.lpPckIndexTable = NULL;
 	pckAllInfo.dwFileCountOld = pckAllInfo.dwFileCount = 0;
 

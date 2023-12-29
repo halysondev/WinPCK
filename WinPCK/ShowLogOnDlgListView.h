@@ -49,7 +49,7 @@ private:
 extern CLogUnits LogUnits;
 void	PreInsertLogToList(const char, const wchar_t *);
 
-//»’÷æ
+//log
 #define LOG_IMAGE_NOTICE				0
 #define LOG_IMAGE_INFO					1
 #define LOG_IMAGE_WARNING				2

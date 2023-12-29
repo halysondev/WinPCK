@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ZupClass.cpp: 用于解析完美世界公司的zup文件中的数据，并显示在List中
-// 头文件
+// ZupClass.cpp: used to parse the data in the zup file of Perfect World Company and display it in the List
+// head File
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.5.23
 //////////////////////////////////////////////////////////////////////
 
@@ -40,12 +40,12 @@ void CZupClass::BuildDirTree()
 
 	for(uint32_t i = 0;i < m_PckAllInfo.dwFileCount;i++) {
 
-		//以element\开头的都需要解码
-		//其他直接复制
+		//Everything starting with element\ needs to be decoded
+		//Other direct copies
 		//"element\" = 0x6d656c65, 0x5c746e656d656c65
 		if(0x6d656c65 == *(uint32_t*)lpPckIndexTable->cFileIndex.szFilename) {
 
-			//解码文件名
+			//Decode file name
 			memcpy(lpZupIndexTable, lpPckIndexTable, sizeof(PCKINDEXTABLE));
 			DecodeFilename(lpZupIndexTable->cFileIndex.szFilename, lpZupIndexTable->cFileIndex.szwFilename, lpPckIndexTable->cFileIndex.szFilename);
 
@@ -78,7 +78,7 @@ void CZupClass::BuildDirTree()
 
 			cReadfile.UnmapViewAll();
 		} else {
-			//直接复制
+			//Copy directly
 			memcpy(lpZupIndexTable, lpPckIndexTable, sizeof(PCKINDEXTABLE));
 			CPckClassCodepage::PckFilenameCode2UCS(lpZupIndexTable->cFileIndex.szFilename, lpZupIndexTable->cFileIndex.szwFilename, sizeof(lpZupIndexTable->cFileIndex.szwFilename) / sizeof(wchar_t));
 		}
@@ -87,7 +87,7 @@ void CZupClass::BuildDirTree()
 		lpZupIndexTable++;
 	}
 
-	//建立目录
+	//Create directory
 	ParseIndexTableToNode(m_lpZupIndexTable);
 
 }
@@ -103,15 +103,15 @@ BOOL CZupClass::Init(LPCWSTR szFile)
 			return FALSE;
 		}
 
-		//第一遍循环，读取inc文件，建立字典
+		//The first loop reads the inc file and creates a dictionary
 		m_lpDictHash = new CDictHash();
 		if(BuildZupBaseDict()) {
 
-			//第二遍循环，解码文件名，建立目录树
+			//The second loop decodes the file name and creates a directory tree.
 			BuildDirTree();
 		}
 
-		//删除字典
+		//delete dictionary
 		delete m_lpDictHash;
 		return (m_PckAllInfo.isPckFileLoaded = TRUE);
 	} else {

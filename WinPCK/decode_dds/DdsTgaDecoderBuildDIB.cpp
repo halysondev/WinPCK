@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// DdsTgaDecoderBuildDIB.cpp: 构建DIB数据
-// 解码dds、tga的模块
+// DdsTgaDecoderBuildDIB.cpp: Build DIB data
+// Module for decoding dds and tga
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2015.6.12
 //////////////////////////////////////////////////////////////////////
 
@@ -14,7 +14,7 @@
 #include "DdsTgaDecoder.h"
 
 
-#pragma region DDS 解码函数
+#pragma region DDS decoding function
 
 
 
@@ -49,7 +49,7 @@ _inline VOID CalcRgbs(CMYRGB cRGB[])
 _inline void CalcRgbsDXT1(UINT32 dwRGBIndex[4], UINT16 wBlockColor2[2])
 {
 #if 0
-	//此功能的c语言实现代码
+	//The c language implementation code of this function
 
 	WORD	*lpwDdsBuffer = (WORD*)wBlockColor2;
 	for(int j = 0;j<2;j++) {
@@ -165,7 +165,7 @@ void CDdsTgaDecoder::decode_dds_dxt1(BYTE *ddsimage)
 	UINT32	dwQuotX, dwQuotY;
 	UINT32	dwColorIndexInBlock[4];
 
-	//dxt格式要求x和y必须是4的倍数
+	//The dxt format requires that x and y must be multiples of 4
 	//dwRemX = picWidth & 0x3;
 	//dwRemY = picHeight & 0x3;
 
@@ -277,13 +277,13 @@ void CDdsTgaDecoder::decode_dds_dxt5(BYTE *ddsimage)
 
 	for(UINT32 ly = 0;ly < dwQuotY;ly += 4) {
 		for(UINT32 lx = 0;lx < dwQuotX;lx += 4) {
-			//DXT5使用64bit 保存 alpha 信息，其中前2个8bit用来存放alpha0,alpha1,这是最大值和最小值，后3*16个bit存放索引，如果
-			//a0>a1,就使用8级插值，如果a0<=a1,就保留110(a6)和111(a7)来显示alpha为0时和255时的情况。
+			//DXT5 uses 64bit to store alpha information. The first 2 8bits are used to store alpha0 and alpha1, which are the maximum and minimum values. The last 3*16 bits store the index. If
+			//If a0>a1, use 8-level interpolation. If a0<=a1, keep 110 (a6) and 111 (a7) to show the situation when alpha is 0 and 255.
 			BYTE *dwAlpha01 = (BYTE*)lpwDdsBuffer;
 			++lpwDdsBuffer;
 
 #if 0
-			//以下注释的代码是下面sse2代码部分的c语言实现
+			//The code commented below is the c language implementation of the sse2 code part below
 			BYTE bAlpha[8];
 			*(UINT16*)bAlpha = *(UINT16*)dwAlpha01;
 			BYTE	*lpdwAlpha = bAlpha + 2;
@@ -465,8 +465,8 @@ void CDdsTgaDecoder::decode_dds_a4r4g4b4(BYTE *ddsimage)
 
 	for(UINT32 i = 0;i < nLoopCount;++i) {
 		/*
-		将2进制数据：aaaarrrr ggggbbbb
-		转换为
+		Convert binary data: aaaarrrr ggggbbbb
+		Convert to
 		aaaa0000 rrrr0000 gggg0000 bbbb0000		
 		*/
 		__m128i mm1 = _mm_setzero_si128();
@@ -565,7 +565,7 @@ BOOL CDdsTgaDecoder::makeTgaColorMappedData(BYTE *&tgaimage, int fmt, char * &bu
 	case FMTTGA_RLETBL:
 
 #if 0
-		//已注释的功能是在老版本中计算图像与透明背景（格子图）混合后的BMP图像的像素
+		//The annotated function is to calculate the pixels of a BMP image after the image is mixed with a transparent background (lattice image) in the old version
 		dwColorTableCount = pHeader->wColorTableSize;
 
 		if(NULL == (bufferOfColorMappedData = (char*) malloc (wColorTableSize * 4)))
@@ -717,7 +717,7 @@ void CDdsTgaDecoder::decode_tga_RGBREL(BYTE *tgaimage)
 		if(m_bytesPerLine == iRowPoint)
 			iRowPoint = 0, lpdwBufferPtr = (lpdwBuffer -= m_stride);
 
-		//检查是否run-length 数据包
+		//Check if run-length packet
 		byteRleRepeatDataCount = (*lpRgbdata & 0x7f) + 1;
 
 		if(*lpRgbdata & 0x80) {
@@ -768,7 +768,7 @@ void CDdsTgaDecoder::decode_tga_ColorMapped8REL(BYTE *tgaimage, char *lpColorMap
 		if(m_bytesPerLine == iRowPoint)
 			iRowPoint = 0, lpdwBufferPtr = (lpdwBuffer -= m_stride);
 
-		//检查是否run-length 数据包
+		//Check if run-length packet
 		byteRleRepeatDataCount = *lpRgbdata & 0x7f;
 
 		if(*lpRgbdata & 0x80) {

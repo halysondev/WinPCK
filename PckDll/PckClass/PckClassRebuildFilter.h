@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "PckClassLog.h"
 #include "PckStructs.h"
 
@@ -11,7 +12,7 @@ private:
 	{
 		SCRIPTOP op;
 		wchar_t	szFilename[MAX_PATH];
-		wchar_t	szFilenameBuffer[MAX_PATH];		//把路径中的\或/填0，分开的路径名称分别用lpszSepratedPaths指向
+		wchar_t	szFilenameBuffer[MAX_PATH];		//Fill in \ or / in the path with 0, and use lpszSepratedPaths to point to the separate path names.
 		wchar_t*	lpszSepratedPaths[MAX_PATH];
 	}FILEOP;
 

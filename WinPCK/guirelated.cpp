@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// guirelated.cpp: WinPCK 界面线程部分
-// 界面初始化
+// guirelated.cpp: WinPCK interface thread part
+// Interface initialization
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -23,26 +23,26 @@ int initArgumentException(int code);
 
 void TInstDlg::initCommctrls()
 {
-	//ListView 初始化
+	//ListView initialization
 	ListView_Init();
 
-	//设置进度条的范围
+	//Set the range of the progress bar
 	SendDlgItemMessage(IDC_PROGRESS, PBM_SETRANGE, (WPARAM)0, MAKELPARAM(0, 1024));
 
-	//StatusBar,文件名，文件数，文件大小，进度，状态
+	//StatusBar, file name, number of files, file size, progress, status
 	//int		iStatusWidth[] = {150, 250, 320, 530, 1024};
 	int		iStatusWidth[] = { 150, 260, 350, 750, 1224 };
 	SendDlgItemMessage(IDC_STATUS, SB_SETPARTS, 5, (LPARAM)iStatusWidth);
 
 	//SetStatusBarText(0, TEXT("textures123456.pck"));
-	//SetStatusBarText(1, TEXT("大小: 9999999999"));
-	//SetStatusBarText(2, TEXT("数量: 9999999"));
-	//SetStatusBarText(3, TEXT("进度: 9999999/9999999 100.0% 缓存:9999 MB / 9999 MB 100.0%"));
+	//SetStatusBarText(1, TEXT("size: 9999999999"));
+	//SetStatusBarText(2, TEXT("quantity: 9999999"));
+	//SetStatusBarText(3, TEXT("schedule: 9999999/9999999 100.0% 缓存:9999 MB / 9999 MB 100.0%"));
 
-	//快捷键
+	//shortcut key
 	hAccel = LoadAccelerators(TApp::GetInstance(), MAKEINTRESOURCE(IDR_ACCELERATOR1));
 
-	//任务栏进度
+	//taskbar progress
 	CoCreateInstance(
 		CLSID_TaskbarList, NULL, CLSCTX_ALL,
 		IID_ITaskbarList3, (void**)&m_pTaskBarlist);
@@ -55,11 +55,11 @@ void TInstDlg::initCommctrls()
 void TInstDlg::initParams()
 {
 
-	//打开、关闭、复原等事件注册
+	//Open, close, restore and other event registration
 	pck_regMsgFeedback(this, MyFeedbackCallback);
 
-	*m_szStrToSearch = 0;			//查找的文字
-	bGoingToExit = FALSE;			//是否准备退出8
+	*m_szStrToSearch = 0;			//Search text
+	bGoingToExit = FALSE;			//Are you ready to exit 8?
 
 #ifdef _DEBUG
 	pck_setMTMaxMemory((512 * 1024 * 1024));
@@ -67,7 +67,7 @@ void TInstDlg::initParams()
 
 	m_isListviewRenaming = FALSE;
 
-	//光标加载
+	//cursor loading
 	m_isSearchWindow = FALSE;
 
 	//Timer
@@ -90,7 +90,7 @@ void TInstDlg::initParams()
 void TInstDlg::initToolbar()
 {
 
-	//初始化工具栏
+	//Initialize toolbar
 	m_imageList = ImageList_Create(32, 32, ILC_COLOR32, 1, 20);
 
 	WORD	wToolBarIDsList[] = { IDI_ICON_OPEN,
@@ -421,7 +421,7 @@ void TInstDlg::initArgument()
 {
 	__try {
 
-		//初始化浏览路径
+		//Initialize browsing path
 
 		//memset(&m_PathDirs, 0, sizeof(m_PathDirs));
 		//*m_PathDirs.lpszDirNames = m_PathDirs.szPaths;
@@ -444,7 +444,7 @@ void TInstDlg::initArgument()
 			_tcscpy_s(m_Filename, __targv[1]);
 		}
 
-		//初始化路径
+		//initialization path
 		if(2 > __argc) {
 			_tcscpy_s(m_Filename, m_CurrentPath);
 			_tcscat_s(m_Filename, TEXT("\\"));
@@ -464,7 +464,7 @@ int initArgumentException(int code)
 
 	switch(code) {
 	case EXCEPTION_ACCESS_VIOLATION:
-		MessageBoxA(NULL, "存储保护异常 在 initArgument", NULL, MB_OK);
+		MessageBoxA(NULL, "Storage protection exception in initArgument", NULL, MB_OK);
 		return EXCEPTION_EXECUTE_HANDLER;
 		//return EXCEPTION_CONTINUE_EXECUTION;
 

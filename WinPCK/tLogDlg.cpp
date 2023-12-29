@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// tLogDlg.cpp: WinPCK 界面线程部分
-// 对话框代码
+// tLogDlg.cpp: WinPCK interface thread part
+// Dialog code
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2017.12.26
 //////////////////////////////////////////////////////////////////////
 
@@ -16,7 +16,7 @@
 
 #define	LOG_BUFFER						8192
 
-//日志
+//log
 #define LOG_IMAGE_NOTICE				0
 #define LOG_IMAGE_INFO					1
 #define LOG_IMAGE_WARNING				2
@@ -27,7 +27,7 @@
 
 
 /*
-日志信息对话框
+Log information dialog box
 */
 BOOL TLogDlg::EvCreate(LPARAM lParam)
 {
@@ -75,7 +75,7 @@ BOOL TLogDlg::EvCreate(LPARAM lParam)
 
 	ListView_SetImageList(hWndList, hSmall, LVSIL_SMALL);
 
-	//当前exe目录
+	//Current exe directory
 	GetModuleFileNameW(NULL, szExePath, MAX_PATH);
 	wchar_t *lpexeTitle = wcsrchr(szExePath, '\\') + 1;
 	*lpexeTitle = 0;
@@ -139,7 +139,7 @@ BOOL TLogDlg::EvCommand(WORD wNotifyCode, WORD wID, LPARAM hwndCtl)
 		FILE *fplog = _wfopen(pszLogFileName(), L"wb");
 		if(!fplog) {
 
-			::MessageBoxW(hWnd, L"保存日志文件失败", L"error", MB_OK);
+			::MessageBoxW(hWnd, L"Failed to save log file", L"error", MB_OK);
 			return TRUE;
 		}
 
@@ -161,7 +161,7 @@ BOOL TLogDlg::EvCommand(WORD wNotifyCode, WORD wID, LPARAM hwndCtl)
 		wchar_t *lpszLogText = pszTargetListLog(m_iCurrentHotItem);
 		size_t nLen = wcslen(lpszLogText) + 1;
 
-		//拷入剪切板
+		//copy to clipboard
 		if(OpenClipboard(hWnd)) {
 			HGLOBAL clipbuffer;
 			char *buffer;
@@ -234,7 +234,7 @@ wchar_t*  TLogDlg::pszLogFileName()
 	static wchar_t logfile[MAX_PATH];
 	SYSTEMTIME systime;
 
-	//创建文件exportlog_2015-05-04_13_22_33.log
+	//Create a file exportlog_2015-05-04_13_22_33.log
 	GetLocalTime(&systime);
 	swprintf_s(logfile, L"%sexportlog_%04d-%02d-%02d_%02d_%02d_%02d.log", szExePath, \
 		systime.wYear, systime.wMonth, systime.wDay, \
@@ -276,7 +276,7 @@ void TLogDlg::InsertLogToList(const char _loglevel, const wchar_t *_logtext)
 	wchar_t szPrintf[8192];
 	size_t nTextLen = wcslen(_logtext);
 
-	//查找\n 如果存在，\n后的内容换行（用新的列）显示
+	//Search\n If it exists, the content after \n will be wrapped (with a new column) and displayed
 	const wchar_t *lpString2Show = _logtext, *lpString2Search = _logtext, *lpStringTail = _logtext + nTextLen;
 	char loglevel = _loglevel;
 
@@ -343,7 +343,7 @@ void TLogDlg::_InsertLogIntoList(const char _loglevel, const wchar_t *_logtext)
 
 	ZeroMemory(&item, sizeof(LVITEMW));
 
-	item.iItem = INT_MAX;			//从0开始
+	item.iItem = INT_MAX;			//Start from 0
 	item.iImage = log_level_char_to_int(_loglevel);
 	//item.iSubItem = 0;
 	item.mask = LVIF_TEXT | LVIF_IMAGE;

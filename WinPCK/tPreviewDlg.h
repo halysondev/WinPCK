@@ -14,7 +14,7 @@ public:
 
 protected:
 
-	//将要显示的对话框
+	//dialog box to be displayed
 	TDlg *	dlg;
 
 	void *	m_buffer;
@@ -60,20 +60,20 @@ class TPicDlg : public TDlg
 {
 protected:
 
-	//窗口标题
+	//window title
 	wchar_t			m_szTitle[MAX_PATH];
 
-	//待显示图片数据和大小
+	//Image data and size to be displayed
 	LPBYTE			*buf;
 	UINT32			dwSize;
 
-	//文件名
+	//file name
 	const wchar_t		*lpszFile;
 	
-	//格式
+	//Format
 	PICFORMAT		iFormat;
 
-	//记录当前鼠标位置
+	//Record the current mouse position
 	POINT			pointMouse;
 	BOOL			isMouseDown;
 

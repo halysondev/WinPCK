@@ -13,11 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// 非特定语言 resources
+// Neutro resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_NEU)
 LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
-#pragma code_page(936)
+#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -25,8 +25,8 @@ LANGUAGE LANG_NEUTRAL, SUBLANG_NEUTRAL
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION WINPCK_VERSION_NUMBER
- PRODUCTVERSION WINPCK_VERSION_NUMBER
+ FILEVERSION 1,33,0,2
+ PRODUCTVERSION 1,33,0,2
  FILEFLAGSMASK 0x37L
 #ifdef _DEBUG
  FILEFLAGS 0x21L
@@ -39,34 +39,34 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080404b0"
+        BLOCK "040904b0"
         BEGIN
             VALUE "FileDescription", "WinPCK GUI"
-            VALUE "FileVersion", WINPCK_VERSION
+            VALUE "FileVersion", "1.33.0.2"
             VALUE "InternalName", "WinPCK"
             VALUE "LegalCopyright", "Copyright (C) 2012-2018 stsm"
             VALUE "OriginalFilename", "WinPCK.exe"
             VALUE "ProductName", "WinPCK"
-            VALUE "ProductVersion", WINPCK_VERSION
+            VALUE "ProductVersion", "1.33.0.2"
             VALUE "SpecialBuild", "WinPCK by stsm"
         END
     END
     BLOCK "VarFileInfo"
     BEGIN
-        VALUE "Translation", 0x804, 1200
+        VALUE "Translation", 0x409, 1200
     END
 END
 
-#endif    // 非特定语言 resources
+#endif    // Neutro resources
 /////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////////////////////////////////////////////////////////////
-// 中文(简体，中国) resources
+// Inglês (Estados Unidos) resources
 
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_CHS)
-LANGUAGE LANG_CHINESE, SUBLANG_CHINESE_SIMPLIFIED
-#pragma code_page(936)
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -87,79 +87,79 @@ END
 
 IDD_DIALOG_INFO DIALOGEX 0, 0, 268, 153
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "附加信息"
+CAPTION "Additional Information"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,216,137,50,14
-    PUSHBUTTON      "取消",IDCANCEL,161,137,50,14
+    DEFPUSHBUTTON   "Confirm",IDOK,216,137,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,161,137,50,14
     EDITTEXT        IDC_EDIT_INFO,2,2,264,132,ES_MULTILINE
 END
 
 IDD_DIALOG_SEARCH DIALOGEX 0, 0, 253, 28
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "查找"
+CAPTION "Find"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "查找",IDOK,198,7,48,14
+    DEFPUSHBUTTON   "Find",IDOK,198,7,48,14
     EDITTEXT        IDC_EDIT_SEARCH,54,7,139,12,ES_AUTOHSCROLL
-    LTEXT           "查找内容：",IDC_STATIC,5,8,47,10
+    LTEXT           "Find What:",IDC_STATIC,5,8,47,10
 END
 
 IDD_DIALOG_COMPRESS DIALOGEX 0, 0, 207, 124
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "设置"
+CAPTION "Compression Options"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,150,103,50,14
-    PUSHBUTTON      "取消",IDCANCEL,96,103,50,14
+    DEFPUSHBUTTON   "Confirm",IDOK,150,103,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,96,103,50,14
     CONTROL         "",IDC_SLIDER_LEVEL,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,63,7,92,17
     CONTROL         "",IDC_SLIDER_THREAD,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,63,25,92,18
-    RTEXT           "压缩等级：",IDC_STATIC,7,9,56,11
-    RTEXT           "CPU 线程数：",IDC_STATIC,7,28,56,10
+    RTEXT           "Comp. Level:",IDC_STATIC,7,9,56,11
+    RTEXT           "CPU Threads:",IDC_STATIC,7,28,56,10
     LTEXT           "9",IDC_STATIC_LEVEL,157,9,17,8
     LTEXT           "3",IDC_STATIC_THREAD,157,28,17,8
-    LTEXT           "缓存是按需分配的，此处为上限值。",IDC_STATIC,7,87,145,8
-    RTEXT           "多线程缓存：",IDC_STATIC,7,69,56,10
-    EDITTEXT        IDC_EDIT_MEM,67,69,35,12,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "MB",IDC_STATIC,107,69,29,10
-    RTEXT           "PCK文件编码：",IDC_STATIC,7,49,56,10
+    LTEXT           "The cache is allocated on demand and is capped here.",IDC_STATIC,7,87,184,8
+    RTEXT           "Multi-thread Cache:",IDC_STATIC,7,69,72,10
+    EDITTEXT        IDC_EDIT_MEM,82,69,48,12,ES_RIGHT | ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "MB",IDC_STATIC,135,69,29,10
+    RTEXT           "PCK Encoding:",IDC_STATIC,7,49,56,10
     COMBOBOX        IDC_CBO_CODEPAGE,67,47,108,15,CBS_DROPDOWNLIST | CBS_SORT | WS_DISABLED | WS_VSCROLL | WS_TABSTOP
 END
 
 IDD_DIALOG_VIEW DIALOGEX 0, 0, 467, 249
 STYLE DS_SETFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_TOOLWINDOW
-CAPTION "查看"
-FONT 9, "宋体", 400, 0, 0x86
+CAPTION "Check"
+FONT 9, "??", 400, 0, 0x86
 BEGIN
-    DEFPUSHBUTTON   "保存",IDOK,417,232,50,16,NOT WS_VISIBLE
-    PUSHBUTTON      "关闭",IDCANCEL,363,232,50,16,NOT WS_VISIBLE
-    CONTROL         "",IDC_RICHEDIT_VIEW,"RichEdit20W",WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP | 0x8c4,0,0,467,248
+    DEFPUSHBUTTON   "??",IDOK,417,232,50,16,NOT WS_VISIBLE
+    PUSHBUTTON      "??",IDCANCEL,363,232,50,16,NOT WS_VISIBLE
+    CONTROL         "",IDC_RICHEDIT_VIEW,"RichEdit20W",ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,0,467,248
     EDITTEXT        IDC_EDIT_VIEW,1,1,466,247,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE | WS_VSCROLL
 END
 
 IDD_DIALOG_PIC DIALOGEX 0, 0, 557, 354
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_MAXIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
-CAPTION "图片查看"
+CAPTION "Picture View"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
 END
 
 IDD_DIALOG_ATTR DIALOGEX 0, 0, 254, 243
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "属性"
+CAPTION "Properties"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,200,225,50,14
-    PUSHBUTTON      "取消",IDCANCEL,145,225,50,14
-    RTEXT           "名称:",IDC_STATIC,7,17,52,10
-    RTEXT           "类型:",IDC_STATIC,7,48,52,10
-    RTEXT           "压缩大小:",IDC_STATIC,7,64,52,10
-    RTEXT           "实际大小:",IDC_STATIC,7,80,52,10
-    RTEXT           "压缩率:",IDC_STATIC,7,96,52,10
-    RTEXT           "包含:",IDC_STATIC,7,112,52,10
-    RTEXT           "偏移地址:",IDC_STATIC,7,128,52,10
-    RTEXT           "路径:",IDC_STATIC,7,32,52,10
+    DEFPUSHBUTTON   "Confirm",IDOK,200,225,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,225,50,14
+    RTEXT           "Name:",IDC_STATIC,7,17,52,10
+    RTEXT           "Type:",IDC_STATIC,7,48,52,10
+    RTEXT           "Comp. Size:",IDC_STATIC,7,64,52,10
+    RTEXT           "Actual size:",IDC_STATIC,7,80,52,10
+    RTEXT           "Comp. Ratio:",IDC_STATIC,7,96,52,10
+    RTEXT           "Include:",IDC_STATIC,7,112,52,10
+    RTEXT           "Offset address:",IDC_STATIC,7,128,52,10
+    RTEXT           "Path:",IDC_STATIC,7,32,52,10
     EDITTEXT        IDC_EDIT_ATTR_NAME,69,17,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_PATH,69,32,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_TYPE,69,48,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
@@ -168,12 +168,12 @@ BEGIN
     EDITTEXT        IDC_EDIT_ATTR_CMPR,69,96,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_FILECOUNT,69,112,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_ADDR,69,128,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
-    GROUPBOX        "目录信息",IDC_STATIC,4,4,246,139
-    GROUPBOX        "压缩包信息",IDC_STATIC,4,146,246,75
-    RTEXT           "文件总大小:",IDC_STATIC,7,175,52,10
-    RTEXT           "压缩包大小:",IDC_STATIC,7,160,52,10
-    RTEXT           "压缩率:",IDC_STATIC,7,190,52,10
-    RTEXT           "冗余数据量:",IDC_STATIC,7,205,52,10
+    GROUPBOX        "Directory Information",IDC_STATIC,4,4,246,139
+    GROUPBOX        "Compressed package information",IDC_STATIC,4,146,246,75
+    RTEXT           "Total file size:",IDC_STATIC,7,175,52,10
+    RTEXT           "C. Pack Size:",IDC_STATIC,7,160,52,10
+    RTEXT           "Comp. Ratio:",IDC_STATIC,7,190,52,10
+    RTEXT           "Amount Data:",IDC_STATIC,7,205,52,10
     EDITTEXT        IDC_EDIT_ATTR_ALLSIZE,69,175,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_PCKSIZE,69,160,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
     EDITTEXT        IDC_EDIT_ATTR_PCKCMPR,69,190,177,12,ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
@@ -182,8 +182,8 @@ END
 
 IDD_DIALOG_LOG DIALOGEX 0, 0, 433, 276
 STYLE DS_SETFONT | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
-CAPTION "WinPCK日志"
-FONT 9, "宋体", 400, 0, 0x86
+CAPTION "WinPCK Log"
+FONT 9, "??", 400, 0, 0x86
 BEGIN
     CONTROL         "",IDC_LIST_LOG,"SysListView32",LVS_REPORT | LVS_ALIGNLEFT | LVS_NOCOLUMNHEADER | WS_BORDER | WS_TABSTOP,0,0,433,276
 END
@@ -191,35 +191,36 @@ END
 IDD_DIALOG_REBUILD_OPT DIALOGEX 0, 0, 317, 159
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_ACCEPTFILES
-CAPTION "重建选项"
+CAPTION "Rebuild Options"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,263,142,50,14
-    PUSHBUTTON      "取消",IDCANCEL,209,142,50,14
+    DEFPUSHBUTTON   "Confirm",IDOK,263,142,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,209,142,50,14
     CONTROL         "",IDC_SLIDER_LEVEL,"msctls_trackbar32",TBS_AUTOTICKS | WS_TABSTOP,61,7,213,16
-    LTEXT           "压缩等级：",IDC_STATIC,5,9,53,11
-    CONTROL         "使用数据重压缩",IDC_CHECK_RECPMPRESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,142,90,11
+    LTEXT           "Comp. Level:",IDC_STATIC,5,9,53,11
+    CONTROL         "Use data recompression",IDC_CHECK_RECPMPRESS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,5,142,90,11
     EDITTEXT        IDC_EDIT_SCRIPT,5,48,268,15,ES_AUTOHSCROLL
-    PUSHBUTTON      "浏览...",IDC_BUTTON_OPEN,275,48,38,15
-    LTEXT           "脚本定义：\nchkfile 文件名(用于检查当前文件名)\nprotect 受保护文件\ndelete 删除的文件\nrmdir 删除的目录\n\n具体示例见：Documents\\test_script.txt",IDC_STATIC,5,75,149,59
-    LTEXT           "重建文件过滤脚本：",IDC_STATIC,5,34,102,8
+    PUSHBUTTON      "Browse...",IDC_BUTTON_OPEN,275,48,38,15
+    LTEXT           "Script definition:\nchkfile file name (used to check the current file name)\nprotect protected file\ndelete deleted file\nrmdir deleted directory\n\nFor specific examples, see: Documents\\test_script.txt",IDC_STATIC,5,71,263,67
+    LTEXT           "Rebuild the file filtering script:",IDC_STATIC,5,34,102,8
     LTEXT           "9",IDC_STATIC_LEVEL,284,9,17,8
     EDITTEXT        IDC_EDIT_RESULT,104,144,101,12,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY | NOT WS_BORDER
 END
 
-IDD_DIALOG_STRIP DIALOGEX 0, 0, 223, 107
+IDD_DIALOG_STRIP DIALOGEX 0, 0, 223, 123
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "PCK文件精简"
+CAPTION "PCK File Reduction"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "确定",IDOK,170,91,50,14
-    PUSHBUTTON      "取消",IDCANCEL,118,91,50,14
-    LTEXT           "此功能仅用于测试，不得用于商业用途，对于使用此功能造成的后果本程序概不负责，请谨慎使用\n目前可以针对gfx.pck,models.pck,buildings.pck进行精简",IDC_STATIC,2,64,217,26
-    CONTROL         "模型贴图精简",IDC_CHECK_DDS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,13,70,12
-    CONTROL         "击中效果精简",IDC_CHECK_ATT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,29,70,12
-    GROUPBOX        "选项",IDC_STATIC,2,2,218,60
-    CONTROL         "光影特效精简",IDC_CHECK_GFX,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,45,70,12
-    CONTROL         "ECM精简",IDC_CHECK_ECM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,81,13,70,12
+    DEFPUSHBUTTON   "Confirm",IDOK,170,107,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,118,107,50,14
+    LTEXT           "This function is only for testing and may not be used for commercial purposes. This program is not responsible for the consequences of using this function. Please use it with caution\nCurrently it can be streamlined for gfx.pck, models.pck, buildings.pck",IDC_STATIC,2,64,217,42
+    CONTROL         "Simplified model textures",IDC_CHECK_DDS,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,13,101,12
+    CONTROL         "Streamlined hit effects",IDC_CHECK_ATT,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,29,93,12
+    GROUPBOX        "Options",IDC_STATIC,2,2,218,60
+    CONTROL         "Streamlined light and shadow effects",IDC_CHECK_GFX,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,45,167,12
+    CONTROL         "ECM streamlined",IDC_CHECK_ECM,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,126,13,70,12
 END
 
 
@@ -297,7 +298,7 @@ BEGIN
         LEFTMARGIN, 2
         RIGHTMARGIN, 221
         TOPMARGIN, 2
-        BOTTOMMARGIN, 105
+        BOTTOMMARGIN, 121
     END
 END
 #endif    // APSTUDIO_INVOKED
@@ -358,69 +359,69 @@ IDI_ICON_LOGD           ICON                    "icons\\logdebug.ico"
 
 IDR_MENU_MAIN MENU
 BEGIN
-    POPUP "文件"
+    POPUP "File"
     BEGIN
-        MENUITEM "打开",                          ID_MENU_OPEN
-        MENUITEM "新建",                          ID_MENU_NEW
-        MENUITEM "关闭文件",                        ID_MENU_CLOSE
+        MENUITEM "Open",                        ID_MENU_OPEN
+        MENUITEM "New",                         ID_MENU_NEW
+        MENUITEM "Close",                       ID_MENU_CLOSE
         MENUITEM SEPARATOR
-        MENUITEM "退出",                          ID_MENU_EXIT
+        MENUITEM "Exit",                        ID_MENU_EXIT
     END
-    POPUP "解压"
+    POPUP "Decompress"
     BEGIN
-        MENUITEM "解压选中",                        ID_MENU_UNPACK_SELECTED
-        MENUITEM "全部解压",                        ID_MENU_UNPACK_ALL
+        MENUITEM "Extract selected",            ID_MENU_UNPACK_SELECTED
+        MENUITEM "Extract all",                 ID_MENU_UNPACK_ALL
     END
-    POPUP "操作"
+    POPUP "Operation"
     BEGIN
-        MENUITEM "添加文件",                        ID_MENU_ADD
-        MENUITEM "游戏精简",                        ID_MENU_SIMPLIFY
-        MENUITEM "整理重建",                        ID_MENU_REBUILD
+        MENUITEM "Add files",                   ID_MENU_ADD
+        MENUITEM "Game streamlined",            ID_MENU_SIMPLIFY
+        MENUITEM "Organize and rebuild",        ID_MENU_REBUILD
         MENUITEM SEPARATOR
-        MENUITEM "附加信息",                        ID_MENU_INFO
-        MENUITEM "查找",                          ID_MENU_SEARCH
+        MENUITEM "Additional Information",      ID_MENU_INFO
+        MENUITEM "Find",                        ID_MENU_SEARCH
         MENUITEM SEPARATOR
-        MENUITEM "压缩选项",                        ID_MENU_COMPRESS_OPT
+        MENUITEM "Compression options",         ID_MENU_COMPRESS_OPT
     END
-    POPUP "其他"
+    POPUP "Others"
     BEGIN
-        MENUITEM "日志",                          ID_MENU_LOG
+        MENUITEM "Log",                         ID_MENU_LOG
         MENUITEM SEPARATOR
-        MENUITEM "安装",                          ID_MENU_SETUP
-        MENUITEM "卸载",                          ID_MENU_UNSETUP
+        MENUITEM "Install",                     ID_MENU_SETUP
+        MENUITEM "Uninstall",                   ID_MENU_UNSETUP
         MENUITEM SEPARATOR
-        MENUITEM "关于",                          ID_MENU_ABOUT
+        MENUITEM "About",                       ID_MENU_ABOUT
     END
-    MENUITEM "任何写操作前请务必做好备份！！！",            ID_40048
+    MENUITEM "Please make a backup before any writing operation! ! !", ID_40048
 END
 
 IDR_MENU_RCLICK MENU
 BEGIN
-    POPUP "右击"
+    POPUP "Right-click"
     BEGIN
-        MENUITEM "查看",                          ID_MENU_VIEW
+        MENUITEM "Check",                       ID_MENU_VIEW
         MENUITEM SEPARATOR
-        MENUITEM "解压选中",                        ID_MENU_UNPACK_SELECTED
-        MENUITEM "重命名",                         ID_MENU_RENAME
-        MENUITEM "删除",                          ID_MENU_DELETE
+        MENUITEM "Extract selected",            ID_MENU_UNPACK_SELECTED
+        MENUITEM "Rename",                      ID_MENU_RENAME
+        MENUITEM "Remove",                      ID_MENU_DELETE
         MENUITEM SEPARATOR
-        MENUITEM "全选",                          ID_MENU_SELECTALL
-        MENUITEM "反选",                          ID_MENU_SELECTORP
+        MENUITEM "Select All",                  ID_MENU_SELECTALL
+        MENUITEM "Reverse Selection",           ID_MENU_SELECTORP
         MENUITEM SEPARATOR
-        MENUITEM "属性",                          ID_MENU_ATTR
+        MENUITEM "Properties",                  ID_MENU_ATTR
     END
 END
 
 IDR_MENU_LOG MENU
 BEGIN
-    POPUP "文件"
+    POPUP "File"
     BEGIN
-        MENUITEM "复制当前日志",                      ID_MENU_LOG_COPY
+        MENUITEM "Copy current log",            ID_MENU_LOG_COPY
         MENUITEM SEPARATOR
-        MENUITEM "导出选中日志",                      ID_MENU_LOG_SAVE_SEL
-        MENUITEM "导出所有日志",                      ID_MENU_LOG_SAVE_ALL
+        MENUITEM "Export selected logs",        ID_MENU_LOG_SAVE_SEL
+        MENUITEM "Export all logs",             ID_MENU_LOG_SAVE_ALL
         MENUITEM SEPARATOR
-        MENUITEM "清空日志",                        ID_MENU_LOG_CLEAR
+        MENUITEM "Clear log",                   ID_MENU_LOG_CLEAR
     END
 END
 
@@ -448,82 +449,6 @@ BEGIN
 END
 
 
-
-
-/////////////////////////////////////////////////////////////////////////////
-//
-// String Table
-//
-
-STRINGTABLE
-BEGIN
-    IDS_STRING_OPEN         "打开文件"
-    IDS_STRING_CLOSE        "关闭文件"
-    IDS_STRING_INFO         "附加信息"
-    IDS_STRING_ADD          "添加文件"
-    IDS_STRING_UNPACK_SELECTED "解压选中"
-    IDS_STRING_UNPACK_ALL   "全部解压"
-    IDS_STRING_REBUILD      "整理重建"
-    IDS_STRING_SEARCH       "查找"
-    IDS_STRING_NEW          "新建"
-    IDS_STRING_ABOUT        "关于"
-    IDS_STRING_COMPRESS_OPT "压缩选项"
-    IDS_STRING_CANCEL       "取消"
-    IDS_STRING_EXIT         "退出"
-    IDS_STRING_DELETE       "删除"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_STRING_RENAME       "重命名"
-    IDS_STRING_SELALL       "全选"
-    IDS_STRING_REVSEL       "反选"
-    IDS_STRING_ISEXIT       "有任务正在进行中，是否确认退出？"
-    IDS_STRING_ISEXITTITLE  "退出？"
-    IDS_STRING_EXITING      "正在退出，请稍候..."
-    IDS_STRING_RENEWING     "正在更新...%s"
-    IDS_STRING_RENEWOK      "更新完成，用时 %.2fms"
-    IDS_STRING_REBUILDING   "正在重建...%s"
-    IDS_STRING_REBUILDOK    "重建完成，用时 %.2fms"
-    IDS_STRING_COMPING      "正在压缩...%s"
-    IDS_STRING_COMPOK       "压缩完成，用时 %.2fms"
-    IDS_STRING_EXPING       "正在解压...%s"
-    IDS_STRING_EXPOK        "解压完成，用时 %.2fms"
-    IDS_STRING_OPENOK       "已打开文件，用时 %.2fms"
-    IDS_STRING_OPENFAIL     "打开文件失败！"
-END
-
-STRINGTABLE
-BEGIN
-    IDS_STRING_OPENFILESIZE "大小:%llu"
-    IDS_STRING_OPENFILECOUNT "数量:%u"
-    IDS_STRING_SEARCHING    "正在查找""%s""，请稍等..."
-    IDS_STRING_SEARCHOK     "找到""%s""一共 %u 处"
-    IDS_STRING_TIMEROK      "已完成: %u/%u 100.0%%"
-    IDS_STRING_TIMERING     "进度: %u/%u %.1f%% 缓存:%s/%s %.1f%%"
-    IDS_STRING_LISTHEAD1    "文件名"
-    IDS_STRING_LISTHEAD2    "实际大小"
-    IDS_STRING_LISTHEAD3    "压缩大小"
-    IDS_STRING_LISTHEAD4    "压缩率"
-    IDS_STRING_ISDELETE     "文件（夹）删除后将不能恢复！\r\n确认删除这些文件（夹）吗？"
-    IDS_STRING_ISDELETETITLE "删除"
-    IDS_STRING_INVALIDFILENAME "文件名中不得包含下列任何字符：\r\n%s"
-    IDS_STRING_RENAMEERROR  "文件夹名过长或重命名时出现错误！"
-    IDS_STRING_ERROR        "错误！"
-    IDS_STRING_PROCESS_ERROR "操作未能正常结束"
-END
-
-#endif    // 中文(简体，中国) resources
-/////////////////////////////////////////////////////////////////////////////
-
-
-/////////////////////////////////////////////////////////////////////////////
-// 英语(美国) resources
-
-#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
-LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
-#pragma code_page(1252)
-
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -548,7 +473,123 @@ END
 
 #endif    // APSTUDIO_INVOKED
 
-#endif    // 英语(美国) resources
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// AFX_DIALOG_LAYOUT
+//
+
+IDD_DIALOG_ATTR AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_COMPRESS AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_INFO AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_LOG AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_PIC AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_REBUILD_OPT AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_SEARCH AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_STRIP AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+IDD_DIALOG_VIEW AFX_DIALOG_LAYOUT
+BEGIN
+    0
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE
+BEGIN
+    IDS_STRING_OPEN         "Open a file"
+    IDS_STRING_CLOSE        "Close the file"
+    IDS_STRING_INFO         "Additional Information"
+    IDS_STRING_ADD          "Add files"
+    IDS_STRING_UNPACK_SELECTED "Extract selected"
+    IDS_STRING_UNPACK_ALL   "Extract all"
+    IDS_STRING_REBUILD      "Organize and rebuild"
+    IDS_STRING_SEARCH       "Find"
+    IDS_STRING_NEW          "New"
+    IDS_STRING_ABOUT        "About"
+    IDS_STRING_COMPRESS_OPT "Compression options"
+    IDS_STRING_CANCEL       "Cancel"
+    IDS_STRING_EXIT         "Exit"
+    IDS_STRING_DELETE       "Delete"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STRING_RENAME       "Rename"
+    IDS_STRING_SELALL       "Select All"
+    IDS_STRING_REVSEL       "Reverse Selection"
+    IDS_STRING_ISEXIT       "There is a task in progress. Do you want to confirm the exit?"
+    IDS_STRING_ISEXITTITLE  "Quit?"
+    IDS_STRING_EXITING      "Exiting, please wait..."
+    IDS_STRING_RENEWING     "Updating...%s"
+    IDS_STRING_RENEWOK      "Update completed, time %.2fms"
+    IDS_STRING_REBUILDING   "Rebuilding...%s"
+    IDS_STRING_REBUILDOK    "Rebuild completed, time %.2fms"
+    IDS_STRING_COMPING      "Compressing...%s"
+    IDS_STRING_COMPOK       "Compression completed, time %.2fms"
+    IDS_STRING_EXPING       "Decompressing...%s"
+    IDS_STRING_EXPOK        "Decompression completed, time %.2fms"
+    IDS_STRING_OPENOK       "File opened, time %.2fms"
+    IDS_STRING_OPENFAIL     "Failed to open file!"
+END
+
+STRINGTABLE
+BEGIN
+    IDS_STRING_OPENFILESIZE "Size:%llu"
+    IDS_STRING_OPENFILECOUNT "Quantity:%u"
+    IDS_STRING_SEARCHING    "Searching for ""%s"", please wait..."
+    IDS_STRING_SEARCHOK     "Found ""%s"" in %u places"
+    IDS_STRING_TIMEROK      "Completed: %u/%u 100.0%%"
+    IDS_STRING_TIMERING     "Progress: %u/%u %.1f%% Cache: %s/%s %.1f%%"
+    IDS_STRING_LISTHEAD1    "Filename"
+    IDS_STRING_LISTHEAD2    "Actual size"
+    IDS_STRING_LISTHEAD3    "Compressed size"
+    IDS_STRING_LISTHEAD4    "Compression ratio"
+    IDS_STRING_ISDELETE     "Files (folders) cannot be recovered after being deleted! \r\nAre you sure to delete these files (folders)?"
+    IDS_STRING_ISDELETETITLE "Delete"
+    IDS_STRING_INVALIDFILENAME 
+                            "File names must not contain any of the following characters:\r\n%s"
+    IDS_STRING_RENAMEERROR  "The folder name is too long or an error occurred while renaming!"
+    IDS_STRING_ERROR        "Error!"
+    IDS_STRING_PROCESS_ERROR "The operation failed to end normally"
+END
+
+#endif    // Inglês (Estados Unidos) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -558,7 +599,8 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#define IDR_MANIFEST					1
+#define IDR_MANIFEST					1
+
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

@@ -2,7 +2,7 @@
 
 #include "PckModelStrip.h"
 
-//在多线程运算中获取未压缩好的源数据
+//Obtain uncompressed source data in multi-threaded operations
 FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromFile(LPDATA_FETCH_METHOD lpDataFetchMethod, PCKINDEXTABLE &pckFileIndex)
 {
 
@@ -24,23 +24,23 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromFile(LPDATA_FETCH_METHOD 
 		LPBYTE lpCompressedBuffer = (BYTE*)MALLOCED_EMPTY_DATA;
 		pckFileIndex.dwMallocSize = m_lpPckClassBase->m_zlib.GetCompressBoundSizeByFileSize(pckFileIndex.cFileIndex.dwFileClearTextSize, pckFileIndex.cFileIndex.dwFileCipherTextSize, lpOneFile->dwFileSize);
 
-		//构建文件名
+		//Build file name
 		memcpy(mystrcpy(pckFileIndex.cFileIndex.szwFilename, lpDataFetchMethod->szCurrentNodeString), lpOneFile->szwFilename + lpOneFile->nFileTitleLen, lpOneFile->nBytesToCopy - lpDataFetchMethod->nCurrentNodeStringLen);
-		//Unicode文件名转换为CP936的ANSI
+		//Convert Unicode filenames to CP936 ANSI
 		CPckClassCodepage::PckFilenameCode2Ansi(pckFileIndex.cFileIndex.szwFilename, pckFileIndex.cFileIndex.szFilename, sizeof(pckFileIndex.cFileIndex.szwFilename));
 
-		//如果文件大小为0，则跳过打开文件步骤
+		//If file size is 0, skip opening file step
 		if (0 != pckFileIndex.cFileIndex.dwFileClearTextSize) {
 			CMapViewFileRead		cFileRead;
 			LPBYTE					lpBufferToRead;
-			//文件不为0时的处理
-			//打开要进行压缩的文件
+			//Processing when the file is not 0
+			//Open the file to be compressed
 			if (NULL == (lpBufferToRead = cFileRead.OpenMappingViewAllRead(lpOneFile->szwFilename))) {
 				m_lpPckClassBase->SetErrMsgFlag(PCK_ERR_OPENMAPVIEWR);
 				return FD_ERR;
 			}
 
-			//判断使用的内存是否超过最大值
+			//Determine whether the memory used exceeds the maximum value
 			FETCHDATA_RET rtn;
 			if (FD_OK != (rtn = detectMaxAndAddMemory(lpCompressedBuffer, pckFileIndex.dwMallocSize))) {
 				return rtn;
@@ -83,9 +83,9 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD l
 			continue;
 
 		LPBYTE				lpBufferToRead;
-		//保存重压缩数据的解压的数据
+		//Save decompressed data of heavily compressed data
 		LPBYTE				lpDecompressBuffer = NULL;
-		//保存重压缩数据的源数据
+		//Save source data for heavily compressed data
 		LPBYTE				lpSourceBuffer = NULL;
 
 		LPPCKINDEXTABLE	lpPckIndexTablePtrSrc = cDataFetchMethod.lpPckIndexTablePtrSrc;
@@ -106,15 +106,15 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD l
 
 		if (0 != dwFileClearTextSize) {
 
-			//判断使用的内存是否超过最大值
+			//Determine whether the memory used exceeds the maximum value
 			FETCHDATA_RET rtn;
 			if (FD_OK != (rtn = detectMaxAndAddMemory(lpCompressedBuffer, pckFileIndex.dwMallocSize))) {
 				return rtn;
 			}
 
-			//文件数据需要重压缩
+			//File data needs to be compressed again
 			if (PCK_BEGINCOMPRESS_SIZE < dwFileClearTextSize) {
-				//保存源数据的空间
+				//Space to save source data
 				if (FD_OK != (rtn = detectMaxAndAddMemory(lpSourceBuffer, dwNumberOfBytesToMap))) {
 					return rtn;
 				}
@@ -144,7 +144,7 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD l
 					if (dwFileClearTextSize == lpPckIndexTablePtrSrc->cFileIndex.dwFileClearTextSize) {
 
 						/*
-						在这里加入精简代码
+						Add minified code here
 						*/
 						if (PCK_STRIP_NONE != cDataFetchMethod.iStripFlag) {
 							CPckModelStrip cModelStrip;

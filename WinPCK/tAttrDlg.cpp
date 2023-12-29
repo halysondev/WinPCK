@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// tAttrDlg.cpp: WinPCK 界面线程部分
-// 对话框代码
+// tAttrDlg.cpp: WinPCK interface thread part
+// Dialog code
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2017.12.26
 //////////////////////////////////////////////////////////////////////
 
@@ -32,15 +32,15 @@ BOOL TAttrDlg::EvCreate(LPARAM lParam)
 	const wchar_t	*lpszwFilename;
 	wchar_t	szPrintf[PRINTF_SIZE];
 	wchar_t	szPrintfBytesize[PRINTF_BYTESIZE];
-	LPCWSTR	lpszFormat = L"%s (%llu 字节)";
-	LPCWSTR	lpszFileFormat = L"%s (%u 字节)";
+	LPCWSTR	lpszFormat = L"%s (%llu byte)";
+	LPCWSTR	lpszFileFormat = L"%s (%u byte)";
 
 	if (PCK_ENTRY_TYPE_INDEX == lpPckInfo->entryType) {
 		wchar_t	szFilename[MAX_PATH_PCK_260];
 
 		wcscpy(szFilename, lpPckInfo->szName);
 
-		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"文件");
+		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"document");
 
 		if (NULL != (lpszFilename = wcsrchr(szFilename, L'\\'))) {
 
@@ -75,7 +75,7 @@ BOOL TAttrDlg::EvCreate(LPARAM lParam)
 	uint64_t qdwDirClearTextSize = pck_getFileSizeInEntry(lpPckInfo);
 	uint64_t qdwDirCipherTextSize = pck_getCompressedSizeInEntry(lpPckInfo);
 
-	//压缩大小
+	//Compressed size
 	swprintf_s(szPrintf, PRINTF_SIZE, lpszFileFormat,
 		StrFormatByteSizeW(qdwDirCipherTextSize, szPrintfBytesize, PRINTF_BYTESIZE),
 		qdwDirCipherTextSize);
@@ -83,14 +83,14 @@ BOOL TAttrDlg::EvCreate(LPARAM lParam)
 	SetDlgItemTextW(IDC_EDIT_ATTR_CIPHER, szPrintf);
 
 
-	//实际大小
+	//actual size
 	swprintf_s(szPrintf, PRINTF_SIZE, lpszFileFormat,
 		StrFormatByteSizeW(qdwDirClearTextSize, szPrintfBytesize, PRINTF_BYTESIZE),
 		qdwDirClearTextSize);
 
 	SetDlgItemTextW(IDC_EDIT_ATTR_SIZE, szPrintf);
 
-	//压缩率
+	//Compression ratio
 	if (0 == qdwDirClearTextSize)
 		SetDlgItemTextA(IDC_EDIT_ATTR_CMPR, "-");
 	else {
@@ -98,54 +98,54 @@ BOOL TAttrDlg::EvCreate(LPARAM lParam)
 		SetDlgItemTextW(IDC_EDIT_ATTR_CMPR, szPrintf);
 	}
 
-	if (PCK_ENTRY_TYPE_FOLDER != (PCK_ENTRY_TYPE_FOLDER & lpPckInfo->entryType))//文件
+	if (PCK_ENTRY_TYPE_FOLDER != (PCK_ENTRY_TYPE_FOLDER & lpPckInfo->entryType))//document
 	{
-		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"文件");
+		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"document");
 
-		//包含
+		//Include
 		SetDlgItemTextA(IDC_EDIT_ATTR_FILECOUNT, "-");
 
-		//偏移地址
+		//offset address
 		swprintf_s(szPrintf, PRINTF_SIZE, L"%llu (0x%016llX)", pck_getFileOffset(lpPckInfo), pck_getFileOffset(lpPckInfo));
 		SetDlgItemTextW(IDC_EDIT_ATTR_ADDR, szPrintf);
 	}
 	else {
 
-		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"文件夹");
+		SetDlgItemTextW(IDC_EDIT_ATTR_TYPE, L"folder");
 
-		//包含
-		swprintf_s(szPrintf, PRINTF_SIZE, L"%u 个文件，%u 个文件夹", pck_getFilesCountInEntry(lpPckInfo), pck_getFoldersCountInEntry(lpPckInfo));
+		//Include
+		swprintf_s(szPrintf, PRINTF_SIZE, L"%u files, %u folders", pck_getFilesCountInEntry(lpPckInfo), pck_getFoldersCountInEntry(lpPckInfo));
 		SetDlgItemTextW(IDC_EDIT_ATTR_FILECOUNT, szPrintf);
 
-		//偏移地址
+		//offset address
 		SetDlgItemTextA(IDC_EDIT_ATTR_ADDR, "-");
 
 	}
 
-	//文件包信息
+	//Package information
 	const PCK_UNIFIED_FILE_ENTRY* lpRootNode = pck_getRootNode();
 
 	qdwDirClearTextSize = pck_getFileSizeInEntry(lpRootNode);
 	qdwDirCipherTextSize = pck_getCompressedSizeInEntry(lpRootNode);
 
-	//文件总大小
+	//total file size
 	swprintf_s(szPrintf, PRINTF_SIZE, lpszFormat,
 		StrFormatByteSizeW(qdwDirClearTextSize, szPrintfBytesize, PRINTF_BYTESIZE),
 		qdwDirClearTextSize);
 
 	SetDlgItemTextW(IDC_EDIT_ATTR_ALLSIZE, szPrintf);
 
-	//压缩包大小
+	//Compressed package size
 	swprintf_s(szPrintf, PRINTF_SIZE, lpszFormat,
 		StrFormatByteSizeW(qdwDirCipherTextSize, szPrintfBytesize, PRINTF_BYTESIZE),
 		qdwDirCipherTextSize);
 	SetDlgItemTextW(IDC_EDIT_ATTR_PCKSIZE, szPrintf);
 
-	//压缩率
+	//Compression ratio
 	swprintf_s(szPrintf, PRINTF_SIZE, L"%.1f%%", qdwDirCipherTextSize / (float)qdwDirClearTextSize * 100.0);
 	SetDlgItemTextW(IDC_EDIT_ATTR_PCKCMPR, szPrintf);
 
-	//冗余数据量
+	//Amount of redundant data
 	uint64_t qwPckFileSize = pck_file_redundancy_data_size();
 	swprintf_s(szPrintf, PRINTF_SIZE, lpszFormat,
 		StrFormatByteSizeW(qwPckFileSize, szPrintfBytesize, PRINTF_BYTESIZE),
@@ -153,9 +153,9 @@ BOOL TAttrDlg::EvCreate(LPARAM lParam)
 	SetDlgItemTextW(IDC_EDIT_ATTR_DIRT, szPrintf);
 
 
-	//窗口文字
+	//window text
 	TCHAR	szTitle[MAX_PATH];
-	_stprintf_s(szTitle, MAX_PATH, TEXT("%s 属性"), lpszwFilename);
+	_stprintf_s(szTitle, MAX_PATH, TEXT("%s Attributes"), lpszwFilename);
 	SetWindowText(szTitle);
 
 	Show();

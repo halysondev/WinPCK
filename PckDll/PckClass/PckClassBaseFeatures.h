@@ -17,34 +17,34 @@ public:
 	virtual const	LPPCKINDEXTABLE		GetPckIndexTable();
 	virtual const	LPPCK_PATH_NODE		GetPckPathNode();
 
-	//是否已经加载文件
+	//Whether the file has been loaded
 	BOOL	isFileLoaded();
 
-	//文件大小
+	//File size
 	uint64_t	GetPckSize();
 
-	//获取文件数
+	//Get the number of files
 	uint32_t	GetPckFileCount();
 
-	//数据区大小
+	//Data area size
 	uint64_t	GetPckDataAreaSize();
 
-	//数据区冗余数据大小
+	//Data area redundant data size
 	uint64_t	GetPckRedundancyDataSize();
 
 protected:
-	//重置信息
+	//Reset information
 	void	ResetPckInfos();
 
-	//设置进度
+	//Set progress
 	void	SetParams_ProgressInc();
 	void	SetParams_Progress(DWORD dwUIProgres);
 
-	//设置进度信息中的最大值
+	//Set the maximum value in progress information
 	void	SetParams_ProgressUpper(DWORD dwUIProgressUpper, BOOL bReset = TRUE);
 	void	AddParams_ProgressUpper(DWORD dwUIProgressUpperAdd);
 
-	//多线程处理进程
+	//multi-threaded process
 	void	SetThreadFlag(BOOL isThreadWorking);
 	BOOL	CheckIfNeedForcedStopWorking();
 	void	SetErrMsgFlag(int errMsg);
@@ -55,7 +55,7 @@ protected:
 
 	CPckClassZlib			m_zlib;
 
-	//运行时变量 
+	//runtime variables 
 	LPPCK_RUNTIME_PARAMS	m_lpPckParams;
 
 };

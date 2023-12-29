@@ -5,7 +5,7 @@
 #include <mutex>
 #endif
 
-//日志
+//log
 #define	LOG_BUFFER						8192
 
 class CPckClassLog
@@ -23,7 +23,7 @@ public:
 		static CPckClassLog onlyInstance;
 		return onlyInstance;
 	}
-	//注册LOG显示方式
+	//Register LOG display mode
 	void PckClassLog_func_register(ShowLogW _ShowLogW);
 
 	void e(const char *_text, ...);
@@ -57,7 +57,7 @@ public:
 
 private:
 
-	//日志显示方式，默认显示到控制台
+	//Log display mode, displayed to the console by default
 	static void		PrintLogToConsole(const char log_level, const wchar_t *str);
 
 	static ShowLogW	ShowLogExtern;
@@ -65,9 +65,9 @@ private:
 	void		ShowLog(const char log_level, const char *str);
 	void		ShowLog(const char log_level, const wchar_t *str);
 
-	//错误信息
+	//error message
 	DWORD	m_dwLastError = 0;
-	//返回具体错误信息
+	//Return specific error information
 	wchar_t *GetErrorMsg(CONST DWORD dwError, wchar_t *szMessage);
 
 };

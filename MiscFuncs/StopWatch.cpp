@@ -1,8 +1,8 @@
 #include "StopWatch.h"
 #include <stdio.h>
 
-#define TIME_ELAPSED_STR	"用时 %.2fms"
-#define TIME_ELAPSED_STRW	L"用时 %.2fms"
+#define TIME_ELAPSED_STR	"time %.2fms"
+#define TIME_ELAPSED_STRW	L"time %.2fms"
 
 CStopWatch::CStopWatch()
 {

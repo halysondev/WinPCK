@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// tRebuildOptDlg.cpp: WinPCK 界面线程部分
-// 对话框代码
+// tRebuildOptDlg.cpp: WinPCK interface thread part
+// Dialog code
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.05.11
 //////////////////////////////////////////////////////////////////////
 
@@ -15,7 +15,7 @@
 
 
 /*
-压缩选项
+Compression options
 */
 BOOL TRebuildOptDlg::EvCreate(LPARAM lParam)
 {
@@ -100,13 +100,13 @@ BOOL TRebuildOptDlg::ParseScript()
 	GetDlgItemText(IDC_EDIT_SCRIPT, szScriptFile, MAX_PATH);
 	if(isScriptParseSuccess = (WINPCK_OK == pck_TestScript((LPCTSTR)szScriptFile))) {
 
-		SetDlgItemTextA(IDC_EDIT_RESULT, "解析脚本成功");
+		SetDlgItemTextA(IDC_EDIT_RESULT, "Parsing script successful");
 		_tcscpy_s(lpszScriptFile, MAX_PATH, szScriptFile);
 
 		::EnableWindow(GetDlgItem(IDOK), TRUE);
 		return TRUE;
 	} else {
-		SetDlgItemTextA(IDC_EDIT_RESULT, "解析脚本失败");
+		SetDlgItemTextA(IDC_EDIT_RESULT, "Parsing script failed");
 		::EnableWindow(GetDlgItem(IDOK), FALSE);
 		return FALSE;
 	}

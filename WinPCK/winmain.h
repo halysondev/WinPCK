@@ -1,4 +1,4 @@
-
+#include <string>
 #include "globals.h"
 #include "pck_handle.h"
 #include "miscdlg.h"
@@ -31,7 +31,7 @@ public:
 
 	virtual BOOL	EvSize(UINT fwSizeType, WORD nWidth, WORD nHeight);
 
-//用户变量
+//user variables
 private:
 
 	TCHAR	m_MyFileName[MAX_PATH];
@@ -39,7 +39,7 @@ private:
 
 	BOOL	m_isListviewRenaming;
 
-	int		m_iListHotItem;	//当前鼠标在listview上的选中数据行
+	int		m_iListHotItem;	//The current mouse selected data row on the listview
 
 	const PCK_UNIFIED_FILE_ENTRY*	m_currentNodeOnShow;
 
@@ -49,7 +49,7 @@ private:
 	//addmode
 	vector<wstring>	m_lpszFilePath;
 
-	//用于找窗口的变量
+	//Variables used to find windows
 	BOOL	m_isSearchWindow;
 
 	HCURSOR	m_hCursorOld, m_hCursorAllow, m_hCursorNo;
@@ -63,10 +63,10 @@ private:
 	wchar_t		szTimerProcessingFormatString[64];
 	wchar_t		szTimerProcessedFormatString[64];
 
-	//任务栏进度
+	//taskbar progress
 	ITaskbarList3* m_pTaskBarlist = nullptr;
 
-	//用户函数
+	//user function
 private:
 
 	//winmain.cpp
@@ -115,15 +115,15 @@ private:
 
 	const PCK_UNIFIED_FILE_ENTRY* GetFileEntryByItem(int itemIndex);
 
-	void DbClickListView(const int itemIndex);	//进入列表中的itemIndex项（进入目录或预览文件）
-	void PopupRightMenu(const int itemIndex);		//listview上右击出菜单
+	void DbClickListView(const int itemIndex);	//Enter the itemIndex item in the list (enter the directory or preview file)
+	void PopupRightMenu(const int itemIndex);		//Right click on listview to bring up menu
 
-	void UnpackAllFiles();					//解压所有文件
-	void UnpackSelectedFiles();				//解压选中的文件
+	void UnpackAllFiles();					//Unzip all files
+	void UnpackSelectedFiles();				//Unzip selected files
 
 #pragma endregion
 private:
-	//打开、关闭、复原等事件注册
+	//Open, close, restore and other event registration
 	static int MyFeedbackCallback(void* pTag, int32_t eventId, size_t wParam, ssize_t lParam);
 
 

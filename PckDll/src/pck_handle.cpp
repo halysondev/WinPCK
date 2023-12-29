@@ -48,7 +48,7 @@ WINPCK_API PCKRTN pck_close()
 		this_handle.ForceBreakThreadWorking();
 
 
-		//等待60秒
+		//Wait 60 seconds
 		for (int i = 0; i < 120; i++) {
 
 			if (!checkIfWorking())
@@ -100,25 +100,25 @@ WINPCK_API LPCWSTR pck_getVersionNameById(int verID)
 	return CPckControlCenter::GetVersionNameById(verID);
 }
 
-//直接添加一个AlgorithmId
+//Add an AlgorithmId directly
 WINPCK_API int pck_addVersionAlgorithmId(int AlgorithmId, int Version)
 {
 	return CPckControlCenter::AddVersionAlgorithmId(AlgorithmId, Version);
 }
 
-//获取当前配置名称
+//Get the current configuration name
 WINPCK_API LPCWSTR pck_GetCurrentVersionName()
 {
 	return this_handle.GetCurrentVersionName();
 }
 
-//有效的
+//Effective
 WINPCK_API int	pck_IsValidPck()
 {
 	return this_handle.IsValidPck();
 }
 
-//获取node路径
+//Get node path
 WINPCK_API BOOL	pck_getNodeRelativePath(LPWSTR _out_szCurrentNodePathString, LPCENTRY lpFileEntry)
 {
 	return CPckControlCenter::GetCurrentNodeString(_out_szCurrentNodePathString, lpFileEntry);
@@ -140,7 +140,7 @@ WINPCK_API LPCENTRY pck_getRootNode()
 	return this_handle.GetRootNode();
 }
 
-//文件大小
+//File size
 WINPCK_API uint64_t	pck_filesize()
 {
 	if (!checkIfValidPck())
@@ -193,13 +193,13 @@ WINPCK_API uint32_t	pck_getFilesCountInEntry(LPCENTRY lpFileEntry)
 	return CPckControlCenter::GetFilesCountInEntry(lpFileEntry);
 }
 
-//当前节点文件名当前长度
+//The current length of the current node file name
 WINPCK_API uint32_t	pck_getFilelenBytesOfEntry(LPCENTRY lpFileEntry)
 {
 	return CPckControlCenter::GetFilelenBytesOfEntry(lpFileEntry);
 }
 
-//当前节点文件名最大长度-当前长度
+//Maximum length of current node file name - current length
 WINPCK_API uint32_t pck_getFilelenLeftBytesOfEntry(LPCENTRY lpFileEntry)
 {
 	return CPckControlCenter::GetFilelenLeftBytesOfEntry(lpFileEntry);
@@ -210,7 +210,7 @@ WINPCK_API uint64_t pck_getFileOffset(LPCENTRY lpFileEntry)
 	return CPckControlCenter::GetFileOffset(lpFileEntry);
 }
 
-//设置附加信息
+//Set extensions
 WINPCK_API LPCSTR pck_GetAdditionalInfo()
 {
 	if (!checkIfValidPck())
@@ -241,13 +241,13 @@ WINPCK_API PCKRTN pck_SetAdditionalInfo(LPCSTR lpszAdditionalInfo)
 	}
 }
 
-//是否是支持更新的文件
+//Whether it is a file that supports updating
 WINPCK_API BOOL	pck_isSupportAddFileToPck()
 {
 	return this_handle.isSupportAddFileToPck();
 }
 
-//重命名一个节点
+//Rename a node
 WINPCK_API PCKRTN pck_RenameEntry(LPENTRY lpFileEntry, LPCWSTR lpszReplaceString)
 {
 	if (!checkIfValidPck())
@@ -259,7 +259,7 @@ WINPCK_API PCKRTN pck_RenameEntry(LPENTRY lpFileEntry, LPCWSTR lpszReplaceString
 	return this_handle.RenameEntry(lpFileEntry, lpszReplaceString) ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//重命名文件
+//Rename file
 WINPCK_API PCKRTN	pck_RenameSubmit()
 {
 	if (!checkIfValidPck())
@@ -299,7 +299,7 @@ WINPCK_API PCKRTN do_RenameEntry(LPCWSTR  szPckFile, LPCWSTR lpFullPathToRename,
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//预览文件
+//Preview file
 WINPCK_API PCKRTN pck_GetSingleFileData(LPCENTRY lpFileEntry, LPSTR _inout_buffer, size_t _in_sizeOfBuffer)
 {
 	if (!checkIfValidPck())
@@ -311,7 +311,7 @@ WINPCK_API PCKRTN pck_GetSingleFileData(LPCENTRY lpFileEntry, LPSTR _inout_buffe
 	return this_handle.GetSingleFileData(lpFileEntry, _inout_buffer, _in_sizeOfBuffer) ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//解压文件
+//unzip files
 WINPCK_API PCKRTN	pck_ExtractFilesByEntrys(LPCENTRY* lpFileEntryArray, int nEntryCount, LPCWSTR lpszDestDirectory)
 {
 	if (!checkIfValidPck())
@@ -370,7 +370,7 @@ WINPCK_API PCKRTN	do_ExtractAllFiles(LPCWSTR lpszSrcPckFile, LPCWSTR lpszDestDir
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//重建pck文件
+//Rebuild pck file
 WINPCK_API PCKRTN	pck_TestScript(LPCWSTR lpszScriptFile)
 {
 	if (!checkIfValidPck())
@@ -425,7 +425,7 @@ WINPCK_API PCKRTN do_RebuildPckFileWithScript(LPCWSTR szSrcPckFile, LPCWSTR lpsz
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//游戏精简
+//Game streamlined
 WINPCK_API PCKRTN pck_StripPck(LPCWSTR szStripedPckFile, int flag)
 {
 	if (!checkIfValidPck())
@@ -456,7 +456,7 @@ WINPCK_API PCKRTN do_StripPck(LPCWSTR szSrcPckFile, LPCWSTR szStripedPckFile, in
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//新建、更新pck文件
+//Create and update pck files
 WINPCK_API void	pck_StringArrayReset()
 {
 	return this_handle.StringArrayReset();
@@ -475,7 +475,7 @@ WINPCK_API PCKRTN	pck_UpdatePckFileSubmit(LPCWSTR szPckFile, LPCENTRY lpFileEntr
 	return this_handle.UpdatePckFileSubmit(szPckFile, lpFileEntry) ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//添加文件到pck
+//Add files to pck
 WINPCK_API PCKRTN	do_AddFileToPckFile(LPCWSTR lpszFilePathSrc, LPCWSTR szPckFile, LPCWSTR lpszPathInPckToAdd, int level)
 {
 
@@ -505,7 +505,7 @@ WINPCK_API PCKRTN	do_AddFileToPckFile(LPCWSTR lpszFilePathSrc, LPCWSTR szPckFile
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//创建新的pck文件
+//Create new pck file
 WINPCK_API PCKRTN	do_CreatePckFile(LPCWSTR lpszFilePathSrc, LPCWSTR szPckFile, int _versionId, int level)
 {
 
@@ -524,7 +524,7 @@ WINPCK_API PCKRTN	do_CreatePckFile(LPCWSTR lpszFilePathSrc, LPCWSTR szPckFile, i
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//删除一个节点
+//Delete a node
 WINPCK_API PCKRTN pck_DeleteEntry(LPCENTRY lpFileEntry)
 {
 	if (!checkIfValidPck())
@@ -536,7 +536,7 @@ WINPCK_API PCKRTN pck_DeleteEntry(LPCENTRY lpFileEntry)
 	return this_handle.DeleteEntry(lpFileEntry) ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//提交
+//submit
 WINPCK_API PCKRTN pck_DeleteEntrySubmit()
 {
 	if (!checkIfValidPck())
@@ -582,7 +582,7 @@ WINPCK_API PCKRTN	 do_DeleteFromPck(LPCWSTR szSrcPckFile, int count, ...)
 	return rtn ? WINPCK_OK : WINPCK_ERROR;
 }
 
-//查询
+//Query
 WINPCK_API uint32_t pck_searchByName(LPCWSTR lpszSearchString, void* _in_param, SHOW_LIST_CALLBACK _showListCallback)
 {
 	if (!checkIfValidPck())
@@ -649,7 +649,7 @@ WINPCK_API BOOL	pck_getLastErrorMsg()
 	return this_handle.GetLastErrorMsg();
 }
 
-//内存占用
+//Memory usage
 WINPCK_API uint32_t	pck_getMTMemoryUsed()
 {
 	return this_handle.getMTMemoryUsed();
@@ -673,7 +673,7 @@ WINPCK_API uint32_t	pck_getMaxMemoryAllowed()
 	return CPckControlCenter::getMaxMemoryAllowed();
 }
 
-//线程数
+//Threads
 WINPCK_API uint32_t	pck_getMaxThreadUpperLimit()
 {
 	return CPckControlCenter::getMaxThreadUpperLimit();
@@ -692,7 +692,7 @@ WINPCK_API void		pck_setMaxThread(uint32_t dwThread)
 	return this_handle.setMaxThread(dwThread);
 }
 
-//压缩等级
+//Compression level
 WINPCK_API uint32_t	pck_getMaxCompressLevel()
 {
 	return CPckControlCenter::getMaxCompressLevel();
@@ -731,7 +731,7 @@ WINPCK_API uint32_t	pck_getUIProgressUpper()
 	return this_handle.getUIProgressUpper();
 }
 
-//添加/新增文件返回结果清单
+//Add/new file returns result list
 WINPCK_API uint32_t	pck_getUpdateResult_OldFileCount()
 {
 	return this_handle.GetUpdateResult_OldFileCount();
@@ -757,7 +757,7 @@ WINPCK_API uint32_t	pck_getUpdateResult_FinalFileCount()
 	return this_handle.GetUpdateResult_FinalFileCount();
 }
 
-//日志
+//log
 WINPCK_API void		log_regShowFunc(ShowLogW _ShowLogW)
 {
 	Logger.PckClassLog_func_register(_ShowLogW);
@@ -789,7 +789,7 @@ define_one_pck_log(D);
 #undef define_one_pck_log
 
 
-//打开、关闭、复原等事件注册
+//Open, close, restore and other event registration
 WINPCK_API void		pck_regMsgFeedback(void* pTag, FeedbackCallback _FeedbackCallBack)
 {
 	CPckControlCenter::regMsgFeedback(pTag, _FeedbackCallBack);

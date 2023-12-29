@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// PckClassLog.cpp: 信息回馈、信息输出、调试等 
+// PckClassLog.cpp: information feedback, information output, debugging, etc.
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2015.5.19
 //////////////////////////////////////////////////////////////////////
 
@@ -39,8 +39,8 @@ void CPckClassLog::PckClassLog_func_register(ShowLogW _ShowLogW)
 
 wchar_t* CPckClassLog::GetErrorMsg(CONST DWORD dwError, wchar_t *szMessage)
 {
-	//static WCHAR szMessage[1024] = L"错误原因：";
-	wcscpy(szMessage, L"错误原因：");
+	//static WCHAR szMessage[1024] = L"wrong reason：";
+	wcscpy(szMessage, L"wrong reason：");
 
 	size_t len = wcslen(szMessage);
 	WCHAR *lpszMessage = szMessage + len;
@@ -54,7 +54,7 @@ wchar_t* CPckClassLog::GetErrorMsg(CONST DWORD dwError, wchar_t *szMessage)
 		lpszMessage,
 		LOG_BUFFER - len,
 		NULL)) {
-		wcscpy(lpszMessage, L"未知错误");
+		wcscpy(lpszMessage, L"unknown mistake");
 	}
 	SetLastError(0);
 	return szMessage;
@@ -181,7 +181,7 @@ void CPckClassLog::PrintErrorLog()
 	}
 #if PCK_DEBUG_OUTPUT
 	else {
-		ShowLog(' ', "未获取到系统错误代码");
+		ShowLog(' ', "System error code not obtained");
 	}
 #endif
 }

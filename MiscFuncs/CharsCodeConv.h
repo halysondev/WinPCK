@@ -26,8 +26,8 @@ int WtoU8(const wchar_t *src, char *dst, int bufsize, int max_len = -1);
 //std::string WtoU8(const std::wstring& src);
 
 /*
-返回值：TEXT_TYPE_ANSI-TEXT_TYPE_RAW
-_s：如果不是以0xfeff或0xbfbbef开头，不修改，否则+2或+3后返回
+Return value: TEXT_TYPE_ANSI-TEXT_TYPE_RAW
+_s: If it does not start with 0xfeff or 0xbfbbef, do not modify it, otherwise return after +2 or +3
 */
 int	TextDataType(const char* &_s, size_t size);
 
@@ -54,8 +54,8 @@ public:
 	CAnsi2Ucs(int cp) : codepage(cp) {}
 	virtual ~CAnsi2Ucs() {};
 
-	const wchar_t *GetString(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI和UNICODE互转
-	int		GetStrlen(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI字符在对应的UNICODE的wcslen下的返回值
+	const wchar_t *GetString(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI and UNICODE conversion
+	int		GetStrlen(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//The return value of ANSI characters under the corresponding UNICODE wcslen
 
 private:
 	int		codepage;
@@ -68,7 +68,7 @@ public:
 	virtual ~CUcs2Ansi() {};
 
 	const char *GetString(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);
-	int		GetStrlen(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);	//UNICODE字符在对应的ANSI的strlen下的返回值
+	int		GetStrlen(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);	//The return value of UNICODE characters under the corresponding ANSI strlen
 
 private:
 	int		codepage;
@@ -80,8 +80,8 @@ public:
 	CU82Ucs(){}
 	virtual ~CU82Ucs() {};
 
-	const wchar_t *GetString(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI和UNICODE互转
-	int		GetStrlen(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI字符在对应的UNICODE的wcslen下的返回值
+	const wchar_t *GetString(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//ANSI and UNICODE conversion
+	int		GetStrlen(const char *_src, wchar_t *_dst = nullptr, int _dstsize = 0);	//The return value of ANSI characters under the corresponding UNICODE wcslen
 };
 
 class CUcs2U8 : public CCharsCodeConv
@@ -91,7 +91,7 @@ public:
 	virtual ~CUcs2U8() {};
 
 	const char *GetString(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);
-	int		GetStrlen(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);	//UNICODE字符在对应的ANSI的strlen下的返回值
+	int		GetStrlen(const wchar_t *_src, char *_dst = nullptr, int _dstsize = 0);	//The return value of UNICODE characters under the corresponding ANSI strlen
 };
 
 class CTextConv2UCS2

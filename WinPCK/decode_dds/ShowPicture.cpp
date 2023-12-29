@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ShowPicture.cpp: 显示dds、tga图像
-// 解码dds、tga并显示
+// ShowPicture.cpp: display dds, tga images
+// Decode dds, tga and display
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -37,11 +37,11 @@ CShowPicture::CShowPicture(HWND hWndShow, LPBYTE &_buffer, size_t _bufsize, LPCW
 	}
 
 	if(NULL != m_resBufferInClass) {
-		//复制数据
+		//Copy data
 		memcpy(m_resBufferInClass, _buffer, _bufsize);
 	}
 
-	//复制完成后释放传入的内存
+	//Release the incoming memory after copying is complete
 	free(_buffer);
 	_buffer = NULL;
 	
@@ -92,11 +92,11 @@ LPCWSTR	CShowPicture::GetWindowTitle(LPWSTR	lpszTitle, size_t bufSize)
 	if(NULL == lpszTitle)
 		lpszTitle = szTitle;
 
-	//窗口文字
+	//window text
 	if(FMT_RAW != m_picFormat) {
-		swprintf_s(lpszTitle, MAX_PATH, L"图片查看 - %s, %dx%d, %S", m_lpszFileTitle, m_picWidth, m_picHeight, m_szPictureFormat);
+		swprintf_s(lpszTitle, MAX_PATH, L"Picture view - %s, %dx%d, %S", m_lpszFileTitle, m_picWidth, m_picHeight, m_szPictureFormat);
 	} else {
-		swprintf_s(lpszTitle, MAX_PATH, L"图片查看 - %s, %dx%d", m_lpszFileTitle, m_picWidth, m_picHeight);
+		swprintf_s(lpszTitle, MAX_PATH, L"Picture view - %s, %dx%d", m_lpszFileTitle, m_picWidth, m_picHeight);
 	}
 
 	//SetWindowText(m_hWndShow, lpszTitle);
@@ -107,20 +107,20 @@ BOOL CShowPicture::ShowTitleOnWindow()
 {
 	wchar_t szTitle[MAX_PATH];
 
-	//窗口文字
+	//window text
 	if(FMT_RAW != m_picFormat) {
 
-		swprintf_s(szTitle, MAX_PATH, L"图片查看 - %s, %dx%d, %S", m_lpszFileTitle, m_picWidth, m_picHeight, m_szPictureFormat);
+		swprintf_s(szTitle, MAX_PATH, L"Picture view - %s, %dx%d, %S", m_lpszFileTitle, m_picWidth, m_picHeight, m_szPictureFormat);
 
 	} else {
-		swprintf_s(szTitle, MAX_PATH, L"图片查看 - %s, %dx%d", m_lpszFileTitle, m_picWidth, m_picHeight);
+		swprintf_s(szTitle, MAX_PATH, L"Picture view - %s, %dx%d", m_lpszFileTitle, m_picWidth, m_picHeight);
 	}
 
 	SetWindowTextW(m_hWndShow, szTitle);
 	return TRUE;
 }
 
-//返回图像的宽和高
+//Returns the width and height of the image
 UINT CShowPicture::GetWidth()
 {
 	return m_picWidth;
@@ -135,14 +135,14 @@ UINT CShowPicture::GetHeight()
 void CalcZoomInAreaAndDrawPosition(__int64 &dst_xy, __int64 &dst_wh, __int64 &src_xy, __int64 &src_wh, double dZoomRatio, LONG iClientWidthHeight, UINT uiPicWidthHeight)
 {
 	/*
-	当缩放后图像大于窗口后，设定窗口左上角坐标为 0,0
-	左端未显示到的区域设定为left_invisible(绝对值),右端为right_invisible，设缩放率为Ratio，
-	则左侧未显示的实际图像大小区域为 left_invisible_real = (int)left_invisible/Ratio，余数为left_invisible_rem
-	右侧相同为right_invisible = tmp_dst_w - left_invisible - rectDlg.right，right_invisible_real = (int)right_invisible/Ratio，right_invisible_rem
-	同时相除后的余数(left_invisible_rem)为要取数据在缩放后显示在窗口上的偏移
-	设实际图像宽度为m_picWidth实际要取的数据为：visible_width_real = m_picWidth - left_invisible_real - right_invisible_real,
-	目标左上角显示坐标dst_x = left_invisible_rem
-	源左上角X坐标src_x = left_invisible_real
+	When the zoomed image is larger than the window, set the coordinates of the upper left corner of the window to 0,0
+	The area not displayed on the left end is set to left_invisible (absolute value), the right end is set to right_invisible, and the zoom rate is Ratio.
+	Then the actual image size area not displayed on the left is left_invisible_real = (int)left_invisible/Ratio, and the remainder is left_invisible_rem
+	The right side is the same as right_invisible = tmp_dst_w - left_invisible - rectDlg.right, right_invisible_real = (int)right_invisible/Ratio, right_invisible_rem
+	At the same time, the remainder after division (left_invisible_rem) is the offset of the data to be displayed on the window after scaling.
+	Assume the actual image width is m_picWidth. The actual data to be retrieved is: visible_width_real = m_picWidth - left_invisible_real - right_invisible_real,
+	The upper left corner of the target displays coordinates dst_x = left_invisible_rem
+	Source upper left corner X coordinate src_x = left_invisible_real
 	*/
 
 	__int64		left_invisible = -dst_xy;
@@ -162,19 +162,19 @@ void CalcZoomInAreaAndDrawPosition(__int64 &dst_xy, __int64 &dst_wh, __int64 &sr
 
 }
 
-//在设备上显示图像
+//Display image on device
 BOOL CShowPicture::Paint(__int64 nXOriginDest, __int64 nYOriginDest, int nXOriginSrc, int nYOriginSrc, double dZoomRatio)
 {
 	/*
-	设定窗口左上角坐标为 0,0
-	pic_x:待显示图像 的左上角相对于窗口的位置
+	Set the coordinates of the upper left corner of the window to 0,0
+	pic_x: The position of the upper left corner of the image to be displayed relative to the window
 	*/
 	RECT rectDlg;
 
 	HDC pDC = ::GetDC(m_hWndShow);
 	GetClientRect(m_hWndShow, &rectDlg);
 
-	//重计算源起点、宽高和目标起点、宽高
+	//Recalculate the source starting point, width and height and the target starting point, width and height
 	__int64 src_x = nXOriginSrc;
 	__int64 src_y = nYOriginSrc;
 	__int64 src_w = m_picWidth;
@@ -189,7 +189,7 @@ BOOL CShowPicture::Paint(__int64 nXOriginDest, __int64 nYOriginDest, int nXOrigi
 
 	if(((1.0 - EPSILON) < dZoomRatio) && ((1.0 + EPSILON) > dZoomRatio)) {
 		//if(isEqual(1.0, dZoomRatio)) {
-			//不缩放
+			//No scaling
 		if(nXOriginDest < 0) {
 
 			dst_x = 0;
@@ -204,18 +204,18 @@ BOOL CShowPicture::Paint(__int64 nXOriginDest, __int64 nYOriginDest, int nXOrigi
 		}
 
 		BitBlt(	
-			pDC,				// 目标 DC 句柄
-			(int)dst_x,				// 目标左上角X坐标
-			(int)dst_y,				// 目标左上角Y坐标
-			(int)dst_w,				// 目标宽度
-			(int)dst_h,				// 目标高度
-			m_MemDC, 			// 源 DC 句柄
-			(int)src_x,				// 源左上角X坐标
-			(int)src_y,				// 源左上角Y坐标
+			pDC,				// Target DC handle
+			(int)dst_x,				// X coordinate of the upper left corner of the target
+			(int)dst_y,				// Y coordinate of the upper left corner of the target
+			(int)dst_w,				// target width
+			(int)dst_h,				// target height
+			m_MemDC, 			// Source DC handle
+			(int)src_x,				// X coordinate of the upper left corner of the source
+			(int)src_y,				// Y coordinate of the upper left corner of the source
 			SRCCOPY);
 
 	} else {
-		//缩放
+		//Zoom
 		dst_w = (__int64)(m_picWidth * dZoomRatio + 0.5);
 		dst_h = (__int64)(m_picHeight * dZoomRatio + 0.5);
 
@@ -227,16 +227,16 @@ BOOL CShowPicture::Paint(__int64 nXOriginDest, __int64 nYOriginDest, int nXOrigi
 
 		SetStretchBltMode(pDC, COLORONCOLOR);
 		StretchBlt(
-			pDC,				// 目标 DC 句柄
-			(int)dst_x,				// 目标左上角X坐标
-			(int)dst_y,				// 目标左上角Y坐标
-			(int)dst_w,				// 目标宽度
-			(int)dst_h,				// 目标高度
-			m_MemDC,			// 源 DC 句柄
-			(int)src_x,				// 源左上角X坐标
-			(int)src_y,				// 源左上角Y坐标
-			(int)src_w,				// 源宽度
-			(int)src_h,				// 源高度
+			pDC,				// Target DC handle
+			(int)dst_x,				// X coordinate of the upper left corner of the target
+			(int)dst_y,				// Y coordinate of the upper left corner of the target
+			(int)dst_w,				// target width
+			(int)dst_h,				// target height
+			m_MemDC,			// Source DC handle
+			(int)src_x,				// X coordinate of the upper left corner of the source
+			(int)src_y,				// Y coordinate of the upper left corner of the source
+			(int)src_w,				// source width
+			(int)src_h,				// source height
 			SRCCOPY);
 	}
 
@@ -246,34 +246,34 @@ BOOL CShowPicture::Paint(__int64 nXOriginDest, __int64 nYOriginDest, int nXOrigi
 	return TRUE;
 }
 
-//在窗口上先显示好透明背景的格子
+//First display the grid with a transparent background on the window
 BOOL CShowPicture::DrawBlockOnDlg()
 {
 	//HDC pDC = ::GetDC(GetDlgItem(IDC_STATIC_PIC));
 	HDC pDC = ::GetDC(m_hWndShow);
 	//GetClientRect(hWnd, &rect);
 
-	//CDC MemDC; //首先定义一个显示设备对象
+	//CDC MemDC; //First define a display device object
 	HDC MemDCTemp;
-	//CBitmap MemBitmap;//定义一个位图对象
+	//CBitmap MemBitmap;//Define a bitmap object
 	HBITMAP MemBitmapTemp;
-	//随后建立与屏幕显示兼容的内存显示设备  
+	//Then create a memory display device compatible with the screen display  
 	m_MemDC = CreateCompatibleDC(NULL);
 	MemDCTemp = CreateCompatibleDC(NULL);
-	//这时还不能绘图，因为没有地方画
-	//下面建立一个与屏幕显示兼容的位图，位图的大小可以用窗口的大小 
+	//You can't draw at this time because there is no place to draw
+	//The following creates a bitmap that is compatible with the screen display. The size of the bitmap can be determined by the size of the window.
 	m_MemBitmap = CreateCompatibleBitmap(pDC, m_picWidth, m_picHeight);
 	MemBitmapTemp = CreateCompatibleBitmap(pDC, 24, 8);
 
 	ReleaseDC(m_hWndShow, pDC);
 
-	//将位图选入到内存显示设备中 
-	//只有选入了位图的内存显示设备才有地方绘图，画到指定的位图上 
+	//Select a bitmap into a memory display device 
+	//Only the memory display device with a bitmap selected can have a place to draw and draw to the specified bitmap.
 	HBITMAP pOldBit = (HBITMAP)SelectObject(m_MemDC, m_MemBitmap);
 	HBITMAP pOldBit1 = (HBITMAP)SelectObject(MemDCTemp, MemBitmapTemp);
 
-	//先用背景色将位图清除干净，这里我用的是白色作为背景 
-	//你也可以用自己应该用的颜色 
+	//First use the background color to clear the bitmap. Here I use white as the background.
+	//You can also use the colors you should use
 	SetBkColor(MemDCTemp, RGB(204, 204, 204));
 	RECT thisrect = { 0, 0, 24, 8 };
 	ExtTextOut(MemDCTemp, 0, 0, ETO_OPAQUE, &thisrect, NULL, 0, NULL);

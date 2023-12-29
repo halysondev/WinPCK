@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// DdsTgaDecoder.cpp: 将dds、tga的数据解码成DIB数据
-// 解码dds、tga的类
+// DdsTgaDecoder.cpp: Decode dds and tga data into DIB data
+// Decode dds, tga classes
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -30,7 +30,7 @@ UINT CDdsTgaDecoder::GetStride()
 	return m_stride;
 }
 
-//返回图像的宽和高
+//Returns the width and height of the image
 UINT CDdsTgaDecoder::GetWidth()
 {
 	return m_picWidth;
@@ -40,13 +40,13 @@ UINT CDdsTgaDecoder::GetHeight()
 	return m_picHeight;
 }
 
-//返回图像的m_decodedDIBFormat
+//Returns the m_decodedDIBFormat of the image
 PixelFormat CDdsTgaDecoder::GetPixelFormat()
 {
 	return m_decodedDIBFormat;
 }
 
-#pragma region 对外开放的解码函数
+#pragma region Open decoding function
 
 BOOL CDdsTgaDecoder::DecodeDDS(LPBYTE _In_data, UINT32 _in_bufsize, LPBYTE &_out_data, UINT &_out__picWidth, UINT &_out_picHeight, LPSTR _out_szFormatDdsTga)
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 /*
-	PCK版本判断，代码源于BeySoft的PckLib
+	PCK version judgment, the code comes from BeySoft’s PckLib
 */
 #pragma warning ( disable : 4309 )
 

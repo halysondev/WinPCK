@@ -11,7 +11,7 @@ private:
 	~CPckClassCodepage();
 
 public:
-	//文件名转码，返回值为转换后的字符串的长度(strlen,wcslen)
+	//File name transcoding, the return value is the length of the converted string (strlen, wcslen)
 	//ansi -> uc cp936
 	static size_t	PckFilenameCode2UCS(const char *_in, wchar_t *_out, size_t _outsize);
 	//uc -> ansi cp936

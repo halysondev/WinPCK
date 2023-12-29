@@ -3,8 +3,8 @@
 
 BOOL CPckThreadRunner::putCompressedDataQueue(PCKINDEXTABLE &cPckFileIndexToCompress)
 {
-#pragma region 减少内存消耗
-	//用到的次数很少
+#pragma region Reduce memory consumption
+	//Used rarely
 	DWORD dwUnusedMemory = cPckFileIndexToCompress.dwMallocSize - cPckFileIndexToCompress.cFileIndex.dwFileCipherTextSize;
 	if ((10 * 1024 * 1024) < dwUnusedMemory) {
 		LPBYTE newbuf = (LPBYTE)realloc(cPckFileIndexToCompress.compressed_file_data, cPckFileIndexToCompress.cFileIndex.dwFileCipherTextSize);

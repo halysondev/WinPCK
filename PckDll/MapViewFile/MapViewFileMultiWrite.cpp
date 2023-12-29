@@ -140,22 +140,22 @@ DWORD CMapViewFileMultiWrite::Write(LPVOID buffer, DWORD dwBytesToWrite)
 	return dwBytesWriteAll;
 }
 
-//创建时，剩余文件的空间量不够时，添加量
+//When creating, if the amount of remaining file space is not enough, add the amount
 #define	PCK_STEP_ADD_SIZE				(64*1024*1024)
-//创建时，剩余文件的空间量小于此值时，扩展数据
+//When the amount of space remaining in the file is less than this value when created, the data is expanded.
 #define	PCK_SPACE_DETECT_SIZE			(4*1024*1024)
-//创建时，剩余文件的空间量小于此值(PCK_SPACE_DETECT_SIZE)时，扩展数据的值
+//The value of the extended data when the amount of remaining file space is less than this value (PCK_SPACE_DETECT_SIZE) when created
 //#define PCK_RENAME_EXPAND_ADD			(16*1024*1024)
 
-//qwCurrentPckFilesize为已经存在的文件大小，qwToAddSpace是需要扩大的大小，返回值为（qwCurrentPckFilesize + 可以再扩大的最大大小）
+//qwCurrentPckFilesize is the size of the existing file, qwToAddSpace is the size that needs to be expanded, and the return value is (qwCurrentPckFilesize + the maximum size that can be expanded)
 QWORD CMapViewFileMultiWrite::GetExpanedPckFilesize(QWORD qwDiskFreeSpace, QWORD qwToAddSpace, QWORD qwCurrentPckFilesize)
 {
-	//计算大概需要多大空间qwTotalFileSize
+	//Calculate how much space is required qwTotalFileSize
 	QWORD	qwTotalFileSizeTemp = qwToAddSpace;
 
 	//if (-1 != qwDiskFreeSpace) {
 
-		//如果申请的空间小于磁盘剩余空间，则申请文件空间大小等于剩余磁盘空间
+		//If the requested space is less than the remaining disk space, the requested file space size is equal to the remaining disk space.
 		if (qwDiskFreeSpace < qwTotalFileSizeTemp)
 			qwTotalFileSizeTemp = qwDiskFreeSpace;
 	//}
@@ -168,9 +168,9 @@ BOOL CMapViewFileMultiWrite::IsNeedExpandWritingFile(
 	QWORD dwWritingAddressPointer,
 	QWORD dwFileSizeToWrite)
 {
-	//判断一下dwAddress的值会不会超过dwTotalFileSizeAfterCompress
-	//如果超过，说明文件空间申请的过小，重新申请一下ReCreateFileMapping
-	//新文件大小在原来的基础上增加(lpfirstFile->dwFileSize + 1mb) >= 64mb ? (lpfirstFile->dwFileSize + 1mb) :64mb
+	//Judge whether the value of dwAddress will exceed dwTotalFileSizeAfterCompress
+	//If it exceeds, it means that the file space applied for is too small, re-apply for ReCreateFileMapping
+	//The new file size is increased from the original one (lpfirstFile->dwFileSize + 1mb) >= 64mb? (lpfirstFile->dwFileSize + 1mb): 64mb
 	//1mb=0x100000
 	//64mb=0x4000000
 
@@ -178,7 +178,7 @@ BOOL CMapViewFileMultiWrite::IsNeedExpandWritingFile(
 
 	if ((dwWritingAddressPointer + dwFileSizeToWrite + PCK_SPACE_DETECT_SIZE) > qwOldFileSize) {
 
-		//打印日志
+		//Print log
 		//CPckClassLog			m_PckLogFD;
 
 		QWORD qwSizeToExpand = ((dwFileSizeToWrite + PCK_SPACE_DETECT_SIZE) > PCK_STEP_ADD_SIZE ? (dwFileSizeToWrite + PCK_SPACE_DETECT_SIZE) : PCK_STEP_ADD_SIZE);
@@ -193,7 +193,7 @@ BOOL CMapViewFileMultiWrite::IsNeedExpandWritingFile(
 		}
 
 		if (dwFileSizeToWrite > qwSizeToExpand) {
-			//m_PckLogFD.PrintLogW("磁盘空间不足，申请空间：%d，剩余空间：%d", dwFileSizeToWrite, qwSizeToExpand);
+			//m_PckLogFD.PrintLogW("Insufficient disk space, requested space: %d, remaining space: %d", dwFileSizeToWrite, qwSizeToExpand);
 			//SetErrMsgFlag(PCK_ERR_DISKFULL);
 			return FALSE;
 		}
@@ -248,7 +248,7 @@ BOOL CMapViewFileMultiWrite::ViewAndWrite2(QWORD dwAddress, const void *  buffer
 		if (0 > iCellIDMidCount)
 			return FALSE;
 
-		//计算一下各个文件需要的大小
+		//Calculate the required size of each file
 		size_t sizeBegin = m_file_cell[iCellIDBegin].qwCellAddressEnd - dwAddress;
 		size_t sizeEnd = dwAddress + dwSize - m_file_cell[iCellIDEnd].qwCellAddressBegin;
 
@@ -285,7 +285,7 @@ BOOL CMapViewFileMultiWrite::ViewAndWrite2(QWORD dwAddress, const void *  buffer
 }
 
 
-//使用MapViewOfFile进行写操作
+//Calculate the required size of each file
 BOOL CMapViewFileMultiWrite::Write2(QWORD dwAddress, const void* buffer, DWORD dwBytesToWrite)
 {
 	static int nBytesWriten = 0;

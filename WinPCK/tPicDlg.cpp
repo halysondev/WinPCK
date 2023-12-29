@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// tPicDlg.cpp: WinPCK 界面线程部分
-// 对话框代码
+// tPicDlg.cpp: WinPCK interface thread part
+// Dialog code
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2017.12.26
 //////////////////////////////////////////////////////////////////////
 
@@ -52,7 +52,7 @@ BOOL TPicDlg::EvCommand(WORD wNotifyCode, WORD wID, LPARAM hwndCtl)
 
 BOOL TPicDlg::SaveFile()
 {
-	//导出
+	//Export
 	if(FMT_RAW != iFormat) {
 		WCHAR	szFilename[MAX_PATH];
 		::GetCurrentDirectoryW(MAX_PATH, szFilename);
@@ -89,7 +89,7 @@ void TPicDlg::InitFixedShowPositionAndShowWindow()
 	} else {
 
 		::SetWindowPos(hWnd, NULL, 0, 0, cx, cy, SWP_NOZORDER | SWP_NOMOVE);
-		//显示窗口
+		//display window
 		Show();
 	}
 }
@@ -151,7 +151,7 @@ BOOL TPicDlg::EventButton(UINT uMsg, int nHitTest, POINTS pos)
 
 		break;
 	case WM_LBUTTONDBLCLK:
-		//导出
+		//Export
 		this->SaveFile();
 		break;
 

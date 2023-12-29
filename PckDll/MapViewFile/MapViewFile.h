@@ -1,12 +1,12 @@
 #pragma once
 //////////////////////////////////////////////////////////////////////
-// MapViewFile.h: 用于映射文件视图
-// 
+// MapViewFile.h: used to map file views
 //
-// 此程序由 李秋枫/stsm/liqf 编写
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This program is written by Li Qiufeng/stsm/liqf
+//
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -88,14 +88,14 @@ public:
 	void	UnMaping();
 	void	clear();
 
-	//获取当前文件的磁盘名
+	//Get the disk name of the current file
 	const char*	GetFileDiskName();
 
-	//强制缓存写入磁盘
+	//Force cache to be written to disk
 	virtual BOOL	FlushFileBuffers() { throw std::exception("programe can not reach here"); }
 	
 protected:
-	////自动生成CreateFileMappingA时所需要的name
+	////Automatically generate the name required when CreateFileMappingA
 	LPCSTR	GenerateMapName();
 
 	void MakeUnlimitedPath(LPWSTR _dst, LPCWSTR	_src, size_t size);
@@ -114,16 +114,16 @@ protected:
 	std::vector<void*> vMapAddress;
 
 
-	//文件对应的磁盘
+	//The disk corresponding to the file
 	char	m_szDisk[8];
 
-	//用于存放MapName
+	//Used to store MapName
 	char szFileMappingName[32];
 
 private:
 /*
-创建为NTFS稀疏文件
-流程为：CreateFile->SetSparseFile->CreateFileMapping->MapViewOfFile->UnmapViewOfFile->CloseHandle
+Created as NTFS sparse file
+The process is：CreateFile->SetSparseFile->CreateFileMapping->MapViewOfFile->UnmapViewOfFile->CloseHandle
 */
 	virtual void	SetSparseFile() { throw std::exception("programe can not reach here"); }
 };

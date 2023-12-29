@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// MapViewFile.cpp: 用于映射文件视图
-// 
+// MapViewFile.cpp: used to map file views
 //
-// 此程序由 李秋枫/stsm/liqf 编写，部分代码取自FastCopy
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This program is written by Li Qiufeng/stsm/liqf, and part of the code is taken from FastCopy
+//
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -56,8 +56,8 @@ void CMapViewFile::clear()
 void CMapViewFile::MakeUnlimitedPath(LPWSTR _dst, LPCWSTR	_src, size_t size)
 {
 	WCHAR	*prefix;
-	// (isUNC ? 1 : 0) ... PATH_UNC_PREFIX の場合、\\server -> \\?\UNC\server 
-	//  にするため、\\server の頭の \ を一つ潰す。
+	// (isUNC ? 1 : 0) ... If PATH_UNC_PREFIX then \\server -> \\?\UNC\server
+	// Delete one \ at the beginning of \\server to make it //.
 	BOOL	isUNC = ('\\' == *_src) ? _src++, TRUE : FALSE;
 
 	prefix = isUNC ? PATHW_UNC_PREFIX : PATHW_LOCAL_PREFIX;
@@ -166,7 +166,7 @@ BOOL CMapViewFile::Open(LPCWSTR lpszFilename, DWORD dwDesiredAccess, DWORD dwSha
 
 uint8_t* CMapViewFile::ViewReal(QWORD qwAddress, DWORD dwSize, DWORD dwDesiredAccess)
 {
-	//文件映射地址必须是64k(0x10000)的整数
+	//The file mapping address must be an integer of 64k (0x10000)
 
 	UNQWORD	qwViewAddress;
 	qwViewAddress.qwValue = qwAddress;
@@ -272,7 +272,7 @@ QWORD CMapViewFile::GetFileSize()
 	return cqwSize.qwValue;
 }
 
-//自动生成CreateFileMappingA时所需要的name，要求同时正在使用的FileMapping的name不可重复
+//Automatically generate the name required when CreateFileMappingA. It is required that the name of the FileMapping being used at the same time cannot be repeated.
 LPCSTR CMapViewFile::GenerateMapName()
 {
 	//

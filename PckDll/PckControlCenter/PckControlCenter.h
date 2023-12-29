@@ -1,17 +1,17 @@
 //////////////////////////////////////////////////////////////////////
-// CPckControlCenter.h: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件,界面与PCK类的数据交互，控制中心
+// CPckControlCenter.h: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Header file, data interaction between interface and PCK class, control center
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.10.10
 //////////////////////////////////////////////////////////////////////
 
 #pragma once
-
+#include <string>
 #include "PckStructs.h"
 #include "PckClassLog.h"
 #include <vector>
@@ -36,7 +36,7 @@ class CPckClassLog;
 
 class EXPORT_CLASS CPckControlCenter
 {
-	//函数
+	//function
 public:
 	CPckControlCenter();
 	virtual ~CPckControlCenter();
@@ -48,7 +48,7 @@ private:
 	void	init();
 	void	uninit();
 	void	Reset(uint32_t dwUIProgressUpper = 1);
-#pragma region 打开关闭文件
+#pragma region Open and close files
 
 	void	Close();
 public:
@@ -57,34 +57,34 @@ public:
 
 #pragma endregion
 
-#pragma region 重命名节点
+#pragma region Rename node
 
-	//重命名一个节点
+	//Rename a node
 	BOOL	RenameEntry(LPENTRY lpFileEntry, LPCWSTR lpszReplaceString);
-	//提交
+	//submit
 	BOOL	RenameSubmit();
 
 #pragma endregion
 
-#pragma region 预览解压文件
+#pragma region Preview unzipped files
 
-	//预览文件
+	//Preview file
 	BOOL		GetSingleFileData(LPCENTRY lpFileEntry, char *buffer, size_t sizeOfBuffer = 0);
 
-	//解压文件
+	//unzip files
 	BOOL		ExtractFiles(const PCK_UNIFIED_FILE_ENTRY **lpFileEntryArray, int nEntryCount, LPCWSTR lpszDestDirectory);
 	BOOL		ExtractAllFiles(LPCWSTR lpszDestDirectory);
 
 #pragma endregion
 
-#pragma region 重建pck文件
-	//重建pck文件
+#pragma region Rebuild pck file
+	//Rebuild pck file
 	BOOL	TestScript(LPCWSTR lpszScriptFile);
 	BOOL	RebuildPckFile(LPCWSTR lpszScriptFile, LPCWSTR szRebuildPckFile, BOOL bUseRecompress);
 
 #pragma endregion
 
-#pragma region 游戏精简
+#pragma region Game streamlined
 	BOOL	StripPck(LPCWSTR lpszStripedPckFile, int flag);
 #pragma endregion
 
@@ -92,27 +92,27 @@ public:
 
 #pragma region create or update pck file
 
-	//多个文件列表进行压缩时使用的vector操作
+	//Vector operation used when compressing multiple file lists
 	void	StringArrayReset();
 	void	StringArrayAppend(LPCWSTR lpszFilePath);
 	BOOL	UpdatePckFileSubmit(LPCWSTR szPckFile, LPCENTRY lpFileEntry);
 
 #pragma endregion
 
-#pragma region 删除节点
-	//删除一个节点
+#pragma region Delete node
+	//Delete a node
 	BOOL	DeleteEntry(LPCENTRY lpFileEntry);
-	//提交
+	//submit
 	BOOL	DeleteEntrySubmit();
 
 #pragma endregion
 
 
-#pragma region 版本相关
+#pragma region Version related
 
 	int		GetPckVersion();
 	BOOL	SetPckVersion(int verID);
-	//获取当前配置名称
+	//Get the current configuration name
 	LPCWSTR	GetCurrentVersionName();
 	static uint32_t	GetVersionCount();
 	static LPCWSTR	GetVersionNameById(int verID);
@@ -120,10 +120,10 @@ public:
 
 #pragma endregion
 
-#pragma region 节点属性操作
+#pragma region Node attribute operations
 
 	LPCENTRY GetRootNode();
-	//获取node路径
+	//Get node path
 	static BOOL			GetCurrentNodeString(LPWSTR szCurrentNodePathString, LPCENTRY lpFileEntry);
 	LPCENTRY			GetFileEntryByPath(LPCWSTR _in_szCurrentNodePathString);
 #pragma endregion
@@ -132,9 +132,9 @@ public:
 
 	BOOL				IsValidPck();
 
-	//获取文件数
+	//Get the number of files
 	uint32_t			GetPckFileCount();
-	//实际文件大小
+	//actual file size
 	uint64_t			GetPckSize();
 	uint64_t			GetPckDataAreaSize();
 	uint64_t			GetPckRedundancyDataSize();
@@ -149,21 +149,21 @@ public:
 
 	static uint64_t		GetFileOffset(LPCENTRY lpFileEntry);
 
-	//设置附加信息
+	//Set extensions
 	const char*			GetAdditionalInfo();
 	static uint32_t		GetAdditionalInfoMaxSize();
 	BOOL				SetAdditionalInfo(LPCSTR lpszAdditionalInfo);
 
-	//是否是支持更新的文件
+	//Whether it is a file that supports updating
 	BOOL				isSupportAddFileToPck();
 
 #pragma endregion
 
-	//打开、关闭、复原等事件注册
+	//Open, close, restore and other event registration
 	static void		regMsgFeedback(void* pTag, FeedbackCallback _FeedbackCallBack);
 	static int		DefaultFeedbackCallback(void* pTag, int32_t eventId, size_t wParam, ssize_t lParam);
 
-#pragma region 查询及目录浏览
+#pragma region Inquiries and catalog browsing
 private:
 	static void		DefaultShowFilelistCallback(void* _in_param, int sn, LPCWSTR lpszFilename, int entry_type, uint64_t qwFileSize, uint64_t qwFileSizeCompressed, void* fileEntry);
 
@@ -173,8 +173,8 @@ public:
 
 #pragma endregion
 
-#pragma region 线程控制
-	//线程运行参数
+#pragma region thread control
+	//Thread running parameters
 	BOOL			isThreadWorking();
 	void			ForceBreakThreadWorking();
 #pragma endregion
@@ -183,38 +183,38 @@ public:
 	int				GetLastErrorMsg();
 	BOOL			isLastOptSuccess();
 
-#pragma region 内存占用
-	//内存占用
+#pragma region Memory usage
+	//Memory usage
 	uint32_t			getMTMemoryUsed();
-	//内存值
+	//memory value
 	void			setMTMaxMemory(uint32_t dwMTMaxMemory);
 	uint32_t			getMTMaxMemory();
 
-	//最大内存
+	//Maximum memory
 	static uint32_t	getMaxMemoryAllowed();
 
 #pragma endregion
 
-#pragma region 线程数
-	//线程数
+#pragma region Threads
+	//Threads
 	uint32_t	getMaxThread();
 	void	setMaxThread(uint32_t dwThread);
-	//线程默认参数
+	//Thread default parameters
 	static uint32_t	getMaxThreadUpperLimit();
 #pragma endregion
 
-#pragma region 压缩等级
+#pragma region Compression level
 
-	//压缩等级
+	//Compression level
 	uint32_t	getCompressLevel();
 	void	setCompressLevel(uint32_t dwCompressLevel = Z_DEFAULT_COMPRESS_LEVEL);
 
-	//压缩等级默认参数
+	//Compression level default parameters
 	static uint32_t	getMaxCompressLevel();
 	static uint32_t	getDefaultCompressLevel();
 #pragma endregion
 
-#pragma region 进度相关
+#pragma region Progress related
 
 	uint32_t	getUIProgress();
 	void	setUIProgress(uint32_t dwUIProgress);
@@ -222,7 +222,7 @@ public:
 
 #pragma endregion
 
-#pragma region 打印添加/新增文件结果
+#pragma region Print the results of adding/adding files
 
 	uint32_t	GetUpdateResult_OldFileCount();
 	uint32_t	GetUpdateResult_PrepareToAddFileCount();
@@ -237,7 +237,7 @@ private:
 	FMTPCK	GetPckTypeFromFilename(const wchar_t * lpszFile);
 
 	LPPCK_PATH_NODE				m_lpPckRootNode;
-	std::vector<std::wstring>	lpszFilePathToAdd;	//对添加多个文件时提供数据
+	std::vector<std::wstring>	lpszFilePathToAdd;	//Provide data when adding multiple files
 
 	std::wstring				szUpdateResultString;
 

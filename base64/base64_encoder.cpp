@@ -1,14 +1,14 @@
 
 #include "base64.h"
 
-const unsigned char BASE64_PADDING='=';  //输入数据不足3的倍数时 输出字符后面填充'='号
+const unsigned char BASE64_PADDING='=';  //When the input data is less than a multiple of 3, the '=' sign is filled after the output character.
 #if BASE64_ZUP
 const unsigned char BASE64_CODE[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-";
 #else
 const unsigned char BASE64_CODE[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 #endif
 
-//编码函数(原数据地址，原数据字节大小，编码输出地址)
+//Encoding function (original data address, original data byte size, encoding output address)
 BEXTERN void BEXPORT base64_encode01(const void* pdata, const uint32_t data_size, void* out_pcode)
 {
 	const uint8_t* input = (const uint8_t*)pdata;

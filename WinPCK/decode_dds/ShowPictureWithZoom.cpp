@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ShowPictureWithZoom.cpp: 显示缩放的dds、tga图像
-// 将解码的dds、tga图像进行缩放后进行显示
+// ShowPictureWithZoom.cpp: Display zoomed dds, tga images
+// Scale the decoded dds and tga images and display them
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -36,24 +36,24 @@ double CShowPictureWithZoom::GetZoomRatio()
 void CalcZoomPictureAtOneDimensional(int iClientPointXY, __int64 &_showXY, UINT64 &_picWidthHeight, double _dZoomRatio, UINT _RealPicWidthHeight, LONG	lClientWidthHeight)
 {
 	/*
-	计算m_ShowX,m_ShowY
-	当前显示大小大于窗口时：
-	缩放以当前鼠标位置为中心缩放
-	假设鼠标的点在图片上的位置为rx,ry, 鼠标在窗口上的位置为mx,my，图片0,0在窗口上的显示点为sx,sy，则rx=mx-sx
-	缩放以当前鼠标位置为中心缩放，则鼠标在图片上的点不动，就是向量值不动，设x方向上的向量值为p,设当前图片宽度为sw，则p=rx/sw=(mx-sx)/sw
-	缩放后图片宽度变化为sw1,显示点变化为sx1，p不变，p=(mx-sx1)/sw1，得到sx1 = mx - (mx-sx)*sw1/sw
+	Calculate m_ShowX,m_ShowY
+	When the current display size is larger than the window:
+	Zoom zooms centered on the current mouse position
+	Assume that the position of the mouse point on the picture is rx, ry, the position of the mouse on the window is mx, my, and the display point of picture 0,0 on the window is sx, sy, then rx=mx-sx
+	The zoom is centered on the current mouse position. If the mouse point on the picture does not move, that is, the vector value does not move. Let the vector value in the x direction be p, and let the current picture width be sw, then p=rx/sw=( mx-sx)/sw
+	After scaling, the width of the picture changes to sw1, the display point changes to sx1, p remains unchanged, p=(mx-sx1)/sw1, and we get sx1 = mx - (mx-sx)*sw1/sw
 	*/
 
 	int mouseXY = iClientPointXY;
-	//当鼠标点在图像之外时，以图像边界为准
+	//When the mouse pointer is outside the image, the image boundary shall prevail.
 	if(_showXY > mouseXY)mouseXY = _showXY;
 	__int64 iShowRightBottom = _showXY + _picWidthHeight;
 	if(iShowRightBottom < mouseXY)mouseXY = iShowRightBottom;
 
-	//计算缩放后的m_ShowX, m_ShowY
+	//Calculate the scaled m_ShowX, m_ShowY
 	UINT64	dwShowPicWidthHeight = _dZoomRatio * _RealPicWidthHeight;
 
-	//当显示的图片宽度大于当前窗口时
+	//When the displayed image width is larger than the current window
 
 	if(lClientWidthHeight < dwShowPicWidthHeight) {
 		_showXY = mouseXY - (mouseXY - _showXY) * dwShowPicWidthHeight / _picWidthHeight;
@@ -69,7 +69,7 @@ void CalcZoomPictureAtOneDimensional(int iClientPointXY, __int64 &_showXY, UINT6
 void CShowPictureWithZoom::ZoomPictureAtPoint(double dZoomRatio, __int64 pos_x, __int64 pos_y)
 {
 
-	//分别计算X和Y方向上以当前点进行缩放的结果
+	//Calculate the results of scaling based on the current point in the X and Y directions respectively.
 
 	RECT	rectWin;
 	GetClientRect(m_hWndShow, &rectWin);
@@ -83,10 +83,10 @@ void CShowPictureWithZoom::ZoomPictureAtPoint(double dZoomRatio, __int64 pos_x, 
 void CShowPictureWithZoom::ZoomWithMousePoint(UINT nFlags, short zDelta, __int64 pos_x, __int64 pos_y)
 {
 
-	//最大放大倍数为8倍，最小为适应当前窗口大小或1.0
+	//Maximum magnification is 8x, minimum is to fit current window size or 1.0
 	double dZoomChangeRatio = 1.0;
 	double dNextZoomRatio;
-	//放大
+	//enlarge
 	if(0 < zDelta) {
 
 		dZoomChangeRatio *= (zDelta / 120.0 * CHANGE_RATIO);
@@ -104,11 +104,11 @@ void CShowPictureWithZoom::ZoomWithMousePoint(UINT nFlags, short zDelta, __int64
 			m_dZoomRatioShow = dNextZoomRatio;
 		}
 
-		//缩小
+		//zoom out
 	} else if(0 > zDelta) {
 		dZoomChangeRatio /= (zDelta / (-120.0) * CHANGE_RATIO);
 
-		//限制缩放范围
+		//Limit zoom range
 		double dMinZoomRatio = (m_fixedZoomRatio > (1.0 - EPSILON)) ? 1.0 : m_fixedZoomRatio;
 
 		if(dMinZoomRatio > (m_dZoomRatio + EPSILON))
@@ -144,13 +144,13 @@ void CShowPictureWithZoom::MovePicture(int xOffset, int yOffset)
 	RECT	rectWin;
 	GetClientRect(m_hWndShow, &rectWin);
 
-	//当显示的图片宽度大于当前窗口时
+	//When the displayed image width is larger than the current window
 	if(rectWin.right < m_ShowPicWidth) {
 
 		int min_x = (int)rectWin.right - (int)m_ShowPicWidth;
 
-		//当显示区域大于窗口时，图片左上角不能大于0
-		//鼠标向左动
+		//When the display area is larger than the window, the upper left corner of the picture cannot be greater than 0
+		//Move the mouse to the left
 		if(xOffset > 0) {
 
 			if(min_x <= m_ShowX) {
@@ -167,12 +167,12 @@ void CShowPictureWithZoom::MovePicture(int xOffset, int yOffset)
 
 	}
 
-	//当显示的图片高度大于当前窗口时
+	//When the height of the displayed picture is greater than the current window
 	if(rectWin.bottom < m_ShowPicHeight) {
 
 		int min_y = (int)rectWin.bottom - (int)m_ShowPicHeight;
 
-		//鼠标向上动
+		//Mouse moves up
 		if(yOffset > 0) {
 
 			if(min_y <= m_ShowY) {
@@ -206,7 +206,7 @@ void CShowPictureWithZoom::CalcMinZoomRatio()
 BOOL CShowPictureWithZoom::CalcFixedRatioAndSizeOnInit(__int64 &_inout_cx, __int64 &_inout_cy, int _in_min_cx, int _in_min_cy)
 {
 
-	//当前分辨率
+	//Current resolution
 	const int width = GetSystemMetrics(SM_CXSCREEN);
 	const int height = GetSystemMetrics(SM_CYSCREEN);
 
@@ -214,7 +214,7 @@ BOOL CShowPictureWithZoom::CalcFixedRatioAndSizeOnInit(__int64 &_inout_cx, __int
 	double screeny_d_realy = height / (double)m_picHeight;
 
 	BOOL bNeedShowMax = TRUE;
-	//比较screenx_d_realx和screeny_d_realy，哪个小说明哪个边先越界
+	//Compare screenx_d_realx and screeny_d_realy, which one indicates which side crosses the boundary first
 	if(screenx_d_realx < screeny_d_realy) {
 
 		if(width < m_picWidth) {
@@ -258,7 +258,7 @@ BOOL CShowPictureWithZoom::CalcFixedRatioAndSizeOnInit(__int64 &_inout_cx, __int
 
 double CShowPictureWithZoom::CalcFixedRatioByClientSize(UINT uRealX, UINT uRealY, UINT uToX, UINT uToY)
 {
-	//计算一下多大是正好的缩放率
+	//Calculate what is the right zoom ratio
 	double zoomx = uToX / (double)uRealX;
 	double zoomy = uToX / (double)uRealX;
 
@@ -270,7 +270,7 @@ void CShowPictureWithZoom::ChangeClientSize(WORD nWidth, WORD nHeight)
 	m_ShowX = ((int)nWidth - (int)m_ShowPicWidth) / 2;
 	m_ShowY = ((int)nHeight - (int)m_ShowPicHeight) / 2;
 
-	//计算一下多大是正好的缩放率
+	//Calculate what is the right zoom ratio
 	m_fixedZoomRatio = CalcFixedRatioByClientSize(m_picWidth, m_picHeight, nWidth, nHeight);
 
 	Paint();
@@ -280,7 +280,7 @@ void CShowPictureWithZoom::Paint()
 {
 	CShowPicture::Paint(m_ShowX, m_ShowY, 0, 0, m_dZoomRatioShow);
 
-	//计算无效区域
+	//Calculate invalid area
 	//x
 	RECT	rectWin;
 	GetClientRect(m_hWndShow, &rectWin);

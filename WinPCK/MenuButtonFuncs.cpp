@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// MenuButtonFuncs.cpp: WinPCK 界面线程部分
-// 界面按钮功能
+// MenuButtonFuncs.cpp: WinPCK interface thread part
+// Interface button function
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.9.4
 //////////////////////////////////////////////////////////////////////
 
@@ -190,7 +190,7 @@ void TInstDlg::MenuAbout()
 		MB_OK | MB_ICONASTERISK);
 }
 
-//游戏精简
+//Game streamlined
 void TInstDlg::MenuStrip()
 {
 	if (pck_isThreadWorking())

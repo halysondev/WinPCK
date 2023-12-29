@@ -1,12 +1,12 @@
 
 #include "PckClassWriteOperator.h"
 
-//新建、更新pck包
+//Create and update pck packages
 BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vector<wstring> &lpszFilePath, const PCK_PATH_NODE* lpNodeToInsert)
 {
-	DWORD		dwNewFileCount = 0;			//文件数量, 原pck文件中的文件数
+	DWORD		dwNewFileCount = 0;			//Number of files, number of files in the original pck file
 	DWORD		dwDuplicateFileCount = 0;
-	uint64_t		qwTotalNewFileSize = 0;						//未压缩时所有文件大小
+	uint64_t		qwTotalNewFileSize = 0;						//All file sizes when uncompressed
 
 	int			level = m_lpPckParams->dwCompressLevel;
 	int			threadnum = m_lpPckParams->dwMTThread;
@@ -14,15 +14,15 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 	uint64_t		dwAddressWhereToAppendData;
 	THREAD_PARAMS		cThreadParams;
 
-	//开始查找文件
+	//Start looking for files
 	const PCK_PATH_NODE*		lpNodeToInsertPtr;
 
-#pragma region 重置压缩参数
+#pragma region Reset compression parameters
 	m_zlib.init_compressor(level);
 #pragma endregion
 
 
-#pragma region 设置参数
+#pragma region Setting parameters
 	
 	m_FilesToBeAdded.clear();
 	m_PckAllInfo.lpFilesToBeAdded = &m_FilesToBeAdded;
@@ -31,10 +31,10 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 
 		lpNodeToInsertPtr = lpNodeToInsert;
 
-		//从文件尾添加数据，操作失败后可回退
+		//Add data from the end of the file, and you can roll back if the operation fails.
 		dwAddressWhereToAppendData = m_PckAllInfo.qwPckSize;
 
-		//取得当前节点的相对路径
+		//Get the relative path of the current node
 		if(!GetCurrentNodeString(cThreadParams.cDataFetchMethod.szCurrentNodeString, lpNodeToInsert)) {
 			assert(FALSE);
 			return FALSE;
@@ -47,7 +47,7 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 			TEXT_LOG_LEVEL_THREAD, level, threadnum);
 
 	} else {
-		//新建文件
+		//create a new file
 		//m_PckAllInfo.dwAddressOfFileEntry = PCK_DATA_START_AT;
 		dwAddressWhereToAppendData = PCK_DATA_START_AT;
 
@@ -65,7 +65,7 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 
 #pragma endregion
 
-#pragma region 遍历待添加的文件 
+#pragma region Traverse the files to be added 
 	if(!EnumAllFilesByPathList(lpszFilePath, dwNewFileCount, qwTotalNewFileSize, m_PckAllInfo.lpFilesToBeAdded))
 		return FALSE;
 
@@ -73,37 +73,37 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 
 	m_PckAllInfo.dwFileCountToAdd = dwNewFileCount;
 #pragma endregion
-	//参数说明：
-	// mt_dwFileCount	添加的文件总数，计重复
-	// dwFileCount		计算过程使用参数，在下面的计算过程中将使用此参数表示添加的文件总数，不计重复
+	//Parameter Description：
+	// mt_dwFileCount	Total number of files added, including duplicates
+	// dwFileCount		The calculation process uses parameters. This parameter will be used in the following calculation process to represent the total number of files added, excluding duplicates.
 
-	//文件数写入窗口类中保存以显示进度
+	//The number of files is written to the window class and saved to show progress
 	SetParams_ProgressUpper(dwNewFileCount);
 
-	//计算大概需要多大空间qwTotalFileSize
+	//Calculate how much space is required qwTotalFileSize
 	cThreadParams.qwCompressTotalFileSize = GetPckFilesizeByCompressed(szPckFile, qwTotalNewFileSize, m_PckAllInfo.qwPckSize);
 
-	//与原来目录中的文件对比，是否有重名
-	//策略：无条件覆盖吧				如果重名且都为文件或文件夹，则覆盖
+	//Compare with the files in the original directory to see if there are duplicate names
+	//Strategy: Unconditionally overwrite it. If the names are the same and both are files or folders, then overwrite them.
 	//
-	//调用FindFileNode返回-1退出，返回0，表示直接添加，非0就是有重复的
-	//写专用的writethread和compressthread,以调用
-	//在PCKINDEXTABLE_COMPRESS里添加add专用属性，以判断是否启用此节点（重名时）0使用，1不使用
-	//结束 时使用2个循环写入压缩索引 
+	//Calling FindFileNode returns -1 to exit, and returns 0, which means adding it directly. If it is not 0, it means there are duplicates.
+	//Write dedicated writethread and compressthread to call
+	//Add the add-specific attribute in PCKINDEXTABLE_COMPRESS to determine whether to enable this node (when the name is the same) 0 is used, 1 is not used
+	//Use 2 loops to write the compressed index at the end
 
-	//dwFileCount变量在此处指的是添加的文件除去重名的数量 
+	//The dwFileCount variable here refers to the number of added files excluding duplicate names.
 	if(m_PckAllInfo.isPckFileLoaded) {
 		if(!FindDuplicateNodeFromFileList(lpNodeToInsertPtr, dwDuplicateFileCount))
 			return FALSE;
 	}
 
-	//日志
+	//log
 	Logger.i(TEXT_UPDATE_FILE_INFO, m_PckAllInfo.dwFileCountToAdd, cThreadParams.qwCompressTotalFileSize);
 
 #pragma region 创建目标文件
 	CMapViewFileMultiPckWrite cFileWriter(m_PckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
-	//OPEN_ALWAYS，新建新的pck(CREATE_ALWAYS)或更新存在的pck(OPEN_EXISTING)
+	//OPEN_ALWAYS, create a new pck (CREATE_ALWAYS) or update an existing pck (OPEN_EXISTING)
 	if(!cFileWriter.OpenPckAndMappingWrite(m_PckAllInfo.szNewFilename, OPEN_ALWAYS, cThreadParams.qwCompressTotalFileSize)) {
 		return FALSE;
 	}
@@ -121,13 +121,13 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 	cThreadParams.lpPckAllInfo = &m_PckAllInfo;
 	cThreadParams.pckParams = m_lpPckParams;
 
-	//写文件索引
+	//Write file index
 	m_PckAllInfo.dwFileCount = m_PckAllInfo.dwFileCountOld - dwDuplicateFileCount;
 
 	CPckThreadRunner m_threadRunner(&cThreadParams);
 	m_threadRunner.start();
 
-	//在这里重新打开一次，或者直接打开，由界面线程完成
+	//Re-open it here, or open it directly, which is completed by the interface thread
 	m_lpPckParams->cVarParams.dwOldFileCount = m_PckAllInfo.dwFileCountOld;
 	m_lpPckParams->cVarParams.dwPrepareToAddFileCount = dwNewFileCount;
 	m_lpPckParams->cVarParams.dwChangedFileCount = m_PckAllInfo.dwFileCountToAdd;

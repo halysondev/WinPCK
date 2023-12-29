@@ -1,19 +1,19 @@
 //////////////////////////////////////////////////////////////////////
-// PckControlCenterAttribute.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件,界面与PCK类的数据交互，控制中心
+// PckControlCenterAttribute.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Header file, data interaction between interface and PCK class, control center
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.10.10
 //////////////////////////////////////////////////////////////////////
 
 #include "PckControlCenter.h"
 #include "PckClass.h"
 
-#pragma region pck文件属性
+#pragma region pck file properties
 
 BOOL CPckControlCenter::IsValidPck()
 {
@@ -23,7 +23,7 @@ BOOL CPckControlCenter::IsValidPck()
 	return m_lpClassPck->isFileLoaded();
 }
 
-//获取文件数
+//Get the number of files
 uint32_t CPckControlCenter::GetPckFileCount()
 {
 	if (NULL == m_lpClassPck)
@@ -178,7 +178,7 @@ BOOL CPckControlCenter::isSupportAddFileToPck()
 
 
 
-#pragma region 节点属性操作
+#pragma region Node attribute operations
 
 LPCENTRY CPckControlCenter::GetRootNode()
 {
@@ -245,7 +245,7 @@ LPCENTRY CPckControlCenter::GetFileEntryByPath(LPCWSTR _in_szCurrentNodePathStri
 
 		if (0 == **lpCurrentDir)return (LPPCK_UNIFIED_FILE_ENTRY)lpCurrentNode;
 
-		//如果是文件夹
+		//If it is a folder
 		if (PCK_ENTRY_TYPE_FOLDER == (PCK_ENTRY_TYPE_FOLDER & lpCurrentNodeToFind->entryType)) {
 			lpCurrentNode = lpCurrentNodeToFind = lpCurrentNodeToFind->child;
 		}

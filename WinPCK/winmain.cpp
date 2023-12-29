@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// winmain.cpp: WinPCK 界面线程部分
-// 界面类的初始化，消息循环等
+// winmain.cpp: WinPCK interface thread part
+// Initialization of interface class, message loop, etc.
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -58,12 +58,12 @@ TInstDlg::TInstDlg(LPTSTR cmdLine) :
 TInstDlg::~TInstDlg() {}
 
 /*
-	儊僀儞僟僀傾儘僌梡 WM_INITDIALOG 張棟儖乕僠儞
+	Initialize the dialog box when receiving WM_INITDIALOG message
 */
 BOOL TInstDlg::EvCreate(LPARAM lParam)
 {
 
-	//InstallExceptionFilter(THIS_NAME, "%s\r\n异常信息已被保存到:\r\n%s\r\n");
+	//InstallExceptionFilter(THIS_NAME, "%s\r\nException information has been saved to:\r\n%s\r\n");
 
 	int		cx = ::GetSystemMetrics(SM_CXFULLSCREEN), cy = ::GetSystemMetrics(SM_CYFULLSCREEN);
 
@@ -76,21 +76,21 @@ BOOL TInstDlg::EvCreate(LPARAM lParam)
 		(LONG_PTR)::LoadIcon(TApp::GetInstance(), (LPCTSTR)IDI_ICON_APP));
 	//MoveWindow((cx - xsize) / 2, (cy - ysize) / 2, xsize, ysize, TRUE);
 
-	//界面和数据初始化
+	//Interface and data initialization
 	SetWindowTextA(THIS_MAIN_CAPTION);
-	//初始化数据
+	//Initialization data
 	initParams();
 
 	OleInitialize(0);
-	//初始化公共控件
+	//Initialize common controls
 	initCommctrls();
-	//初始化工具栏
+	//Initialize toolbar
 	initToolbar();
-	//初始化日志窗口
+	//Initialize log window
 	InitLogWindow();
-	//初始化浏览路径
+	//Initialize browsing path
 	initArgument();
-	//显示窗口
+	//display window
 	Show();
 
 	MoveWindow((cx - xsize) / 2, (cy - ysize) / 2, xsize, ysize, TRUE);
@@ -141,7 +141,7 @@ BOOL TInstDlg::EvTimer(WPARAM timerID, TIMERPROC proc)
 	return	FALSE;
 }
 /*
-	主对话框WM_COMMAND处理程序
+	Main dialog WM_COMMAND handler
 */
 BOOL TInstDlg::EvCommand(WORD wNotifyCode, WORD wID, LPARAM hwndCtl)
 {
@@ -310,8 +310,8 @@ BOOL TInstDlg::EvSize(UINT fwSizeType, WORD nWidth, WORD nHeight)
 }
 
 /*
-	szPath 存放获取的目标窗口路径
-	isGetPath 是否需要获取目标窗口路径
+	szPath stores the obtained target window path
+	isGetPath Whether it is necessary to obtain the target window path
 */
 BOOL TInstDlg::IsValidWndAndGetPath(wchar_t * szPath, BOOL isGetPath)
 {
@@ -431,7 +431,7 @@ BOOL TInstDlg::EvDropFiles(HDROP hDrop)
 		}
 	}
 
-	if(IDCANCEL == MessageBoxW(L"确定添加这些文件吗？", L"询问", MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
+	if(IDCANCEL == MessageBoxW(L"Are you sure you want to add these files?", L"ask", MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))
 		goto END_DROP;
 
 	DragAcceptFiles(hWnd, FALSE);

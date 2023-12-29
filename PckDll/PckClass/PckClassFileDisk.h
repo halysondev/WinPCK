@@ -1,6 +1,7 @@
 #pragma once
 
 typedef unsigned __int64	QWORD;
+#include <string>
 #include "PckStructs.h"
 #include "PckClassLog.h"
 #include "MapViewFileMultiPck.h"
@@ -21,21 +22,21 @@ private:
 protected:
 	BOOL		EnumAllFilesByPathList(const vector<wstring> &lpszFilePath, DWORD &_out_FileCount, QWORD &_out_TotalFileSize, vector<FILES_TO_COMPRESS> *lpFileLinkList);
 
-	//重建pck时需要的磁盘空间（目标文件名，待重建的PCK文件大小）
+	//Disk space required when rebuilding pck (target file name, size of PCK file to be rebuilt)
 	QWORD	GetPckFilesizeRebuild(const wchar_t * lpszFilename, QWORD qwPckFilesize);
 
-	//重命名时需要的文件的大小
+	//The size of the file required when renaming
 	QWORD	GetPckFilesizeRename(const wchar_t * lpszFilename, QWORD qwCurrentPckFilesize);
 
-	//添加和新建文件时，写入的pck文件大小
+	//When adding and creating a new file, the size of the pck file written
 	QWORD	GetPckFilesizeByCompressed(const char* lpszFilename, QWORD qwToCompressFilesize, QWORD qwCurrentPckFilesize);
 	QWORD	GetPckFilesizeByCompressed(const wchar_t * lpszFilename, QWORD qwToCompressFilesize, QWORD qwCurrentPckFilesize);
 
 private:
 
-	//qwCurrentPckFilesize为已经存在的文件大小，qwToAddSpace是需要扩大的大小，返回值为（qwCurrentPckFilesize + 可以再扩大的最大大小）
+	//qwCurrentPckFilesize is the size of the existing file, qwToAddSpace is the size that needs to be expanded, and the return value is (qwCurrentPckFilesize + the maximum size that can be expanded)
 	QWORD	GetPckFilesizeByCompressed(QWORD qwDiskFreeSpace, QWORD qwToAddSpace, QWORD qwCurrentPckFilesize);
-	//遍历文件夹
+	//Traverse folders
 	VOID	EnumFile(LPWSTR szFilename, BOOL IsPatition, DWORD &dwFileCount, vector<FILES_TO_COMPRESS> *lpFileLinkList, QWORD &qwTotalFileSize, size_t nLen);
 
 };

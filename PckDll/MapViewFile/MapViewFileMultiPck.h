@@ -31,9 +31,9 @@ protected:
 	wchar_t	m_tszPckFileName[ID_END][MAX_PATH];
 
 	UNQWORD m_uqwPckSize[ID_END];
-	//真实文件大小
+	//real file size
 	UNQWORD m_uqwPckFileSize;
-	//PCK头结构中的文件大小
+	//File size in PCK header structure
 	UNQWORD m_uqwPckStructSize;
 
 private:

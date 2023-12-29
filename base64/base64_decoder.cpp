@@ -27,7 +27,7 @@ const uint32_t BASE64_DECODE[] = {
 #endif
 
 
-//编码函数(原数据地址，原数据字节大小，编码输出地址)，使用char作为类型
+//Encoding function (original data address, original data byte size, encoding output address), using char as the type
 BEXTERN void BEXPORT base64_decode(const void* pdata, const uint32_t data_size, void* out_pcode)
 {
 	const uint8_t* input = (const uint8_t*)pdata;

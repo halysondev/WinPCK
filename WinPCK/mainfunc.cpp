@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// mainfunc.cpp: WinPCK 界面线程部分
-// 打开并显示pck文件、查找文件、记录浏览位置 
+// mainfunc.cpp: WinPCK interface thread part
+// Open and display pck files, find files, and record browsing locations
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 // 2012.10.10.OK
 //////////////////////////////////////////////////////////////////////
@@ -39,14 +39,14 @@ BOOL TInstDlg::OpenPckFile(wchar_t *lpszFileToOpen, BOOL isReOpen)
 
 		*m_FolderBrowsed = 0;
 	} else {
-		//记录位置
+		//record location
 		iListTopView = ListView_GetTopIndex(GetDlgItem(IDC_LIST));
 	}
 
 	if(0 != *lpszFileToOpen || OpenSingleFile(hWnd, m_Filename, TEXT_FILE_FILTER)) {
 		timer.start();
 
-		//转换文件名格式 
+		//Convert file name format 
 		if(WINPCK_OK == pck_open(m_Filename)) {
 			timer.stop();
 			swprintf_s(szString, 64, GetLoadStrW(IDS_STRING_OPENOK), timer.getElapsedTime());
@@ -113,7 +113,7 @@ void ShowFilelistCallback(void* _in_param, int sn, const wchar_t *lpszFilename, 
 
 	}
 	else {
-		//PCK_ENTRY_TYPE_DOTDOT 时只能是文件夹
+		//PCK_ENTRY_TYPE_DOTDOT can only be a folder
 		pThis->InsertList(hList, sn,
 			LVIF_PARAM | LVIF_IMAGE, IMGLIST_FOLDER,
 			fileEntry, 1,
@@ -134,14 +134,14 @@ VOID TInstDlg::SearchPckFiles()
 
 	HWND	hList = GetDlgItem(IDC_LIST);
 
-	//显示查找文字
+	//Show search text
 	wchar_t	szPrintf[64];
 	swprintf_s(szPrintf, 64, GetLoadStrW(IDS_STRING_SEARCHING), m_szStrToSearch);
 	SendDlgItemMessageW(IDC_STATUS, SB_SETTEXTW, 4, (LPARAM)szPrintf);
 
 	ListView_DeleteAllItems(hList);
 
-	//清除浏览记录
+	//Clear browsing history
 	*m_FolderBrowsed = 0;
 
 	::SendMessage(hList, WM_SETREDRAW, FALSE, 0);

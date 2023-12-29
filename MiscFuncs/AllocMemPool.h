@@ -9,15 +9,15 @@ https://blog.csdn.net/dustpg/article/details/38756241
 
 class CAllocMemPool
 {
-	// 节点
+	// node
 	struct Node {
-		// 后节点
+		// posterior node
 		Node*               next = nullptr;
-		// 已分配数量
+		// Allocated quantity
 		size_t              allocated = 0;
-		// 上次分配位置
+		// Last assigned position
 		uint8_t*               last_allocated = nullptr;
-		// 缓冲区
+		// buffer
 		uint8_t                buffer[0];
 	};
 
@@ -25,16 +25,16 @@ public:
 	CAllocMemPool(size_t _PoolSize);
 	~CAllocMemPool();
 
-	// 申请内存
+	// Apply for memory
 	void*               Alloc(size_t size, uint32_t align = sizeof(size_t));
-	// 释放内存
+	// free memory
 	void                Free(void* address);
 
 private:
 
-	// 申请节点
+	// Apply for node
 	__forceinline Node* new_Node();
-	// 首节点
+	// first node
 	Node*	m_pFirstNode;
 
 	size_t	m_EachPoolSize;

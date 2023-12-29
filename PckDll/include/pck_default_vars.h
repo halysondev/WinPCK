@@ -26,11 +26,11 @@ typedef int ssize_t;
 #endif
 
 
-//版本信息
+//Version Information
 #define WINPCK_VERSION_NUMBER  1,33,0,2
 #define WINPCK_VERSION        "1.33.0.2"
 
-//调度输出
+//Scheduling output
 #ifdef _DEBUG
 #define PCK_DEBUG_OUTPUT		0
 #define PCK_DEBUG_OUTPUT_FILE	0
@@ -41,7 +41,7 @@ typedef int ssize_t;
 
 #define PCK_V2031_ENABLE		0
 
-//打开、关闭、复原等事件注册
+//Open, close, restore and other event registration
 #define PCK_FILE_OPEN_SUCESS		1
 #define PCK_FILE_CLOSE				2
 
@@ -58,17 +58,17 @@ typedef int ssize_t;
 
 #define PCK_OK					0   /* Successful result */
 /* beginning-of-error-codes */
-#define PCK_MSG_USERCANCELED	1   /* 用户取消 */
+#define PCK_MSG_USERCANCELED	1   /* User cancels */
 #define PCK_ERROR				2   /* Generic error */
-#define PCK_ERR_DISKFULL		3	/* 磁盘已满 */	//磁盘空间不足，申请空间：%d，剩余空间：%d
-#define PCK_ERR_VIEWMAP_FAIL	4	/* Mapping 失败 */
-#define PCK_ERR_VIEW			5	/* View 失败 */
-#define PCK_ERR_OPENMAPVIEWR	6	/* OpenMappingViewAllRead 失败 */
-#define PCK_ERR_MALLOC			7	/* 内存申请失败 */
+#define PCK_ERR_DISKFULL		3	/* Disk is full */ //Insufficient disk space, requested space: %d, remaining space: %d
+#define PCK_ERR_VIEWMAP_FAIL	4	/* Mapping failed */
+#define PCK_ERR_VIEW			5	/* View failed */
+#define PCK_ERR_OPENMAPVIEWR	6	/* OpenMappingViewAllRead failed */
+#define PCK_ERR_MALLOC			7	/* Memory request failed */
 
 /* end-of-error-codes */
 
-//数字转字符时使用的字符串长度
+//The length of the string used when converting numbers to characters
 #define CHAR_NUM_LEN 12
 
 #define	MAX_INDEXTABLE_CLEARTEXT_LENGTH	0x120

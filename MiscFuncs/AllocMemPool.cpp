@@ -12,7 +12,7 @@ CAllocMemPool::~CAllocMemPool()
 {
 	Node* pNode = m_pFirstNode;
 	Node* pNextNode = nullptr;
-	// 顺序释放
+	// sequential release
 	while (pNode)
 	{
 		pNextNode = pNode->next;
@@ -21,7 +21,7 @@ CAllocMemPool::~CAllocMemPool()
 	}
 }
 
-// 申请节点
+// Apply for node
 CAllocMemPool::Node* CAllocMemPool::new_Node()
 {
 	Node* pointer = reinterpret_cast<Node*>(malloc(m_EachPoolSize));
@@ -39,31 +39,31 @@ void* CAllocMemPool::Alloc(size_t size, uint32_t align) {
 #endif
 		return nullptr;
 	}
-	// 获取空闲位置
+	// Get free position
 	auto* now_pos = m_pFirstNode->buffer + m_pFirstNode->allocated;
-	// 获取对齐后的位置
+	// Get the aligned position
 	auto aligned = (reinterpret_cast<size_t>(now_pos)& (align - 1));
 	if (aligned) aligned = align - aligned;
 	now_pos += aligned;
-	// 增加计数
+	// increase count
 	m_pFirstNode->allocated += size + aligned;
-	// 检查是否溢出
+	// Check for overflow
 	if (m_pFirstNode->allocated > (m_EachPoolSize - sizeof(Node))) {
 		Node* node = new_Node();
 		if (!node) return nullptr;
 		node->next = m_pFirstNode;
 		m_pFirstNode = node;
-		// 递归(仅一次)
+		// Recursion (only once)
 		return Alloc(size, align);
 	}
-	// 记录上次释放位置
+	// Record the last release position
 	m_pFirstNode->last_allocated = now_pos;
 	return now_pos;
 }
 
-// 释放内存 
+// free memory 
 void CAllocMemPool::Free(void* address) {
-	// 上次申请的就这样了
+	// This is what I applied for last time.
 	if (address && m_pFirstNode->last_allocated == address) {
 		m_pFirstNode->allocated =
 			(m_pFirstNode->last_allocated - m_pFirstNode->buffer);

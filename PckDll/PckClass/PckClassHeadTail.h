@@ -9,7 +9,7 @@ public:
 	CPckClassHeadTail();
 	~CPckClassHeadTail();
 
-	//设置附加信息
+	//Set extensions
 	const char*	GetAdditionalInfo();
 	BOOL	SetAdditionalInfo(const char* lpszAdditionalInfo);
 

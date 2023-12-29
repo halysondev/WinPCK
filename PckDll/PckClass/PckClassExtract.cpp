@@ -1,12 +1,12 @@
 //////////////////////////////////////////////////////////////////////
-// PckClassExtract.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 解压功能
+// PckClassExtract.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// decompression function
 //
-// 此程序由 李秋枫/stsm/liqf 编写，pck结构参考若水的pck结构.txt，并
-// 参考了其易语言代码中并于读pck文件列表的部分
+// This program is written by Li Qiufeng/stsm/liqf. The pck structure refers to Ruoshui's pck structure.txt, and
+// Refer to the part of its Yi language code and read the pck file list
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 #pragma warning ( disable : 4267 )
@@ -70,7 +70,7 @@ BOOL CPckClass::ExtractFiles(const PCKINDEXTABLE **lpIndexToExtract, int nFileCo
 
 	Logger.i(TEXT_LOG_EXTRACT);
 
-	//首先设置一下进度条
+	//First set up the progress bar
 	SetParams_ProgressUpper(nFileCount, TRUE);
 
 	CMapViewFileMultiPckRead	cFileRead;
@@ -101,7 +101,7 @@ BOOL CPckClass::ExtractFiles(const PCKINDEXTABLE **lpIndexToExtract, int nFileCo
 			++szStrchr;
 		}
 
-		//解压文件
+		//unzip files
 		if(!(DecompressFile(szFilename, *lpIndexToExtractPtr, &cFileRead))) {
 			Logger_el(TEXT_UNCOMP_FAIL);
 			return FALSE;
@@ -122,7 +122,7 @@ BOOL CPckClass::ExtractFiles(const PCK_PATH_NODE **lpNodeToExtract, int nFileCou
 
 	Logger.i(TEXT_LOG_EXTRACT);
 
-	//首先设置一下进度条
+	//First set up the progress bar
 	SetParams_ProgressUpper(nFileCount, TRUE);
 
 	CMapViewFileMultiPckRead	cFileRead;
@@ -142,7 +142,7 @@ BOOL CPckClass::ExtractFiles(const PCK_PATH_NODE **lpNodeToExtract, int nFileCou
 
 		if(PCK_ENTRY_TYPE_FOLDER != (PCK_ENTRY_TYPE_FOLDER & (*lpNodeToExtractPtr)->entryType)) {
 
-			//解压文件
+			//unzip files
 			if(!(DecompressFile((*lpNodeToExtractPtr)->szName, (*lpNodeToExtractPtr)->lpPckIndexTable, &cFileRead))) {
 				Logger_el(TEXT_UNCOMP_FAIL);
 				return FALSE;
@@ -152,7 +152,7 @@ BOOL CPckClass::ExtractFiles(const PCK_PATH_NODE **lpNodeToExtract, int nFileCou
 			}
 
 		} else {
-			//进度中加上当前目录中的文件数
+			//Add the number of files in the current directory to the progress
 			AddParams_ProgressUpper((*lpNodeToExtractPtr)->child->dwFilesCount - 1);
 
 			CreateDirectoryW((*lpNodeToExtractPtr)->szName, NULL);
@@ -232,7 +232,7 @@ BOOL CPckClass::StartExtract(LPPCK_PATH_NODE lpNodeToExtract, LPVOID lpvoidFileR
 
 		} else {
 
-			//解压文件
+			//unzip files
 			if(!DecompressFile(lpNodeToExtract->szName, lpNodeToExtract->lpPckIndexTable, lpFileRead)) {
 				Logger_el(TEXT_UNCOMP_FAIL);
 
@@ -259,19 +259,19 @@ BOOL CPckClass::DecompressFile(LPCWSTR	lpszFilename, const PCKINDEXTABLE* lpPckF
 	LPBYTE	lpMapAddressToWrite;
 	DWORD	dwFileLengthToWrite;
 
-	//if (0 == strcmp(lpszFilename, "剑仙男技能攻击1.gfx")){
+	//if (0 == strcmp(lpszFilename, "SwordFairyMaleSkillAttack1.gfx")){
 	//	dwFileLengthToWrite = 1;
 	//}
 
 	dwFileLengthToWrite = lpPckFileIndex->dwFileClearTextSize;
 
-	//以下是创建一个文件，用来保存解压缩后的文件
+	//The following is to create a file to save the decompressed file
 	if(!cFileWrite.Open(lpszFilename, CREATE_ALWAYS)) {
 		Logger_el(TEXT_OPENWRITENAME_FAIL, lpszFilename);
 		return FALSE;
 	}
 
-	//如果文件大小为0，创建文件后直接返回
+	//If the file size is 0, return directly after creating the file.
 	if(0 == dwFileLengthToWrite)
 		return TRUE;
 

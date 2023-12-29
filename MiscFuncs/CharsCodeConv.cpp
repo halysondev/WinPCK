@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// CharsCodeConv.cpp: WinPCK 辅助函数部分
-// 将文字在Ansi Unicode UTF-8之间转换
+// CharsCodeConv.cpp: WinPCK auxiliary function part
+// Convert text between Ansi Unicode UTF-8
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -41,7 +41,7 @@
 
 int AtoW(const char *src, wchar_t *dst, int bufsize, int max_len, int cp)
 {
-	//返回的值是转换后的字符串使用strlen或wcslen的值+1
+	//The returned value is the converted string using the value of strlen or wcslen + 1
 	return	::MultiByteToWideChar(cp, 0, src, max_len, dst, bufsize);
 }
 int WtoA(const wchar_t *src, char *dst, int bufsize, int max_len, int cp)
@@ -51,7 +51,7 @@ int WtoA(const wchar_t *src, char *dst, int bufsize, int max_len, int cp)
 
 int U8toW(const char *src, wchar_t *dst, int bufsize, int max_len)
 {
-	//返回的值是转换后的字符串使用strlen或wcslen的值+1
+	//The returned value is the converted string using the value of strlen or wcslen + 1
 	return	::MultiByteToWideChar(CP_UTF8, 0, src, max_len, dst, bufsize);
 }
 int WtoU8(const wchar_t *src, char *dst, int bufsize, int max_len)
@@ -226,7 +226,7 @@ int	CAnsi2Ucs::GetStrlen(const char *_src, wchar_t *_dst, int _dstsize)
 
 }
 
-const char * CUcs2Ansi::GetString(const wchar_t *_src, char *_dst, int _dstsize)//_dstsize是指数组元素个数
+const char * CUcs2Ansi::GetString(const wchar_t *_src, char *_dst, int _dstsize)//_dstsize refers to the number of array elements
 {
 
 	if(nullptr != _dst) {
@@ -256,7 +256,7 @@ int	CUcs2Ansi::GetStrlen(const wchar_t *_src, char *_dst, int _dstsize)
 	}
 }
 
-const char * CUcs2U8::GetString(const wchar_t *_src, char *_dst, int _dstsize)//_dstsize是指数组元素个数
+const char * CUcs2U8::GetString(const wchar_t *_src, char *_dst, int _dstsize)//_dstsize refers to the number of array elements
 {
 
 	if(nullptr != _dst) {

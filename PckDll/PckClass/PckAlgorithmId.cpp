@@ -15,11 +15,11 @@ CPckAlgorithmId::~CPckAlgorithmId()
 
 void CPckAlgorithmId::SetAlgorithmId(unsigned __int32 id)
 {
-	//0	  诛仙(Jade Dynasty),完美世界(Perfect World)
-	//111 热舞派对(Hot Dance Party)
-	//121 口袋西游(Ether Saga Odyssey)
-	//131 神魔(Forsaken World)
-	//161 圣斗士(Saint Seiya),笑傲江湖(Swordsman Online)
+	//0 Jade Dynasty, Perfect World
+	//111 Hot Dance Party
+	//121 Ether Saga Odyssey
+	//131 Forsaken World
+	//161 Saint Seiya, Swordsman Online
 
 	switch (id)
 	{

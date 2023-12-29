@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by pckdll.rc
 
-// 新对象的下一组默认值
+// The next set of default values for the new object
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS

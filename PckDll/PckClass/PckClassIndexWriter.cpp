@@ -8,16 +8,16 @@ CPckClassIndexWriter::CPckClassIndexWriter()
 CPckClassIndexWriter::~CPckClassIndexWriter()
 {}
 
-//写入全部索引
+//Write all indexes
 BOOL CPckClassIndexWriter::WriteAllIndex(CMapViewFileMultiPckWrite *lpWrite, LPPCK_ALL_INFOS lpPckAllInfo,  QWORD &dwAddress)
 {
 	CPckMemoryCache cPckCache;
 
-	//窗口中以显示的文件进度，初始化，显示写索引进度
+	//The file progress, initialization, and writing index progress are displayed in the window.
 	DWORD dwValidFileCount = lpPckAllInfo->dwFileCount + lpPckAllInfo->dwFileCountToAdd;
 	SetParams_ProgressUpper(dwValidFileCount);
 
-	//写原来的文件
+	//write original file
 	LPPCKINDEXTABLE	lpPckIndexTableOld = lpPckAllInfo->lpPckIndexTable;
 	DWORD dwOldPckFileCount = lpPckAllInfo->dwFileCountOld;
 	DWORD dwFinalFileCount = 0;

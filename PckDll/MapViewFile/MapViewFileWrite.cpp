@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// MapViewFileWrite.cpp: 用于映射文件视图（写）
-// 
+// MapViewFileWrite.cpp: used to map file view (write)
 //
-// 此程序由 李秋枫/stsm/liqf 编写
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This program is written by Li Qiufeng/stsm/liqf
+//
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2014.4.24
 //////////////////////////////////////////////////////////////////////
 
@@ -120,7 +120,7 @@ void CMapViewFileWrite::SetSparseFile()
 	DeviceIoControl(hFile, FSCTL_SET_SPARSE, NULL, 0, NULL, 0, &dw, NULL);
 }
 
-////使用MapViewOfFile进行写操作
+////Using MapViewOfFile for write operations
 //BOOL CMapViewFileWrite::Write2(QWORD dwAddress, LPVOID buffer, DWORD dwBytesToWrite)
 //{
 //	return 1;

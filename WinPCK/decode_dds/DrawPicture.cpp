@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// DrawPicture.cpp: 显示dds、tga图像
-// 解码dds、tga并显示
+// DrawPicture.cpp: display dds, tga images
+// Decode dds, tga and display
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.5.29
 //////////////////////////////////////////////////////////////////////
 
@@ -17,7 +17,7 @@
 
 BOOL CShowPicture::BuildImage()
 {
-	//读dds header
+	//Read dds header
 	CDdsTgaDecoder cDdsTgaDecoder;
 	switch(m_picFormat) {
 	case FMT_DDS:
@@ -60,7 +60,7 @@ BOOL CShowPicture::BuildImage()
 		//show picture
 		m_lpmyImage = new Image(m_stream);
 
-		//看看图片大小和显示窗口大小
+		//Look at the picture size and display window size
 		m_picWidth = m_lpmyImage->GetWidth();
 		m_picHeight = m_lpmyImage->GetHeight();
 
@@ -88,10 +88,10 @@ BOOL CShowPicture::DrawPictureOnDC()
 		delete m_lpoGraph;
 	m_lpoGraph = NULL;
 
-	//以下在源代码中是当FMT_RAW == iFormat时执行的
+	//The following in the source code is executed when FMT_RAW == iFormat
 	if (FMT_RAW == m_picFormat) {
 
-		//不可以现在释放m_lpmyImage，保存为png时会用到
+		//m_lpmyImage cannot be released now, it will be used when saving as png
 		if(NULL != m_lpmyImage)
 			delete m_lpmyImage;
 		m_lpmyImage = NULL;

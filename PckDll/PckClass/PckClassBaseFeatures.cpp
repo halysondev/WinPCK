@@ -84,7 +84,7 @@ void CPckClassBaseFeatures::AddParams_ProgressUpper(DWORD dwUIProgressUpperAdd)
 void CPckClassBaseFeatures::SetThreadFlag(BOOL isThreadWorking)
 {
 	//if (FALSE == isThreadWorking)
-	//在开始和结束任务后，把强制退出标记置0
+	//After starting and ending the task, set the force exit flag to 0
 	//m_lpPckParams->cVarParams.bForcedStopWorking = FALSE;
 	SetErrMsgFlag(PCK_OK);
 	m_lpPckParams->cVarParams.bThreadRunning = isThreadWorking;

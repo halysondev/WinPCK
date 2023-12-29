@@ -20,7 +20,7 @@ CPckClassZlib::~CPckClassZlib()
 }
 
 /*
-在压缩文件时进行调用，目前调用的函数为UpdatePckFile和ReCompress，压缩文件索引时不更新
+Called when compressing files. The currently called functions are UpdatePckFile and ReCompress. They are not updated when compressing file indexes.
 */
 int CPckClassZlib::init_compressor(int level)
 {
@@ -131,7 +131,7 @@ int CPckClassZlib::decompress(void *dest, ulong_t  *destLen, const void *source,
 	return (rtnd == Z_OK);
 }
 
-//如果只需要解压一部分数据
+//If you only need to decompress a part of the data
 int CPckClassZlib::decompress_part(void *dest, ulong_t  *destLen, const void *source, uint32_t sourceLen, uint32_t  fullDestLen)
 {
 	/*
@@ -155,22 +155,22 @@ int CPckClassZlib::decompress_part(void *dest, ulong_t  *destLen, const void *so
 		char *lpReason;
 		switch (rtn) {
 		case Z_NEED_DICT:
-			lpReason = "需要字典";
+			lpReason = "Need dictionary";
 			break;
 		case Z_STREAM_ERROR:
-			lpReason = "流状态错误";
+			lpReason = "Stream status error";
 			break;
 		case Z_DATA_ERROR:
-			lpReason = "数据无效";
+			lpReason = "Invalid data";
 			break;
 		case Z_MEM_ERROR:
-			lpReason = "没有足够的内存";
+			lpReason = "not enough memory";
 			break;
 		case Z_BUF_ERROR:
-			lpReason = "缓冲区空间不足";
+			lpReason = "Not enough buffer space";
 			break;
 		default:
-			lpReason = "其他错误";
+			lpReason = "Other errors";
 		}
 		assert(FALSE);
 		Logger_el(TEXT_UNCOMPRESSDATA_FAIL_REASON, lpReason);
@@ -181,7 +181,7 @@ int CPckClassZlib::decompress_part(void *dest, ulong_t  *destLen, const void *so
 	}
 }
 
-//获取数据压缩后的大小，如果源大小小于一定值就不压缩
+//Get the compressed size of the data. If the source size is less than a certain value, it will not be compressed.
 unsigned long CPckClassZlib::GetCompressBoundSizeByFileSize(ulong_t &dwFileClearTextSize, ulong_t &dwFileCipherTextSize, uint32_t dwFileSize)
 {
 	if (PCK_BEGINCOMPRESS_SIZE < dwFileSize) {

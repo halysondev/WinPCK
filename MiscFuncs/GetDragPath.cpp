@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// GetDragPath.cpp: WinPCK 界面线程部分
-// 取 ShellWindow 路径
+// GetDragPath.cpp: WinPCK interface thread part
+// Get the ShellWindow path
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -58,7 +58,7 @@ void decodeandcopy(wchar_t *dst, wchar_t *src)
 	*dst = 0;
 }
 
-//通过Com直接获取鼠标位置所在的explorer.exe的窗口，并获取路径
+//Directly obtain the window of explorer.exe where the mouse position is located through Com and obtain the path
 BOOL GetWndPath(HWND hWnd, wchar_t * szPath)
 {
 	BOOL rtn = FALSE;

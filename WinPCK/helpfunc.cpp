@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// helpfunc.cpp: WinPCK 界面线程部分
-// 拖放、打开保存文件、预览
+// helpfunc.cpp: WinPCK interface thread part
+// Drag and drop, open saved file, preview
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 
@@ -77,7 +77,7 @@ void TInstDlg::DbClickListView(const int itemIndex)
 
 	int entry_type = lpFileEntry->entryType;
 
-	//列表是否是以搜索状态显示
+	//Whether the list is displayed in search status
 	if(PCK_ENTRY_TYPE_INDEX == entry_type) {
 
 		if(0 != itemIndex) {
@@ -86,12 +86,12 @@ void TInstDlg::DbClickListView(const int itemIndex)
 		}
 	}
 
-	//目录浏览下root目录下的..不可点
+	//In directory browsing, the .. in the root directory cannot be clicked.
 	if ((PCK_ENTRY_TYPE_ROOT | PCK_ENTRY_TYPE_DOTDOT) == ((PCK_ENTRY_TYPE_ROOT | PCK_ENTRY_TYPE_DOTDOT) & entry_type)) {
 		return;
 	}
 
-	//本级是否是文件夹(NULL=文件夹)
+	//Whether this level is a folder (NULL=folder)
 	if (PCK_ENTRY_TYPE_FOLDER == (PCK_ENTRY_TYPE_FOLDER & entry_type)) {
 
 		ShowPckFiles(lpFileEntry);
@@ -173,7 +173,7 @@ BOOL TInstDlg::AddFiles()
 
 	if(pck_isThreadWorking())return FALSE;
 
-	if(IDCANCEL == MessageBoxW(L"确定添加文件吗？", L"询问", MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))return FALSE;
+	if(IDCANCEL == MessageBoxW(L"Are you sure you want to add the file?", L"ask", MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2))return FALSE;
 
 	if(OpenFiles(hWnd, m_lpszFilePath)) {
 
@@ -232,17 +232,17 @@ void TInstDlg::AddSetupReg()
 	//DWORD	dwDataLength;
 	//m_MyFileName
 
-	//检查是否存在[HKEY_CLASSES_ROOT\pckfile]
+	//Check if [HKEY_CLASSES_ROOT\pckfile] exists
 	if(ERROR_SUCCESS == (result = RegOpenKeyEx(HKEY_CLASSES_ROOT,
 		TEXT("pckfile\\shell\\open\\command"),
 		0,
 		KEY_READ,
 		&hRegKey))) {
-		//存在
-		//1.如果程序包含patcher.exe，新加
+		//exist
+		//1. If the program contains patcher.exe, add
 		//result = RegQueryValueEx(hRegKey, NULL, NULL, &dwType, reinterpret_cast<LPBYTE>(szString), &dwDataLength)
-		//2.否则替换
-		//3.修改打开方式索引
+		//2.Otherwise replace
+		//3.Modify open with index
 		RegCloseKey(hRegKey);
 
 		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".pck"));
@@ -266,7 +266,7 @@ void TInstDlg::AddSetupReg()
 	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell\\open"), TEXT("使用 WinPCK 打开"));
 	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell\\open\\command"), szStringExec);
 
-	MessageBox(TEXT("安装完成。"), TEXT("信息"), MB_OK | MB_ICONASTERISK);
+	MessageBox(TEXT("The installation is complete."), TEXT("information"), MB_OK | MB_ICONASTERISK);
 }
 
 void TInstDlg::DeleteSetupReg()
@@ -276,7 +276,7 @@ void TInstDlg::DeleteSetupReg()
 	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".zup"));
 	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("ZPWUpdatePack"));
 
-	MessageBox(TEXT("卸载完成。"), TEXT("信息"), MB_OK | MB_ICONASTERISK);
+	MessageBox(TEXT("Uninstallation completed."), TEXT("information"), MB_OK | MB_ICONASTERISK);
 }
 
 inline void CreateAndSetDefaultValue(LPCTSTR pszValueName, LPCTSTR pszValue)
@@ -335,14 +335,14 @@ void TInstDlg::InitLogWindow()
 	//SetLogListWnd(logdlg->GetListWnd());
 	//SetLogMainWnd(hWnd);
 
-	//绑定函数
+	//binding function
 	LogUnits.setInsertLogFunc(std::bind(&TLogDlg::InsertLogToList, &m_logdlg, std::placeholders::_1, std::placeholders::_2));
 	LogUnits.setSetStatusBarInfoFunc(std::bind(&TInstDlg::SetStatusBarInfo, this, std::placeholders::_1));
 
-	//日志函数绑定
+	//Log function binding
 	log_regShowFunc(PreInsertLogToList);
 
-	//启动日志
+	//Startup log
 	pck_logIA(THIS_MAIN_CAPTION " is started.");
 
 }
@@ -400,7 +400,7 @@ TCHAR*	TInstDlg::BuildSaveDlgFilterString()
 
 		for (int i = 0; i < nPckVersionCount; i++) {
 
-			_stprintf_s(szPrintf, TEXT("%sPCK文件(*.pck)|*.pck|"), pck_getVersionNameById(i));
+			_stprintf_s(szPrintf, TEXT("%sPCK file(*.pck)|*.pck|"), pck_getVersionNameById(i));
 			_tcscat_s(szSaveDlgFilterString, szPrintf);
 
 		}

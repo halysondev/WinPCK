@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ShowLogOnDlgListView.cpp: 将日志显示在listView中
-// 
+// ShowLogOnDlgListView.cpp: Display the log in the listView
 //
-// 此程序由 李秋枫/stsm/liqf 编写
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This program is written by Li Qiufeng/stsm/liqf
+//
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2018.6.4
 //////////////////////////////////////////////////////////////////////
 

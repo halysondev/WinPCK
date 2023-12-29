@@ -76,13 +76,13 @@ BOOL CPckModelStrip::StripAtt(BYTE* buffer, LPPCKFILEINDEX lpFileIndex)
 	buffer_dst[lpFileIndex->dwFileClearTextSize] = 0;
 
 	int nLen_dst = 0;
-	int nLen_src_last = lpFileIndex->dwFileClearTextSize;	//还有多少字节没复制
+	int nLen_src_last = lpFileIndex->dwFileClearTextSize;	//How many bytes are left that have not been copied?
 
 	const char* lpszAttBuff;
 	const char* lpszAttBuff_Prev = lpszAttBuff = (char*)buffer_dst;
 	char* lpszAttDst = (char*)buffer;
 
-	//查找"Path: "，然后把"Path: "这一行后面的内容去掉
+	//Search for "Path: ", and then remove the content after the line "Path: "
 	//Path: 人物\击中\冷嗤_击中子效果轨迹球.gfx\r\n
 	//Hook:\r\n
 	//Pos: 0.000000, 0.000000, 0.000000\r\n
@@ -98,7 +98,7 @@ BOOL CPckModelStrip::StripAtt(BYTE* buffer, LPPCKFILEINDEX lpFileIndex)
 		//人物\击中\冷嗤_击中子效果轨迹球.gfx\r\n
 		//Hook:\r\n
 		//Pos: 0.000000, 0.000000, 0.000000
-		//复制从上一个位置到 "Path: "前的内容
+		//Copy the content from the previous position to "Path:"
 		//for (const char *lpbuf = lpszAttBuff_Prev; lpbuf < lpszAttBuff; lpbuf++)
 		//{
 		//	*lpszAttDst = *lpbuf;
@@ -114,12 +114,12 @@ BOOL CPckModelStrip::StripAtt(BYTE* buffer, LPPCKFILEINDEX lpFileIndex)
 		lpszAttDst += bytesToCopy;
 
 
-		//从lpszAttBuff开始到行尾的\r\n前的内容跳过
+		//Skip the content before \r\n from the beginning of lpszAttBuff to the end of the line
 		//lpszAttBuff:->
 		//\r\n
 		//Hook:\r\n
 		//Pos: 0.000000, 0.000000, 0.000000\r\n
-		//复制从上一个位置到 "Path: "前的内容
+		//Copy the content from the previous position to "Path:"
 		while ('\r' != *lpszAttBuff && '\n' != *lpszAttBuff)
 		{
 			lpszAttBuff++;
@@ -132,7 +132,7 @@ BOOL CPckModelStrip::StripAtt(BYTE* buffer, LPPCKFILEINDEX lpFileIndex)
 
 	lpszAttBuff = lpszAttBuff_Prev;
 
-	//复制最后的内容
+	//Copy the last content
 	memcpy(buffer + nLen_dst, lpszAttBuff, nLen_src_last);
 
 	lpFileIndex->dwFileClearTextSize = nLen_dst + nLen_src_last;
@@ -146,7 +146,7 @@ BOOL CPckModelStrip::StripGfx(BYTE* buffer, LPPCKFILEINDEX lpFileIndex)
 	buffer[lpFileIndex->dwFileClearTextSize] = 0;
 
 	int nLen_dst = 0;
-	//int nLen_src_last = lpFileIndex->dwFileClearTextSize;	//还有多少字节没复制
+	//int nLen_src_last = lpFileIndex->dwFileClearTextSize;	//How many bytes are left that have not been copied?
 
 	char* lpszAttBuff;
 	char* lpszAttBuff_Prev = lpszAttBuff = (char*)buffer;

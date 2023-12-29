@@ -11,19 +11,19 @@ public:
 	CPckClassIndex();
 	~CPckClassIndex();
 
-	//根据文件数量申请文件索引的内存
+	//Apply for file index memory based on the number of files
 	LPPCKINDEXTABLE		AllocPckIndexTableByFileCount();
-	//将lpPckIndexTable->cFileIndex.szFilename 中的Ansi字符转换志Unicode并写到lpPckIndexTable->cFileIndex.szwFilename中
+	//Convert Ansi characters in lpPckIndexTable->cFileIndex.szFilename to Unicode and write them to lpPckIndexTable->cFileIndex.szwFilename
 	void		GenerateUnicodeStringToIndex();
-	// 文件头、尾等结构体的读取
+	// Reading of file header, tail and other structures
 	BOOL		ReadPckFileIndexes();
 
 protected:
 
 	void*	AllocMemory(size_t	sizeStuct);
-	//重建时重新计算文件数量，除去无效的和文件名重复的
+	//Recalculate the number of files during reconstruction and remove invalid and duplicate file names.
 	DWORD	ReCountFiles();
-	//按修改后的索引数据按版本填入到结构体中并压缩好
+	//Fill the modified index data into the structure by version and compress it
 	LPPCKINDEXTABLE_COMPRESS FillAndCompressIndexData(LPPCKINDEXTABLE_COMPRESS lpPckIndexTableComped, LPPCKFILEINDEX lpPckFileIndexToCompress);
 
 };

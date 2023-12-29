@@ -97,7 +97,7 @@ void CPckThreadRunner::WriteThread(LPTHREAD_PARAMS threadparams)
 
 		uint64_t dwAddress = lpPckIndexTableComp.dwAddressFileDataToWrite;
 
-		//处理lpPckFileIndex->dwAddressOffset
+		//Process lpPckFileIndex->dwAddressOffset
 		if (0 != lpPckIndexTableComp.dwCompressedFilesize) {
 
 			if (!lpFileWrite->Write2(dwAddress, dataToWrite, lpPckIndexTableComp.dwCompressedFilesize)) {
@@ -115,7 +115,7 @@ void CPckThreadRunner::WriteThread(LPTHREAD_PARAMS threadparams)
 	mt_dwAddressQueue = dwAddressDataAreaEndAt;
 
 
-#pragma region 写线程失败处理
+#pragma region Write thread failure handling
 
 	if (!result) {
 
@@ -164,13 +164,13 @@ void CPckThreadRunner::CompressThread(FETCHDATA_FUNC GetUncompressedData)
 
 	PCKINDEXTABLE		pckFileIndex = { 0 };
 
-	//取得压缩好的数据
+	//Get compressed data
 	while (FD_OK == GetUncompressedData(pckFileIndex)) {
 
-		//窗口中以显示的文件进度
+		//The file progress shown in the window
 		m_lpPckClassBase->SetParams_ProgressInc();
 
-		//放入队列
+		//put in queue
 		putCompressedDataQueue(pckFileIndex);
 
 	}

@@ -1,11 +1,11 @@
 //////////////////////////////////////////////////////////////////////
-// ZupClass.h: 用于解析完美世界公司的zup文件中的数据，并显示在List中
-// 头文件
+// ZupClass.h: used to parse the data in the zup file of Perfect World Company and display it in the List
+// head File
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2012.5.23
 //////////////////////////////////////////////////////////////////////
 
@@ -29,26 +29,26 @@ public:
 
 	const	LPPCKINDEXTABLE		GetPckIndexTable() override;
 
-	//重建pck文件
+	//Rebuild pck file
 	virtual BOOL	RebuildPckFile(LPCWSTR lpszScriptFile, LPCWSTR szRebuildPckFile, BOOL bUseRecompress) override { Logger.e(TEXT_NOTSUPPORT);return FALSE; }
 	virtual BOOL	StripPck(LPCWSTR lpszStripedPckFile, int flag) override { Logger.e(TEXT_NOTSUPPORT); return FALSE; }
 
-	//新建、更新pck文件
+	//Create and update pck files
 	virtual BOOL	UpdatePckFile(LPCWSTR szPckFile, const vector<wstring> &lpszFilePath, const PCK_PATH_NODE* lpNodeToInsert) override { Logger.e(TEXT_NOTSUPPORT);return FALSE; }
 
-	//重命名文件
+	//Rename file
 	virtual BOOL	RenameFilename() override { Logger.e(TEXT_NOTSUPPORT);return FALSE; }
 
-	//删除一个节点
+	//Delete a node
 	virtual void	DeleteNode(LPPCK_PATH_NODE lpNode) override { Logger.e(TEXT_NOTSUPPORT);}
 	virtual void	DeleteNode(LPPCKINDEXTABLE lpIndex) override { Logger.e(TEXT_NOTSUPPORT); }
 
-	//重命名一个节点
+	//Rename a node
 	virtual	BOOL	RenameNode(LPPCK_PATH_NODE lpNode, const wchar_t* lpszReplaceString) override { Logger.e(TEXT_NOTSUPPORT); return FALSE; }
 	virtual	BOOL	RenameIndex(LPPCK_PATH_NODE lpNode, const wchar_t* lpszReplaceString) override { Logger.e(TEXT_NOTSUPPORT); return FALSE; }
 	virtual	BOOL	RenameIndex(LPPCKINDEXTABLE lpIndex, const wchar_t* lpszReplaceString) override { Logger.e(TEXT_NOTSUPPORT); return FALSE; }
 
-	//预览文件
+	//Preview file
 	virtual BOOL	GetSingleFileData(const PCKINDEXTABLE* const lpZupFileIndexTable, char *buffer, size_t sizeOfBuffer = 0) override;
 protected:
 	virtual BOOL	GetSingleFileData(LPVOID lpvoidFileRead, const PCKINDEXTABLE* const lpPckFileIndexTable, char *buffer, size_t sizeOfBuffer = 0) override;

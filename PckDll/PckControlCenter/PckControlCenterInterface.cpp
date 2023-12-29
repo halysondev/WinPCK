@@ -1,19 +1,19 @@
 
 //////////////////////////////////////////////////////////////////////
-// PckControlCenterInterface.cpp: 用于解析完美世界公司的pck文件中的数据，并显示在List中
-// 头文件,界面与PCK类的数据交互，控制中心，日志功能
+// PckControlCenterInterface.cpp: used to parse the data in the pck file of Perfect World Company and display it in the List
+// Header file, data interaction between interface and PCK class, control center, log function
 //
-// 此程序由 李秋枫/stsm/liqf 编写
+// This program is written by Li Qiufeng/stsm/liqf
 //
-// 此代码预计将会开源，任何基于此代码的修改发布请保留原作者信息
-// 
+// This code is expected to be open source. Please retain the original author information for any modified release based on this code.
+//
 // 2015.5.19
 //////////////////////////////////////////////////////////////////////
 
 #include "PckControlCenter.h"
 #include "PckClass.h"
 
-#pragma region 文件打开关闭信息界面交互
+#pragma region File opening and closing information interface interaction
 
 FeedbackCallback CPckControlCenter::pFeedbackCallBack = DefaultFeedbackCallback;
 void* CPckControlCenter::pTag = NULL;
@@ -54,7 +54,7 @@ int CPckControlCenter::DefaultFeedbackCallback(void* pTag, int32_t eventId, size
 
 #pragma endregion
 
-#pragma region 查询及目录浏览
+#pragma region Inquiries and catalog browsing
 
 void CPckControlCenter::DefaultShowFilelistCallback(void* _in_param, int sn, LPCWSTR lpszFilename, int entry_type, uint64_t qwFileSize, uint64_t qwFileSizeCompressed, void* fileEntry)
 {
@@ -124,7 +124,7 @@ uint32_t CPckControlCenter::SearchByName(LPCWSTR lpszSearchString, void* _in_par
 	uint32_t	dwFileCount = GetPckFileCount(), dwFoundCount = 0;
 	const PCKINDEXTABLE	* lpPckIndexTable = m_lpClassPck->GetPckIndexTable();
 
-	//打印顶层
+	//Print top layer
 	_showList(_in_param,
 		dwFoundCount++,
 		L"<--",
@@ -163,11 +163,11 @@ uint32_t CPckControlCenter::ListByNode(LPCENTRY lpFileEntry, void* _in_param, SH
 		_showList = DefaultShowFilelistCallback;
 	}
 
-	//如果是..文件夹，就显示上一层，不是就显示下一层
+	//If it is a .. folder, the previous layer will be displayed; if not, the next layer will be displayed.
 	const PCK_PATH_NODE* lpNodeToShow = (LPPCK_PATH_NODE)lpFileEntry;
 
 	int entry_type = lpFileEntry->entryType;
-	//首先要是文件夹
+	//The first thing is the folder
 	if (PCK_ENTRY_TYPE_FOLDER != (PCK_ENTRY_TYPE_FOLDER & entry_type)) {
 #if PCK_DEBUG_OUTPUT
 		printf("%s:is not a folder\n", __FUNCTION__);
@@ -175,17 +175,17 @@ uint32_t CPckControlCenter::ListByNode(LPCENTRY lpFileEntry, void* _in_param, SH
 		return 0;
 	}
 
-	//进入非..文件夹
+	//Enter a non-..folder
 	if (PCK_ENTRY_TYPE_DOTDOT != (PCK_ENTRY_TYPE_DOTDOT & entry_type)){
 
 		lpNodeToShow = ((LPPCK_PATH_NODE)lpFileEntry)->child;
 
-	}//剩下的是..文件夹
+	}//What remains is the ..folder
 	else {
 		lpNodeToShow = ((LPPCK_PATH_NODE)lpFileEntry)->parentfirst;
 	}
 
-	//lpNodeToShow是否为NULL
+	//Is lpNodeToShow NULL?
 	if (NULL == lpNodeToShow) {
 #if PCK_DEBUG_OUTPUT
 		printf("%s:lpNodeToShow is NULL\n", __FUNCTION__);
@@ -198,7 +198,7 @@ uint32_t CPckControlCenter::ListByNode(LPCENTRY lpFileEntry, void* _in_param, SH
 	const PCK_PATH_NODE* lpNodeToShowPtr = lpNodeToShow;
 
 	while (NULL != lpNodeToShowPtr && 0 != *lpNodeToShowPtr->szName) {
-		//这里先显示文件夹
+		//Show the folder first here
 		int entryType = lpNodeToShowPtr->entryType;
 		if ((PCK_ENTRY_TYPE_FOLDER == (PCK_ENTRY_TYPE_FOLDER & entryType))) {
 
