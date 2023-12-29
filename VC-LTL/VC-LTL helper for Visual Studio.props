@@ -2,37 +2,37 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
 <!--
-作者：mingkuang
-修改日期：2018-08-14
+Author:mingkuang
+Modification date: 2018-08-14
 
 
-VC-LTL自动化加载配置，建议你将此文件单独复制到你的工程再使用，该文件能自动识别当前环境是否存在VC-LTL，并且自动应用。
+VC-LTL automatically loads configuration. It is recommended that you copy this file separately to your project before using it. This file can automatically identify whether VC-LTL exists in the current environment and apply it automatically.
 
-使用方法：
-  1. 在属性管理器选择所有Release配置，然后右键选择“添加现有属性表”。
-  2. 务必保证所有依赖的静态库也均用VC-LTL重新编译。
+Instructions:
+   1. Select all Release configurations in the attribute manager, then right-click and select "Add existing attribute table".
+   2. Be sure to ensure that all dependent static libraries are also recompiled with VC-LTL.
 
 
-VC-LTL默认搜索顺序
-  1. VC-LTL helper for Visual Studio.props所在目录，即 $(MSBuildThisFileDirectory)
-  2. 当前项目根目录，即 $(ProjectDir)VC-LTL
-  3. 前解决方案根目录，即 $(SolutionDir)VC-LTL
-  4. 当前项目父目录，即 $(ProjectDir)..\VC-LTL
-  5. 当前解决方案父目录，即 $(SolutionDir)..\VC-LTL
-  6. 注册表HKEY_CURRENT_USER\Code\VC-LTL@Root
+VC-LTL default search order
+   1. The directory where VC-LTL helper for Visual Studio.props is located, that is, $(MSBuildThisFileDirectory)
+   2. Current project root directory, i.e. $(ProjectDir)VC-LTL
+   3. The former solution root directory, i.e. $(SolutionDir)VC-LTL
+   4. The current project parent directory, i.e. $(ProjectDir)..\VC-LTL
+   5. The current solution parent directory, i.e. $(SolutionDir)..\VC-LTL
+   6. Registry HKEY_CURRENT_USER\Code\VC-LTL@Root
 
-把VC-LTL放在其中一个位置即可，VC-LTL就能被自动引用。
+Just put VC-LTL in one of the locations, and VC-LTL will be automatically referenced.
 
-如果你对默认搜索顺序不满，你可以修改此文件。你也可以直接指定$(VC_LTL_Root)宏更加任性的去加载VC-LTL。
+If you are not satisfied with the default search order, you can modify this file. You can also directly specify the $(VC_LTL_Root) macro to load VC-LTL more arbitrarily.
 
 -->
   
-  <!--#####################################################################VC-LTL设置#####################################################################-->
+  <!--#####################################################################VC-LTL settings#####################################################################-->
   <PropertyGroup>
-    <!--取消下方注释可以开启VC-LTL轻量模式，轻量模式更加注重体积控制，但是CRT规范将会维持在VS2008。如果你需要高度兼容微软UCRT，那么请不要打开此选项！！！-->
+    <!--Cancel the comment below to enable VC-LTL lightweight mode. The lightweight mode pays more attention to volume control, but the CRT specification will remain at VS2008. If you need high compatibility with Microsoft UCRT, then please do not turn on this option! !！-->
     <!--<DisableAdvancedSupport>true</DisableAdvancedSupport>-->
 
-    <!--取消下方注释可以开启强制XP兼容模式，默认情况下仅在选择WinXP工具集时才开启。-->
+    <!--Uncomment the following to enable forced XP compatibility mode, which is only enabled by default when the WinXP toolset is selected.-->
     <!--<SupportWinXP>true</SupportWinXP>-->
   </PropertyGroup>
   <!--####################################################################################################################################################-->
@@ -43,29 +43,29 @@ VC-LTL默认搜索顺序
   </ItemDefinitionGroup>
   
   <PropertyGroup>
-    <!--Shared.props文件根目录存在VC-LTL？-->
+    <!--Does VC-LTL exist in the root directory of the Shared.props file?-->
     <VC_LTL_Root Condition=" ('$(VC_LTL_Root)'=='') And (Exists('$(MSBuildThisFileDirectory)_msvcrt.h')) ">$(MSBuildThisFileDirectory)</VC_LTL_Root>
 
-    <!--当前项目根目录存在VC-LTL？-->
+    <!--Does VC-LTL exist in the current project root directory?-->
     <VC_LTL_Root Condition=" ('$(VC_LTL_Root)'=='') And (Exists('$(ProjectDir)VC-LTL\_msvcrt.h')) ">$(ProjectDir)VC-LTL</VC_LTL_Root>
 
-    <!--当前解决方案根目录存在VC-LTL？-->
+    <!--Does VC-LTL exist in the current solution root directory?-->
     <VC_LTL_Root Condition=" ('$(VC_LTL_Root)'=='') And ('$(SolutionDir)'!='') And (Exists('$(SolutionDir)VC-LTL\_msvcrt.h')) ">$(SolutionDir)VC-LTL</VC_LTL_Root>
 
-    <!--当前项目父目录存在VC-LTL？-->
+    <!--Does VC-LTL exist in the current project parent directory?-->
     <VC_LTL_Root Condition=" ('$(VC_LTL_Root)'=='') And (Exists('$(ProjectDir)..\VC-LTL\_msvcrt.h')) ">$(ProjectDir)..\VC-LTL</VC_LTL_Root>
 
-    <!--当前解决方案父目录存在VC-LTL？-->
+    <!--Does VC-LTL exist in the current solution parent directory?-->
     <VC_LTL_Root Condition=" ('$(VC_LTL_Root)'=='') And ('$(SolutionDir)'!='') And (Exists('$(SolutionDir)..\VC-LTL\_msvcrt.h')) ">$(SolutionDir)..\VC-LTL</VC_LTL_Root>
 
-    <!--如果本地工程没有，那么继续尝试通过注册表获取VC-LTL路径，双击Install.cmd可以自动产生此注册表。-->
+    <!--If the local project does not exist, continue to try to obtain the VC-LTL path through the registry. Double-click Install.cmd to automatically generate this registry.-->
     <VC_LTL_Root Condition=" '$(VC_LTL_Root)'=='' ">$(Registry:HKEY_CURRENT_USER\Code\VC-LTL@Root)</VC_LTL_Root>
   </PropertyGroup>
   
   <ImportGroup Condition=" '$(VC_LTL_Root)'!=''">
     <Import Project="$(VC_LTL_Root)\Config\config.props" Condition="Exists('$(VC_LTL_Root)\Config\config.props')"/>
 
-    <!--兼容模式，尝试加载老版本-->
+    <!--Compatibility mode, try to load the old version-->
     <Import Project="$(VC_LTL_Root)\ltlvcrt.props" Condition="(!Exists('$(VC_LTL_Root)\Config\config.props')) And (Exists('$(VC_LTL_Root)\ltlvcrt.props'))"/>
   </ImportGroup>
 </Project>

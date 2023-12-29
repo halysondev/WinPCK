@@ -355,7 +355,7 @@ BOOL TInstDlg::ListView_EndLabelEdit(const NMLVDISPINFO* pNmHdr)
 			if(NULL != _tcschr(pNmHdr->item.pszText, *lpszInvalid)) {
 				TCHAR szPrintf[64];
 				_stprintf_s(szPrintf, 64, GetLoadStr(IDS_STRING_INVALIDFILENAME), lpszInvalid);
-				MessageBox(szPrintf, TEXT("ÌבÊ¾"), MB_OK | MB_ICONASTERISK);
+				MessageBox(szPrintf, TEXT("hint"), MB_OK | MB_ICONASTERISK);
 				return FALSE;
 			}
 

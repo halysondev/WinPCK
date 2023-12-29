@@ -2,10 +2,10 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ShowPlatformName>false</ShowPlatformName>
-    <VSPlatformName Condition="('$(PlatformToolset)'=='v141') And ('$(ShowPlatformName)'=='true')">VS2017</VSPlatformName>
+    <VSPlatformName Condition="('$(PlatformToolset)'=='v141') And ('$(ShowPlatformName)'=='true')">VS2022</VSPlatformName>
     <VSPlatformName Condition="'$(ShowPlatformName)'=='false'"></VSPlatformName>
     <IntDirName>build</IntDirName>
-    <!-- 生成文件=Makefile 应用程序(.exe)=Application dll=DynamicLibrary lib=StaticLibrary 实用工具=Utility -->
+    <!-- Makefile=Makefile Application (.exe)=Application dll=DynamicLibrary lib=StaticLibrary Utility=Utility -->
     <IsExecuteFile Condition="('$(ConfigurationType)'=='Application') Or ('$(ConfigurationType)'=='DynamicLibrary')">true</IsExecuteFile>
     <IsExecuteFile Condition="'$(IsExecuteFile)'!='true'">false</IsExecuteFile>
   </PropertyGroup>

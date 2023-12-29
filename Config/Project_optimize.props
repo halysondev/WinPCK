@@ -1,46 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <!--检测是否是Debug编译-->
+    <!--Check whether it is Debug compilation-->
     <UseDebugLibraries Condition="('$(UseDebugLibraries)'=='') And ('$(Configuration)'=='Debug')">true</UseDebugLibraries>
     <UseDebugLibraries Condition="('$(UseDebugLibraries)'!='true')">false</UseDebugLibraries>
-    <!-- 全程序优化 -->
+    <!-- Whole program optimization -->
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(UseDebugLibraries)'=='false'">
     <ClCompile>
       <OptimizeForWindowsApplication>true</OptimizeForWindowsApplication>
-      <!-- 优化 /O1=MinSpace /O2=MaxSpeed /Ox=Full -->
+      <!-- Optimization /O1=MinSpace /O2=MaxSpeed ​​/Ox=Full -->
       <Optimization>Full</Optimization>
-      <!-- 优选大小或速度 /Ot=Speed /Os=Size 均不=Neither -->
+      <!-- Preferred size or speed /Ot=Speed ​​/Os=Size Neither=Neither -->
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <!-- 支持纤程安全的线程本地存储区 -->
+      <!--Support for fiber-safe thread-local storage-->
       <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <!-- 省略帧指针 -->
+      <!-- omit frame pointer -->
       <OmitFramePointers>true</OmitFramePointers>
-      <!-- 启用字符串池 -->
+      <!-- Enable string pool -->
       <StringPooling>true</StringPooling>
-      <!-- 启用内部函数 -->
+      <!-- Enable internal functions -->
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <!-- 启用函数级链接 -->
+      <!-- Enable function-level linking -->
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <!-- 安全检查 -->
+      <!-- Security check -->
       <BufferSecurityCheck>false</BufferSecurityCheck>
-      <!-- 控制流防护 启用=Guard 禁用=false -->
+      <!-- Control Flow Guard Enable=Guard Disable=false -->
       <ControlFlowGuard>false</ControlFlowGuard>
-      <!-- 浮点模型 快速=Fast 严格=Strict 精度=Precise -->
+      <!-- Floating point model Fast=Fast Strict=Precise -->
       <FloatingPointModel>Fast</FloatingPointModel>
     </ClCompile>
     <Link>
-      <!-- 引用 是(/OPT:REF)=true 否(/OPT:NOREF)=false /OPT:REF 将消除从未引用过的函数和/或数据，而 /OPT:NOREF 则保留从未引用过的函数和/或数据。 -->
+      <!-- Reference Yes (/OPT:REF)=true No (/OPT:NOREF)=false /OPT:REF will eliminate functions and/or data that are never referenced, while /OPT:NOREF retains functions and/or data that are never referenced /or data. -->
       <OptimizeReferences>true</OptimizeReferences>
-      <!-- 启用 COMDAT 折叠 是(/OPT:REF)=true 否(/OPT:NOREF)=false 使用 /OPT:ICF[=iterations] 可执行相同 COMDAT 折叠。 -->
+      <!-- Enable COMDAT folding Yes (/OPT:REF)=true No (/OPT:NOREF)=false Use /OPT:ICF[=iterations] to perform the same COMDAT folding. -->
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(UseDebugLibraries)|$(Platform)'=='false|Win32'">
     <ClCompile>
-      <!-- 增强指令集 SSE2=StreamingSIMDExtensions2 禁用=NotSet -->
+      <!-- Enhanced instruction set SSE2=StreamingSIMDExtensions2 Disable=NotSet-->
       <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
   </ItemDefinitionGroup>

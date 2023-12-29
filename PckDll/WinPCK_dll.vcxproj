@@ -397,13 +397,13 @@
     <ClInclude Include="ZupClass\ZupHeader.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\base64\base64_2017.vcxproj">
+    <ProjectReference Include="..\base64\base64_2022.vcxproj">
       <Project>{4526ffba-6cee-4c01-8d22-535617fe88e5}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\libdeflate\libdeflate_2017.vcxproj">
+    <ProjectReference Include="..\libdeflate\libdeflate_2022.vcxproj">
       <Project>{2a3f22c4-d534-497b-82fc-f92a634fb20f}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\zlib\zlib_2017.vcxproj">
+    <ProjectReference Include="..\zlib\zlib_2022.vcxproj">
       <Project>{1d5981bc-51af-4748-9ef6-9458e10abba4}</Project>
     </ProjectReference>
   </ItemGroup>

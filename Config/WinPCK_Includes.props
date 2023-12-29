@@ -10,7 +10,7 @@
   </PropertyGroup>
     <ItemDefinitionGroup>
       <ClCompile>
-        <!-- 结构成员对齐 -->
+        <!-- Structure member alignment -->
         <StructMemberAlignment>16Bytes</StructMemberAlignment>
       </ClCompile>
     </ItemDefinitionGroup>
