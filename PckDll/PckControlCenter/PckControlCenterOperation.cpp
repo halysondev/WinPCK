@@ -32,7 +32,9 @@ FMTPCK	CPckControlCenter::GetPckTypeFromFilename(const wchar_t * lpszFile)
 
 	if(0 == wcsicmp(lpszFile + nFileLength - 4, L".pck")) {
 		return FMTPCK_PCK;
-	} else if(0 == wcsicmp(lpszFile + nFileLength - 4, L".zup")) {
+	}
+	else if (0 == wcsicmp(lpszFile + nFileLength - 4, L".zup") ||
+		0 == wcsicmp(lpszFile + nFileLength - 4, L".cup")) {
 		return FMTPCK_ZUP;
 	}
 	return FMTPCK_UNKNOWN;

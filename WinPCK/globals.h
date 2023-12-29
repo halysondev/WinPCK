@@ -52,7 +52,7 @@ using namespace std;
 
 #define	TEXT_INVALID_PATHCHAR			"\\/:*?\"<>|"
 
-#define	TEXT_FILE_FILTER				TEXT(	"PCK compressed file(*.pck;*.zup)\0*.pck;*.zup\0")	\
+#define	TEXT_FILE_FILTER				TEXT(	"PCK compressed file(*.pck;*.zup;*.cup)\0*.pck;*.zup;*.cup\0")	\
 										TEXT(	"All files\0*.*\0\0")
 
 #define IMGLIST_FOLDER	0

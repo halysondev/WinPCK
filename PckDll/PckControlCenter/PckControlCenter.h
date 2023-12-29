@@ -244,7 +244,7 @@ private:
 	PCK_RUNTIME_PARAMS			cParams;
 	CPckClass					*m_lpClassPck;
 
-	//∏Ò Ω
+	//Format
 	FMTPCK						m_emunFileFormat;
 
 	static FeedbackCallback		pFeedbackCallBack;

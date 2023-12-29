@@ -249,6 +249,8 @@ void TInstDlg::AddSetupReg()
 		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("pckfile"));
 		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".zup"));
 		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("ZPWUpdatePack"));
+		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".cup"));
+		RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("CPWUpdatePack"));
 
 	}
 
@@ -256,15 +258,22 @@ void TInstDlg::AddSetupReg()
 	CreateAndSetDefaultValue(TEXT("pckfile"), TEXT("Angelica File Package"));
 	CreateAndSetDefaultValue(TEXT("pckfile\\DefaultIcon"), szStringIcon);
 	CreateAndSetDefaultValue(TEXT("pckfile\\shell"), NULL);
-	CreateAndSetDefaultValue(TEXT("pckfile\\shell\\open"), TEXT("使用 WinPCK 打开"));
+	CreateAndSetDefaultValue(TEXT("pckfile\\shell\\open"), TEXT("Open using WinPCK"));
 	CreateAndSetDefaultValue(TEXT("pckfile\\shell\\open\\command"), szStringExec);
 
 	CreateAndSetDefaultValue(TEXT(".zup"), TEXT("ZPWUpdatePack"));
-	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack"), TEXT("诛仙更新包"));
+	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack"), TEXT("Zhu Xian update package"));
 	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\DefaultIcon"), szStringIcon);
 	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell"), NULL);
-	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell\\open"), TEXT("使用 WinPCK 打开"));
+	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell\\open"), TEXT("Open using WinPCK"));
 	CreateAndSetDefaultValue(TEXT("ZPWUpdatePack\\shell\\open\\command"), szStringExec);
+
+	CreateAndSetDefaultValue(TEXT(".cup"), TEXT("CPWUpdatePack"));
+	CreateAndSetDefaultValue(TEXT("CPWUpdatePack"), TEXT("Perfect World update package"));
+	CreateAndSetDefaultValue(TEXT("CPWUpdatePack\\DefaultIcon"), szStringIcon);
+	CreateAndSetDefaultValue(TEXT("CPWUpdatePack\\shell"), NULL);
+	CreateAndSetDefaultValue(TEXT("CPWUpdatePack\\shell\\open"), TEXT("Open using WinPCK"));
+	CreateAndSetDefaultValue(TEXT("CPWUpdatePack\\shell\\open\\command"), szStringExec);
 
 	MessageBox(TEXT("The installation is complete."), TEXT("information"), MB_OK | MB_ICONASTERISK);
 }
@@ -275,6 +284,8 @@ void TInstDlg::DeleteSetupReg()
 	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("pckfile"));
 	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".zup"));
 	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("ZPWUpdatePack"));
+	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT(".cup"));
+	RecurseDeleteKey(HKEY_CLASSES_ROOT, TEXT("CPWUpdatePack"));
 
 	MessageBox(TEXT("Uninstallation completed."), TEXT("information"), MB_OK | MB_ICONASTERISK);
 }

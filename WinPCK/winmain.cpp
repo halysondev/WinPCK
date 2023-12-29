@@ -422,7 +422,9 @@ BOOL TInstDlg::EvDropFiles(HDROP hDrop)
 
 					OpenPckFile(szFirstFile);
 					goto END_DROP;
-				} else if(0 == lstrcmpiW(szFirstFile + nFirstFileLength - 4, L".zup")) {
+				}
+				else if (0 == lstrcmpiW(szFirstFile + nFirstFileLength - 4, L".zup") ||
+					0 == lstrcmpiW(szFirstFile + nFirstFileLength - 4, L".cup")) {
 
 					OpenPckFile(szFirstFile);
 					goto END_DROP;
