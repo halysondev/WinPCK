@@ -10,9 +10,8 @@
 // 2012.4.10
 //////////////////////////////////////////////////////////////////////
 #pragma warning ( disable : 4267 )
-
 #include "PckClass.h"
-
+using namespace std;
 BOOL CPckClass::GetSingleFileData(const PCKINDEXTABLE* const lpPckFileIndexTable, char *buffer, size_t sizeOfBuffer)
 {
 	CMapViewFileMultiPckRead	cFileRead;
@@ -29,7 +28,7 @@ BOOL CPckClass::GetSingleFileData(LPVOID lpvoidFileRead, const PCKINDEXTABLE* co
 	CMapViewFileMultiPckRead	*lpFileRead = (CMapViewFileMultiPckRead*)lpvoidFileRead;
 	const PCKFILEINDEX* lpPckFileIndex = &lpPckFileIndexTable->cFileIndex;
 
-	BYTE	*lpMapAddress;
+	BYTE *lpMapAddress;
 	if(NULL == (lpMapAddress = lpFileRead->View(lpPckFileIndex->dwAddressOffset, lpPckFileIndex->dwFileCipherTextSize))) {
 		Logger_el(UCSTEXT(TEXT_VIEWMAPNAME_FAIL), m_PckAllInfo.szFilename);
 		return FALSE;

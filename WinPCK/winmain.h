@@ -89,7 +89,7 @@ private:
 
 
 	//mainfunc.cpp
-	BOOL OpenPckFile(wchar_t *lpszFileToOpen = L"", BOOL isReOpen = FALSE);
+	BOOL OpenPckFile(const wchar_t *lpszFileToOpen = L"", BOOL isReOpen = FALSE);
 	VOID SearchPckFiles();
 	VOID ShowPckFiles(const PCK_UNIFIED_FILE_ENTRY* lpNodeToShow);
 

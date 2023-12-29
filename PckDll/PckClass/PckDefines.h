@@ -33,6 +33,7 @@ typedef enum _FMTPCK
 
 typedef enum _PCKVER
 {
+	PCK_INVALID = -1,
 	PCK_V2020,
 	PCK_V2030,
 	PCK_VXAJH

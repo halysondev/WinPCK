@@ -18,6 +18,9 @@ enum class EolType : std::uint8_t
 	osdefault = windows,
 };
 
+static const int CR = 0x0D;
+static const int LF = 0x0A;
+
 template<class T>
 static EolType getEOLFormatForm(const T* const data, size_t length, EolType defvalue = EolType::osdefault)
 {
@@ -40,42 +43,37 @@ static EolType getEOLFormatForm(const T* const data, size_t length, EolType defv
 	return defvalue; // fallback unknown
 }
 
-
-static const int CR = 0x0D;
-static const int LF = 0x0A;
-
 template<class T, class R, class RI>
-void CTextUnits<T, R, RI>::ProcessLine(T& newline, std::vector<T>& v, int flag)
-{
-	if (flag & LINE_TRIM_LEFT) {
+void CTextUnits<T, R, RI>::ProcessLine(const T& newline, std::vector<T>& v, int flag) {
+	T modifiableLine = newline; // Create a copy for modification
 
-		T::size_type pos = newline.find_first_not_of(' ');
-		if (T::npos != pos)
-		{
-			newline.erase(0, pos);
+	if (flag & LINE_TRIM_LEFT) {
+		typename T::size_type pos = modifiableLine.find_first_not_of(' ');
+		if (T::npos != pos) {
+			modifiableLine.erase(0, pos);
 		}
 	}
 
 	if (flag & LINE_TRIM_RIGHT) {
-		T::size_type pos = newline.find_last_not_of(' ');
-		if (T::npos != pos)
-		{
-			newline.erase(pos + 1);
+		typename T::size_type pos = modifiableLine.find_last_not_of(' ');
+		if (T::npos != pos) {
+			modifiableLine.erase(pos + 1);
 		}
 	}
 
 	if (flag & LINE_EMPTY_DELETE) {
-		if (0 == newline.size())
+		if (0 == modifiableLine.size())
 			return;
 	}
 
-	v.emplace_back(newline);
+	v.emplace_back(modifiableLine); // Use the modified copy
 }
+
 
 template<class T, class R, class RI>
 void CTextUnits<T, R, RI>::Split(const T& s, std::vector<T>& v, const T& c, int flag)
 {
-	T::size_type pos1, pos2;
+	typename T::size_type pos1, pos2;
 	size_t len = s.length();
 	pos2 = s.find(c);
 	pos1 = 0;
@@ -92,7 +90,7 @@ void CTextUnits<T, R, RI>::Split(const T& s, std::vector<T>& v, const T& c, int 
 }
 
 template<class T, class R, class RI>
-std::vector<T> CTextUnits<T,R,RI>::SplitRegEx(const T input, const T c, int flag = 0)
+std::vector<T> CTextUnits<T,R,RI>::SplitRegEx(const T input, const T c, int flag)
 {
 	R re(c);
 	RI p(input.begin(), input.end(), re, -1);

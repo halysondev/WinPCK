@@ -19,7 +19,7 @@
 
 #include "Raw2HexString.h"
 
-#pragma region หตร๗
+#pragma region illustrate
 
 /*
  **	IndexesEntryAddressCryptKey >= 0x80000000 ->0xffffffff80000000
@@ -392,6 +392,11 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 	//Read file header
 	CMapViewFileMultiPckRead cRead;
 
+	uint64_t qwSizeFileBefore = 0;
+	BOOL isFoundVer = FALSE;
+	PCK_CATEGORY ver = PCK_INVALID; // Assuming PCK_VERSION_INVALID is a valid default value
+	uint64_t qwPckSizeInHeader = 0;
+
 	if (!cRead.OpenPck(lpszPckFile)) {
 		Logger_el(TEXT_OPENNAME_FAIL, lpszPckFile);
 		goto dect_err;
@@ -403,7 +408,7 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 	}
 
 	//Determine whether the file size is 64-bit and whether the file size in the head matches the actual size.
-	uint64_t qwPckSizeInHeader = (0x100 < cPckHead.dwHeadCheckTail) ? cPckHead.dwPckSize : ((PCKHEAD_V2030*)&cPckHead)->dwPckSize;
+	qwPckSizeInHeader = (0x100 < cPckHead.dwHeadCheckTail) ? cPckHead.dwPckSize : ((PCKHEAD_V2030*)&cPckHead)->dwPckSize;
 
 	if (qwPckSizeInHeader > cRead.GetFileSize())
 		throw MyException("size in header is bigger than file size");
@@ -472,8 +477,8 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 		goto dect_err;
 	}
 
-	PCK_CATEGORY ver = cPckVersionFunc[iDetectedPckID].cPckXorKeys.CategoryId;
-	BOOL		isFoundVer = FALSE;
+	ver = cPckVersionFunc[iDetectedPckID].cPckXorKeys.CategoryId;
+	isFoundVer = FALSE;
 
 	switch (ver) {
 	case PCK_V2020:
@@ -520,7 +525,7 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 	m_PckAllInfo.lpSaveAsPckVerFunc = m_PckAllInfo.lpDetectedPckVerFunc = &cPckVersionFunc[iDetectedPckID];
 
 	//Adjust file size
-	uint64_t qwSizeFileBefore = cRead.GetFileSize();
+	qwSizeFileBefore = cRead.GetFileSize();
 
 	if (qwPckSizeInHeader < qwSizeFileBefore){
 
@@ -563,7 +568,7 @@ void* FillHeadData(LPPCK_ALL_INFOS lpPckAllInfo)
 template<typename T>
 void* FillTailData(LPPCK_ALL_INFOS lpPckAllInfo)
 { 
-	static BYTE tailbuf[MAX_TAIL_LENGTH];  
+	static BYTE tailbuf[MAX_TAIL_LENGTH];
 	T lpTail = (T)tailbuf; 
 	lpTail->dwIndexTableCheckHead = lpPckAllInfo->lpSaveAsPckVerFunc->cPckXorKeys.TailVerifyKey1; 
 	lpTail->dwVersion0 = lpTail->dwVersion = lpPckAllInfo->lpSaveAsPckVerFunc->cPckXorKeys.Version; 

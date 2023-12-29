@@ -1,4 +1,4 @@
-static char *tmisc_id = 
+static const char *tmisc_id =
 	"@(#)Copyright (C) 1996-2010 H.Shirouzu		tmisc.cpp	Ver0.99";
 /* ========================================================================
 	Project  Name			: Win32 Lightweight  Class Library Test
@@ -227,8 +227,8 @@ BOOL TSetPrivilege(LPTSTR pszPrivilege, BOOL bEnable)
 /*=========================================================================
 	bin <-> hex
 =========================================================================*/
-static char  *hexstr   =  "0123456789abcdef";
-static WCHAR *hexstr_w = L"0123456789abcdef";
+static const char  *hexstr   =  "0123456789abcdef";
+static const WCHAR *hexstr_w = L"0123456789abcdef";
 
 inline u_char hexchar2char(u_char ch)
 {
@@ -317,7 +317,7 @@ _int64 hex2ll(char *buf)
 	Debug
 =========================================================================*/
 #ifdef _DEBUG
-void DebugA(char *fmt,...)
+void DebugA(const char *fmt,...)
 {
 	char buf[8192];
 
@@ -328,7 +328,7 @@ void DebugA(char *fmt,...)
 	::OutputDebugStringA(buf);
 }
 
-void DebugW(WCHAR *fmt,...)
+void DebugW(const WCHAR *fmt,...)
 {
 	WCHAR buf[8192];
 
@@ -341,7 +341,7 @@ void DebugW(WCHAR *fmt,...)
 
 
 #ifdef DEBUG_U8
-void DebugU8(char *fmt,...)
+void DebugU8(const char *fmt,...)
 {
 	char buf[8192];
 

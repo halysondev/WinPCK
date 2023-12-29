@@ -556,9 +556,9 @@ BOOL TChangeWindowMessageFilter(UINT msg, DWORD flg);
 
 BOOL InstallExceptionFilter(char *title, char *info);
 #ifdef _DEBUG
-void DebugA(char *fmt,...);
-void DebugW(WCHAR *fmt,...);
-void DebugU8(char *fmt,...);
+void DebugA(const char *fmt,...);
+void DebugW(const WCHAR *fmt,...);
+void DebugU8(const char *fmt,...);
 #ifdef UNICODE
 #define Debug  DebugW
 #else

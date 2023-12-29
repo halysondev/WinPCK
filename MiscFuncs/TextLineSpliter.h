@@ -22,7 +22,7 @@ private:
 
 	static void GetEolChars(const std::string& _str, std::string& c);
 	static void GetEolChars(const std::wstring& _str, std::wstring& c);
-	static void ProcessLine(T& newline, std::vector<T>& v, int flag);
+	static void ProcessLine(const T& newline, std::vector<T>& v, int flag);
 
 };
 

@@ -402,14 +402,15 @@ BOOL TInstDlg::EvDrawItem(UINT ctlID, DRAWITEMSTRUCT *lpDis)
 
 BOOL TInstDlg::EvDropFiles(HDROP hDrop)
 {
+	DWORD dwDropFileCount = 0;  // Initialize at the point of declaration
 
-	if(pck_isThreadWorking())goto END_DROP;
+	if(pck_isThreadWorking()) goto END_DROP;
 
 	wchar_t	szFirstFile[MAX_PATH];
 
-	DWORD dwDropFileCount = DragQueryFileW(hDrop, 0xFFFFFFFF, NULL, 0);
+	dwDropFileCount = DragQueryFileW(hDrop, 0xFFFFFFFF, NULL, 0);
 
-	if(0 == dwDropFileCount)goto END_DROP;
+	if (0 == dwDropFileCount) goto END_DROP;
 
 	if(1 == dwDropFileCount) {
 		if(!pck_IsValidPck()) {
