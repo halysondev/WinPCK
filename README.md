@@ -1,4 +1,4 @@
 # WinPCK
-完美世界公司游戏的pck文件压缩包查看器
+Perfect World Company game pck file compressed package viewer
 
-目前支持的游戏版本有：诛仙、完美世界、圣斗士、笑傲江湖、神魔、热舞派对、口袋西游
+Currently supported game versions are: Zhu Xian, Perfect World, Saint Seiya, Swordsman, Gods and Demons, Hot Dance Party, Pocket Westward Journey
