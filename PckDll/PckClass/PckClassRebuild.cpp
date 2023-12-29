@@ -170,7 +170,7 @@ BOOL CPckClassWriteOperator::RecompressPckFile(const wchar_t * szRecompressPckFi
 	THREAD_PARAMS		cThreadParams;
 	CMapViewFileMultiPckRead	cFileRead;
 
-#pragma region 重置压缩参数
+#pragma region Reset compression parameters
 	m_zlib.init_compressor(m_lpPckParams->dwCompressLevel);
 #pragma endregion
 
@@ -186,7 +186,7 @@ BOOL CPckClassWriteOperator::RecompressPckFile(const wchar_t * szRecompressPckFi
 	if(!cFileRead.OpenPckAndMappingRead(pckAllInfo.szFilename))
 		return FALSE;
 
-#pragma region 创建目标文件
+#pragma region Create target file
 	CMapViewFileMultiPckWrite cFileWriter(pckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
 	//OPEN_ALWAYS, create a new pck (CREATE_ALWAYS) or update an existing pck (OPEN_EXISTING)

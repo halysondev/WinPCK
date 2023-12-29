@@ -117,8 +117,8 @@ CPckClassVersionDetect::~CPckClassVersionDetect()
 
 const PCK_VERSION_ID CPckClassVersionDetect::cPckIDs[] = 
 {
-	{ PCK_VERSION_ZX,		TEXT("Zhu Xian"),			PCK_V2020, AFPCK_VERSION_202, 0 },
-	{ PCK_VERSION_ZXNEW,	TEXT("Zhu Xian(New)"),		PCK_V2030, AFPCK_VERSION_203, 0 },
+	{ PCK_VERSION_ZX,		TEXT("Perfect World"),			PCK_V2020, AFPCK_VERSION_202, 0 },
+	{ PCK_VERSION_ZXNEW,	TEXT("Perfect World(New)"),		PCK_V2030, AFPCK_VERSION_203, 0 },
 	{ PCK_VERSION_SDS,		TEXT("Saint Seiya"),			PCK_V2020, AFPCK_VERSION_202, 161 },
 	{ PCK_VERSION_SDSNEW,	TEXT("Saint Seiya(New)"),		PCK_V2030, AFPCK_VERSION_203, 161 },
 	{ PCK_VERSION_SM,		TEXT("Gods and Demons"),			PCK_V2020, AFPCK_VERSION_202, 131 },

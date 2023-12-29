@@ -11,7 +11,7 @@
 //////////////////////////////////////////////////////////////////////
 #pragma warning ( disable : 4267 )
 #include "PckClass.h"
-using namespace std;
+
 BOOL CPckClass::GetSingleFileData(const PCKINDEXTABLE* const lpPckFileIndexTable, char *buffer, size_t sizeOfBuffer)
 {
 	CMapViewFileMultiPckRead	cFileRead;

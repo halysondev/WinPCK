@@ -21,7 +21,7 @@ void CMapViewFileMultiPck::GetPkXName(LPSTR dst, LPCSTR src, int _pckid)
 		strcpy(lpszDst, ".pkx");
 		break;
 	case ID_PKG:
-		strcpy(lpszDst, ".pkg");
+		strcpy(lpszDst, ".pkx1");
 		break;
 	default:
 		break;
@@ -42,7 +42,7 @@ void CMapViewFileMultiPck::GetPkXName(LPWSTR dst, LPCWSTR src, int _pckid)
 		wcscpy(lpszDst, L".pkx");
 		break;
 	case ID_PKG:
-		wcscpy(lpszDst, L".pkg");
+		wcscpy(lpszDst, L".pkx1");
 		break;
 	default:
 		break;

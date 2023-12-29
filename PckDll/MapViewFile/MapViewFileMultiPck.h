@@ -10,6 +10,7 @@
 
 #define ID_PCK	0
 #define ID_PKX	1
+//#define ID_PKX1	2
 #define ID_PKG	2
 #define ID_END	3
 
@@ -83,4 +84,5 @@ public:
 private:
 
 	QWORD	m_Max_PckFile_Size;
+	QWORD	m_Max_PkxFile_Size;
 };

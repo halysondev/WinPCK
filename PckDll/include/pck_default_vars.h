@@ -32,8 +32,8 @@ typedef int ssize_t;
 
 //Scheduling output
 #ifdef _DEBUG
-#define PCK_DEBUG_OUTPUT		0
-#define PCK_DEBUG_OUTPUT_FILE	0
+#define PCK_DEBUG_OUTPUT		1
+#define PCK_DEBUG_OUTPUT_FILE	1
 #else
 #define PCK_DEBUG_OUTPUT		0
 #define PCK_DEBUG_OUTPUT_FILE	0
@@ -53,6 +53,7 @@ typedef int ssize_t;
 
 //params
 #define	MT_MAX_MEMORY				0x80000000	//2048MB
+//#define MT_MAX_MEMORY				0x100000000
 #define MAX_COMPRESS_LEVEL			12
 #define Z_DEFAULT_COMPRESS_LEVEL	9
 
@@ -86,6 +87,7 @@ typedef int ssize_t;
 #define PCK_ENTRY_TYPE_DOTDOT			8
 #define PCK_ENTRY_TYPE_ROOT				16
 #define PCK_ENTRY_TYPE_TAIL_INDEX		0x80000000
+//#define PCK_ENTRY_TYPE_TAIL_INDEX		0x100000000
 
 #define	PCK_ADDITIONAL_KEY				"Angelica File Package"
 #define	PCK_ADDITIONAL_INFO				PCK_ADDITIONAL_KEY", Perfect World Co. Ltd. 2002~2008. All Rights Reserved.\r\nCreated by WinPCK v" WINPCK_VERSION  

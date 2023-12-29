@@ -28,12 +28,16 @@ using namespace std;
 #define	THIS_DESC			L"Perfect World series game PCK file package comprehensive viewer" 
 #define	THIS_AUTHOR			L"Programming: stsm/liqf/Li Qiufeng\r\n" \
 							"E-Mail: stsm85@126.com "
-#define THIS_UESDLIB		L"This software is open source, source code address£º\r\nhttps://github.com/stsm85\r\n\r\n" \
-							"Use open source libraries£º\r\n" \
-							"VC LTL(Copyright (C) Chuyu-Team)\r\n" \
-							"libdeflate(Copyright (C) 2016 Eric Biggers)\r\n" \
-							"zlib(Copyright (C) 1995-2011 Mark Adler)\r\n" \
-							"tlib(Copyright (C) 1996-2010 H.Shirouzu) "
+#define THIS_UESDLIB        L"This software is open source \n\n" \
+							"Updated by Haly \n\n" \
+							"updated source code address : https://github.com/halysondev/WinPCK\r\n\r\n" \
+							"stsm source code address£º\r\nhttps://github.com/stsm85\r\n\r\n" \
+                            "Use open source libraries£º\r\n" \
+                            "VC LTL(Copyright (C) Chuyu-Team)\r\n" \
+                            "libdeflate(Copyright (C) 2016 Eric Biggers)\r\n" \
+                            "zlib(Copyright (C) 1995-2011 Mark Adler)\r\n" \
+                            "tlib(Copyright (C) 1996-2010 H.Shirouzu) " \
+                            
 
 #ifdef _WIN64
 	#define	THIS_MAIN_CAPTION	THIS_NAME \

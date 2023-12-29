@@ -2,11 +2,13 @@
 
 #if _TEST_MAX_PCK_CELL
 CMapViewFileMultiPckWrite::CMapViewFileMultiPckWrite(QWORD qwMaxPckSize):
+	//alcalm_Max_PckFile_Size(100 * 1024 * 1024)
 	m_Max_PckFile_Size(100 * 1024 * 1024)
 {}
 #else
 CMapViewFileMultiPckWrite::CMapViewFileMultiPckWrite(QWORD qwMaxPckSize) :
-	m_Max_PckFile_Size(qwMaxPckSize)
+	m_Max_PckFile_Size(qwMaxPckSize),
+	m_Max_PkxFile_Size(0xfffffe00U)
 {}
 #endif
 
@@ -23,8 +25,16 @@ BOOL CMapViewFileMultiPckWrite::OpenPck(LPCSTR lpszFilename, DWORD dwCreationDis
 	GetPkXName(m_szPckFileName[ID_PKG], m_szPckFileName[ID_PCK], ID_PKG);
 
 	for(int i = 0;i < ID_END;i++) {
-		if(!AddFile(m_szPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile))
+		if (i >= 1)
+		{
+			if (!AddFile(m_szPckFileName[i], dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile));
 			break;
+		}
+		else
+		{
+			if (!AddFile(m_szPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile));
+			break;
+		}
 
 		rtn = TRUE;
 	}
@@ -42,8 +52,16 @@ BOOL CMapViewFileMultiPckWrite::OpenPck(LPCWSTR lpszFilename, DWORD dwCreationDi
 
 	for(int i = 0;i < ID_END;i++) {
 
-		if(!AddFile(m_tszPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile))
-			break;
+		if (i >= 1)
+		{
+			if (!AddFile(m_tszPckFileName[i], dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile))
+				break;
+		}
+		else
+		{
+			if (!AddFile(m_tszPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile))
+				break;
+		}
 		rtn = TRUE;
 	}
 	m_uqwPckStructSize.qwValue = CMapViewFileMulti::GetFileSize();

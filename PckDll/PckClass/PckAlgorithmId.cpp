@@ -33,8 +33,9 @@ void CPckAlgorithmId::SetAlgorithmId(unsigned __int32 id)
 	default:
 		PckGuardByte0 = 0xFDFDFEEE + id * 0x72341F2;
 		PckGuardByte1 = 0xF00DBEEF + id * 0x1237A73;
-		PckMaskDword = 0xA8937462 + id * 0xAB2321F;
-		PckCheckMask = 0x59374231 + id * 0x987A223;
+		//oficial
+		PckMaskDword = 0xA8937462 + id * 0xAB2321F; //key1
+		PckCheckMask = 0x59374231 + id * 0x987A223; //key2
 		break;
 	}
 }

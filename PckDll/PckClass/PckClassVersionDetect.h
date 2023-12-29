@@ -54,6 +54,8 @@
 
 #define MAX_FILE_PACKAGE		0x7fffff00U
 
+#define MAX_FILE_PACKAGE_2		0xfffffe00U
+
 #define AFPCK_VERSION_202		0x00020002
 #define AFPCK_VERSION_203		0x00020003
 

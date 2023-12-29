@@ -280,6 +280,7 @@ DWORD	CMapViewFileMulti::GetCellSize()
 		return m_file_cell[0].qwMaxCellSize;
 	}
 	else {
-		return 0x7fffff00;
+		//return 0x7fffff00;
+		return 0xfffffe00;
 	}
 }

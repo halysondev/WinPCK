@@ -185,7 +185,7 @@ void TInstDlg::MenuAbout()
 		THIS_AUTHOR
 		"\r\n\r\n"
 		THIS_UESDLIB,
-		L"¹ØÓÚ "
+		L"About "
 		THIS_NAME,
 		MB_OK | MB_ICONASTERISK);
 }
