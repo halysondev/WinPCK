@@ -27,8 +27,8 @@ typedef int ssize_t;
 
 
 //Version Information
-#define WINPCK_VERSION_NUMBER  1,33,0,2
-#define WINPCK_VERSION        "1.33.0.2"
+#define WINPCK_VERSION_NUMBER  1,33,0,3
+#define WINPCK_VERSION        "1.33.0.3"
 
 //Scheduling output
 #ifdef _DEBUG
