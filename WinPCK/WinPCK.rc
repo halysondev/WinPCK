@@ -134,7 +134,7 @@ FONT 9, "??", 400, 0, 0x86
 BEGIN
     DEFPUSHBUTTON   "??",IDOK,417,232,50,16,NOT WS_VISIBLE
     PUSHBUTTON      "??",IDCANCEL,363,232,50,16,NOT WS_VISIBLE
-    CONTROL         "",IDC_RICHEDIT_VIEW,"RichEdit20W",ES_MULTILINE | ES_AUTOVSCROLL | ES_AUTOHSCROLL | ES_READONLY | WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP,0,0,467,248
+    CONTROL         "",IDC_RICHEDIT_VIEW,"RichEdit20W",WS_BORDER | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP | 0x8c4,0,0,467,248
     EDITTEXT        IDC_EDIT_VIEW,1,1,466,247,ES_MULTILINE | ES_AUTOHSCROLL | ES_READONLY | NOT WS_VISIBLE | WS_VSCROLL
 END
 
@@ -147,7 +147,7 @@ END
 
 IDD_DIALOG_ATTR DIALOGEX 0, 0, 254, 243
 STYLE DS_SETFONT | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
-CAPTION "Properties"
+CAPTION "+"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     DEFPUSHBUTTON   "Confirm",IDOK,200,225,50,14
@@ -390,9 +390,11 @@ BEGIN
         MENUITEM "Install",                     ID_MENU_SETUP
         MENUITEM "Uninstall",                   ID_MENU_UNSETUP
         MENUITEM SEPARATOR
+        MENUITEM "Settings",                    ID_OTHERS_SETTINGS
         MENUITEM "About",                       ID_MENU_ABOUT
     END
     MENUITEM "Please make a backup before any writing operation! ! !", ID_40048
+    MENUITEM "v1.33.0.3",                   0
 END
 
 IDR_MENU_RCLICK MENU
@@ -599,8 +601,7 @@ END
 //
 // Generated from the TEXTINCLUDE 3 resource.
 //
-#define IDR_MANIFEST					1
-
+#define IDR_MANIFEST					1
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 

@@ -13,7 +13,7 @@ CPckAlgorithmId::CPckAlgorithmId(unsigned __int32 id)
 CPckAlgorithmId::~CPckAlgorithmId()
 {}
 
-void CPckAlgorithmId::SetAlgorithmId(unsigned __int32 id)
+void CPckAlgorithmId::SetAlgorithmId(unsigned __int32 id, __int32 CustomPckGuardByte0, __int32 CustomPckGuardByte1, __int32 CustomPckMaskDword, __int32 CustomPckCheckMask)
 {
 	//0 Jade Dynasty, Perfect World
 	//111 Hot Dance Party

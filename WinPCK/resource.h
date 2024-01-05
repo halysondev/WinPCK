@@ -1,5 +1,5 @@
 //{{NO_DEPENDENCIES}}
-// Arquivo de inclusao gerado pelo Microsoft Visual C++.
+// Arquivo de inclus?o gerado pelo Microsoft Visual C++.
 // Usado por WinPCK.rc
 //
 #define IDD_MAIN                        1
@@ -181,13 +181,14 @@
 #define ID_40049                        40049
 #define ID_MENU_SIM                     40050
 #define ID_MENU_SIMPLIFY                40051
+#define ID_OTHERS_SETTINGS              40052
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        205
-#define _APS_NEXT_COMMAND_VALUE         40052
+#define _APS_NEXT_COMMAND_VALUE         40053
 #define _APS_NEXT_CONTROL_VALUE         1046
 #define _APS_NEXT_SYMED_VALUE           101
 #endif

@@ -36,7 +36,7 @@ class CCharsCodeConv
 public:
 	CCharsCodeConv();
 	~CCharsCodeConv();
-	//返回的长度包含了\0
+	//The returned length includes\0
 	virtual int		GetConvertedStrLen() { return m_ConvertedStrLen - 1; }
 
 protected:

@@ -19,7 +19,8 @@ public:
 private:
 	unsigned __int32  PckGuardByte0, PckGuardByte1, PckMaskDword, PckCheckMask;
 
-	void SetAlgorithmId(unsigned __int32 id);
+	//void SetAlgorithmId(unsigned __int32 id);
+	void SetAlgorithmId(unsigned __int32 id, __int32 CustomPckGuardByte0 = 0, __int32 CustomPckGuardByte1 = 0, __int32 CustomPckMaskDword = 0, __int32 CustomPckCheckMask = 0);
 
 };
 
