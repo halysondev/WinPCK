@@ -43,9 +43,8 @@
 #define PCK_VERSION_END_ID			5
 #define PCK_VERSION_NORMAL_NUMS		6
 #define PCK_VERSION_SP_START_ID		6
-#define PCK_VERSION_HISTORY			6
-#define	PCK_VERSION_XAJH			7
-#define PCK_VERSION_SP_END_ID		7
+#define	PCK_VERSION_XAJH			6
+#define PCK_VERSION_SP_END_ID		6
 
 #endif
 
