@@ -115,7 +115,7 @@ CPckClassVersionDetect::~CPckClassVersionDetect()
 	Logger.OutputVsIde(__FUNCTION__"\r\n");
 }
 
-const PCK_VERSION_ID CPckClassVersionDetect::cPckIDs[] = 
+PCK_VERSION_ID CPckClassVersionDetect::cPckIDs[] = 
 {
 	{ PCK_VERSION_ZX,		TEXT("Perfect World"),			PCK_V2020, AFPCK_VERSION_202, 0 },
 	{ PCK_VERSION_ZXNEW,	TEXT("Perfect World(New)"),		PCK_V2030, AFPCK_VERSION_203, 0 },
@@ -221,14 +221,48 @@ int CPckClassVersionDetect::FillUnknownVersionInfo(DWORD AlgorithmId, DWORD Vers
 	return PCK_VERSION_INVALID;
 }
 
+int CPckClassVersionDetect::FillUnknownVersionInfoByKeys(DWORD AlgorithmId, DWORD Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask)
+{
+	if ((PCK_VERSION_INVALID != AlgorithmId) && ((AFPCK_VERSION_202 == Version) || (AFPCK_VERSION_203 == Version))) {
+
+		PCK_VERSION_FUNC cPckVersionFuncToAdd;
+
+		LPPCK_KEYS lpUnknownPckKeys = &cPckVersionFuncToAdd.cPckXorKeys;
+		LPPCK_VERSION_FUNC lpUnknownPckVersionFunc = &cPckVersionFuncToAdd;
+		lpUnknownPckKeys->id = cPckVersionFunc.size();
+		if (Name && wcslen(Name) > 0) 
+		{
+			wcscpy_s(lpUnknownPckKeys->name, Name);
+		}
+		else 
+		{
+			swprintf_s(lpUnknownPckKeys->name, L"Unknown format recognized(ver=0x%x id=%d)", Version, AlgorithmId);
+		}
+		lpUnknownPckKeys->CategoryId = AFPCK_VERSION_202 == Version ? PCK_V2020 : PCK_V2030;
+		lpUnknownPckKeys->Version = Version;
+
+		SetAlgorithmId(AlgorithmId, &cPckVersionFuncToAdd, CustomPckGuardByte0, CustomPckGuardByte1, CustomPckMaskDword, CustomPckCheckMask);
+		//cPckVersionFunc.push_back(cPckVersionFuncToAdd);
+		cPckVersionFunc.insert(cPckVersionFunc.begin(), cPckVersionFuncToAdd);
+
+		return cPckVersionFunc.size() - 1;
+	}
+	return PCK_VERSION_INVALID;
+}
+
 int	CPckClassVersionDetect::AddPckVersion(int AlgorithmId, int Version)
 {
 	return FillUnknownVersionInfo(AlgorithmId, Version);
 }
 
-void CPckClassVersionDetect::SetAlgorithmId(DWORD id, LPPCK_VERSION_FUNC lpPckVersionFunc)
+int	CPckClassVersionDetect::AddPckVersionByKeys(int AlgorithmId, int Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask)
 {
-	CPckAlgorithmId AlgorithmId(id);
+	return FillUnknownVersionInfoByKeys(AlgorithmId, Version, Name, CustomPckGuardByte0, CustomPckGuardByte1, CustomPckMaskDword, CustomPckCheckMask);
+}
+
+void CPckClassVersionDetect::SetAlgorithmId(DWORD id, LPPCK_VERSION_FUNC lpPckVersionFunc, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask)
+{
+	CPckAlgorithmId AlgorithmId(id, CustomPckGuardByte0, CustomPckGuardByte1, CustomPckMaskDword, CustomPckCheckMask);
 
 	LPPCK_KEYS lpPckKey = &lpPckVersionFunc->cPckXorKeys;
 
@@ -382,7 +416,7 @@ dect_err:
 #undef PRINT_TAIL_SIZE
 
 //Read the file header and tail to determine the pck file version and return the version ID
-BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
+BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile, int next)
 {
 	PCKHEAD_V2020 cPckHead;
 	uint32_t	dwTailVals[4];
@@ -425,7 +459,7 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 		if (0 != dwTailVals[0])
 			dwTailVals[1] = dwTailVals[0];
 
-		for (int i = 0; i < dwVerionDataCount; i++) {
+		for (int i = next; i < dwVerionDataCount; i++) {
 			if ((cPckVersionFunc[i].cPckXorKeys.Version == AFPCK_VERSION_203) &&
 				(cPckVersionFunc[i].cPckXorKeys.TailVerifyKey2 == dwTailVals[1]) &&
 				(cPckVersionFunc[i].cPckXorKeys.HeadVerifyKey1 == cPckHead.dwHeadCheckHead)) {
@@ -438,7 +472,7 @@ BOOL CPckClassVersionDetect::DetectPckVerion(LPCWSTR lpszPckFile)
 	else {
 
 		//When the version is 202, the value of TailVerifyKey2 may be HeadVerifyKey2 or 0. This example has appeared on the pck file of the game: Gods and Demons.
-		for (int i = 0; i < dwVerionDataCount; i++) {
+		for (int i = next; i < dwVerionDataCount; i++) {
 			if ((cPckVersionFunc[i].cPckXorKeys.Version == dwTailVals[3]) &&
 				(cPckVersionFunc[i].cPckXorKeys.TailVerifyKey2 == dwTailVals[1]) &&
 				(cPckVersionFunc[i].cPckXorKeys.HeadVerifyKey1 == cPckHead.dwHeadCheckHead) &&

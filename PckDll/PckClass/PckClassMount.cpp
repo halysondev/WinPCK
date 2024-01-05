@@ -13,15 +13,21 @@
 
 BOOL CPckClass::MountPckFile(LPCWSTR	szFile)
 {
-	try {
-		if (!DetectPckVerion(szFile))
-			return FALSE;
-
-		if (!ReadPckFileIndexes())
-			return FALSE;
-		//Set the entryType of the last Index to PCK_ENTRY_TYPE_TAIL_INDEX
-		m_PckAllInfo.lpPckIndexTable[m_PckAllInfo.dwFileCount].entryType = PCK_ENTRY_TYPE_TAIL_INDEX;
-		return TRUE;
+	try
+	{
+		for(size_t version = 0; version <= GetPckVersionCount(); version++)
+		{
+			if(DetectPckVerion(szFile, version))
+			{
+				if(ReadPckFileIndexes())
+				{
+					//Set the entryType of the last Index to PCK_ENTRY_TYPE_TAIL_INDEX
+					m_PckAllInfo.lpPckIndexTable[m_PckAllInfo.dwFileCount].entryType = PCK_ENTRY_TYPE_TAIL_INDEX;
+					return TRUE;
+				}
+			}
+		}
+		return FALSE;
 	}
 	catch (MyException e) {
 		Logger.e(e.what());

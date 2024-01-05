@@ -106,6 +106,12 @@ WINPCK_API int pck_addVersionAlgorithmId(int AlgorithmId, int Version)
 	return CPckControlCenter::AddVersionAlgorithmId(AlgorithmId, Version);
 }
 
+
+WINPCK_API int pck_addVersionAlgorithmIdByKeys(int AlgorithmId, int Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask)
+{
+	return CPckControlCenter::AddVersionAlgorithmIdByKeys(AlgorithmId, Version, Name, CustomPckGuardByte0, CustomPckGuardByte1, CustomPckMaskDword, CustomPckCheckMask);
+}
+
 //Get the current configuration name
 WINPCK_API LPCWSTR pck_GetCurrentVersionName()
 {

@@ -48,7 +48,8 @@ WINPCK_API uint32_t		pck_getVersionCount();
 WINPCK_API LPCWSTR 		pck_getVersionNameById(int verID);
 //AlgorithmId can not be -1, Version must be AFPCK_VERSION_202(0x00020002) or AFPCK_VERSION_203(0x00020003), return value is id , PCK_VERSION_INVALID = -1
 WINPCK_API int 			pck_addVersionAlgorithmId(int AlgorithmId, int Version);
-
+WINPCK_API int 			pck_addVersionAlgorithmIdByKeys(int AlgorithmId, int Version, const wchar_t* Name = L"", int CustomPckGuardByte0 = 0, int CustomPckGuardByte1 = 0, int CustomPckMaskDword = 0, int CustomPckCheckMask = 0);
+WINPCK_API int			pck_AddCustomKeys(int CustomPckGuardByte0 = 0, int CustomPckGuardByte1 = 0, int CustomPckMaskDword = 0, int CustomPckCheckMask = 0);
 
 //Get the current configuration name
 WINPCK_API LPCWSTR 		pck_GetCurrentVersionName();

@@ -43,8 +43,9 @@
 #define PCK_VERSION_END_ID			5
 #define PCK_VERSION_NORMAL_NUMS		6
 #define PCK_VERSION_SP_START_ID		6
-#define	PCK_VERSION_XAJH			6
-#define PCK_VERSION_SP_END_ID		6
+#define PCK_VERSION_HISTORY			6
+#define	PCK_VERSION_XAJH			7
+#define PCK_VERSION_SP_END_ID		7
 
 #endif
 
@@ -91,13 +92,15 @@ public:
 
 	static	int		AddPckVersion(int AlgorithmId, int Version);
 
+	static	int		AddPckVersionByKeys(int id, int Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask);
+
 protected:
 	//Detect the pck version and write it to iDetectedPckID, and read the file header and tail at the same time
-	BOOL	DetectPckVerion(LPCWSTR lpszPckFile);
+	BOOL	DetectPckVerion(LPCWSTR lpszPckFile, int next = 0);
 
 private:
 
-	static const PCK_VERSION_ID			cPckIDs[];
+	static PCK_VERSION_ID			cPckIDs[];
 	static const PCK_KEYS				cPckSPKeys[];
 	static const PCK_VERSION_FUNC		cPckSPVersionFunc[];
 
@@ -105,9 +108,10 @@ private:
 	static void		FillGeneralVersionInfo();
 	static void		FillSpecialVersionInfo();
 	static int		FillUnknownVersionInfo(DWORD AlgorithmId, DWORD Version);
+	static int		FillUnknownVersionInfoByKeys(DWORD AlgorithmId, DWORD Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask);
 
 	//PCK version judgment
-	static void		SetAlgorithmId(DWORD id, LPPCK_VERSION_FUNC lpPckVersionFunc);
+	static void		SetAlgorithmId(DWORD id, LPPCK_VERSION_FUNC lpPckVersionFunc, int CustomPckGuardByte0 = 0, int CustomPckGuardByte1 = 0, int CustomPckMaskDword = 0, int CustomPckCheckMask = 0);
 
 	//Data filling and data writing at the beginning and end of the file
 	static void*	FillHeadData_V2020(void *param);

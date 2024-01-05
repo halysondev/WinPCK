@@ -8,7 +8,7 @@
 class CPckAlgorithmId
 {
 public:
-	CPckAlgorithmId(unsigned __int32 id);
+	CPckAlgorithmId(unsigned __int32 id, unsigned __int32 CustomPckGuardByte0 = 0, unsigned __int32 CustomPckGuardByte1 = 0, unsigned __int32 CustomPckMaskDword = 0, unsigned __int32 CustomPckCheckMask = 0);
 	~CPckAlgorithmId();
 
 	unsigned __int32 GetPckGuardByte0() { return PckGuardByte0; }
@@ -20,7 +20,7 @@ private:
 	unsigned __int32  PckGuardByte0, PckGuardByte1, PckMaskDword, PckCheckMask;
 
 	//void SetAlgorithmId(unsigned __int32 id);
-	void SetAlgorithmId(unsigned __int32 id, __int32 CustomPckGuardByte0 = 0, __int32 CustomPckGuardByte1 = 0, __int32 CustomPckMaskDword = 0, __int32 CustomPckCheckMask = 0);
+	void SetAlgorithmId(unsigned __int32 id, unsigned __int32 CustomPckGuardByte0 = 0, unsigned __int32 CustomPckGuardByte1 = 0, unsigned __int32 CustomPckMaskDword = 0, unsigned __int32 CustomPckCheckMask = 0);
 
 };
 

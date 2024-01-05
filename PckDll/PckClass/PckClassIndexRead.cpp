@@ -18,7 +18,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 	//Start reading file
 	BYTE *lpFileBuffer;
 	if(NULL == (lpFileBuffer = cRead.View(m_PckAllInfo.dwAddressOfFileEntry, cRead.GetFileSize() - m_PckAllInfo.dwAddressOfFileEntry))) {
-		Logger_el(TEXT_VIEWMAP_FAIL);
+		//Logger_el(TEXT_VIEWMAP_FAIL);
 		return FALSE;
 	}
 

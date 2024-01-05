@@ -117,6 +117,7 @@ public:
 	static uint32_t	GetVersionCount();
 	static LPCWSTR	GetVersionNameById(int verID);
 	static int		AddVersionAlgorithmId(int AlgorithmId, int Version);
+	static int		AddVersionAlgorithmIdByKeys(int AlgorithmId, int Version, const wchar_t* Name, int CustomPckGuardByte0, int CustomPckGuardByte1, int CustomPckMaskDword, int CustomPckCheckMask);
 
 #pragma endregion
 
