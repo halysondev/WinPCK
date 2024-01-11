@@ -60,3 +60,4 @@ Release/dlltester_*.exe
 /Release_static/WinPCK_x64.exe
 /Release_static/WinPCK_x64.pdb
 *.exe
+/WinPCK/pck.ini
