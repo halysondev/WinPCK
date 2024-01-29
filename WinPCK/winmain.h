@@ -19,6 +19,9 @@ public:
 	virtual BOOL	EvClose();
 	virtual BOOL	EvTimer(WPARAM timerID, TIMERPROC proc);
 	virtual BOOL	EvNotify(UINT ctlID, NMHDR *pNmHdr);
+
+	
+
 #ifdef _USE_CUSTOMDRAW_
 	virtual BOOL	EvMeasureItem(UINT ctlID, MEASUREITEMSTRUCT *lpMis);
 	virtual BOOL	EvDrawItem(UINT ctlID, DRAWITEMSTRUCT *lpDis);
@@ -103,8 +106,20 @@ private:
 #pragma endregion
 
 #pragma region helpfunc.cpp
+
+public:
+	struct PckKey
+	{
+		int AlgorithmId;
+		int Version;
+		std::string Name;
+		unsigned long long KEY_1;
+		unsigned long long KEY_2;
+	};
 private:
 	//helpfunc.cpp
+	
+
 	VOID ViewFileAttribute();
 	VOID ViewFile(const PCK_UNIFIED_FILE_ENTRY* lpFileEntry);
 	BOOL AddFiles();
@@ -120,6 +135,12 @@ private:
 
 	void UnpackAllFiles();					//Unzip all files
 	void UnpackSelectedFiles();				//Unzip selected files
+
+	void CheckAndCreatePckIni();			//Check if the pck.ini file exists, if not, create it
+	std::vector<PckKey> ReadPckIni();
+	void WritePckIni();
+	const wchar_t* StringToWideChar(const std::string& str);
+	
 
 #pragma endregion
 private:

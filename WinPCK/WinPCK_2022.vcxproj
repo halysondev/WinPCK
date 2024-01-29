@@ -392,6 +392,7 @@
     <ClInclude Include="..\MiscFuncs\Raw2HexString.h" />
     <ClInclude Include="..\MiscFuncs\StopWatch.h" />
     <ClInclude Include="globals.h" />
+    <ClInclude Include="ini.h" />
     <ClInclude Include="miscdlg.h" />
     <ClInclude Include="tPreviewDlg.h" />
     <ClInclude Include="resource.h" />

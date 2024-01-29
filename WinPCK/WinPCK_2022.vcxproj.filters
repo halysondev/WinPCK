@@ -253,6 +253,9 @@
     <ClInclude Include="tPreviewDlg.h">
       <Filter>Header</Filter>
     </ClInclude>
+    <ClInclude Include="ini.h">
+      <Filter>Header</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="icons\file.ico">

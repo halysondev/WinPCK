@@ -146,10 +146,10 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD l
 						/*
 						Add minified code here
 						*/
-						if (PCK_STRIP_NONE != cDataFetchMethod.iStripFlag) {
+						/*if (PCK_STRIP_NONE != cDataFetchMethod.iStripFlag) {
 							CPckModelStrip cModelStrip;
 							cModelStrip.StripContent(lpDecompressBuffer, &pckFileIndex.cFileIndex, cDataFetchMethod.iStripFlag);
-						}
+						}*/
 
 						m_lpPckClassBase->m_zlib.compress(lpCompressedBuffer, &pckFileIndex.cFileIndex.dwFileCipherTextSize, lpDecompressBuffer, pckFileIndex.cFileIndex.dwFileClearTextSize);
 					}
@@ -170,7 +170,7 @@ FETCHDATA_RET CPckThreadRunner::GetUncompressedDataFromPCK(LPDATA_FETCH_METHOD l
 
 			}
 			else {
-#pragma region 文件过小不需要压缩时
+#pragma region FileRead
 				std::lock_guard<std::mutex> lckCReadFileMap(m_LockReadFileMap);
 
 				if (NULL == (lpBufferToRead = cDataFetchMethod.lpFileReadPCK->View(lpPckIndexTablePtrSrc->cFileIndex.dwAddressOffset, dwNumberOfBytesToMap)))

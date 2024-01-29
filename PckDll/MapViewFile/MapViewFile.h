@@ -123,7 +123,7 @@ protected:
 private:
 /*
 Created as NTFS sparse file
-The process is£ºCreateFile->SetSparseFile->CreateFileMapping->MapViewOfFile->UnmapViewOfFile->CloseHandle
+The process is CreateFile->SetSparseFile->CreateFileMapping->MapViewOfFile->UnmapViewOfFile->CloseHandle
 */
 	virtual void	SetSparseFile() { throw std::exception("programe can not reach here"); }
 };

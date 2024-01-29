@@ -22,6 +22,15 @@
 #include <process.h>
 #include "OpenSaveDlg.h"
 #include "ShowLogOnDlgListView.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <filesystem>
+#include <map>
+#define MINI_CASE_SENSITIVE
+#include "ini.h"
+#include <codecvt>
 
 
 inline LONG RecurseDeleteKey(HKEY hRegKey, LPCTSTR lpszKey);
@@ -428,3 +437,75 @@ TCHAR*	TInstDlg::BuildSaveDlgFilterString()
 	}
 	return szSaveDlgFilterString;
 }
+
+void TInstDlg::CheckAndCreatePckIni()
+{
+	const std::string filename = "pck.ini";
+
+	if(!std::filesystem::exists(filename))
+	{
+		mINI::INIFile file("pck.ini");
+
+		mINI::INIStructure ini;
+
+		ini["pck_key_0"]["algorithmid"] = "0";
+		ini["pck_key_0"]["version"] = "3";
+		ini["pck_key_0"]["name"] = "Custom";
+		ini["pck_key_0"]["key_1"] = "2828235874";
+		ini["pck_key_0"]["key_2"] = "1496793649";
+
+		file.generate(ini);
+	}
+	else
+	{
+		ReadPckIni();
+	}
+}
+
+const wchar_t* TInstDlg::StringToWideChar(const std::string& str) {
+	// Calculate the size of the wide character string
+	int size_needed = MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), NULL, 0);
+	wchar_t* wstrTo = new wchar_t[size_needed + 1]; // +1 for null terminator
+	MultiByteToWideChar(CP_UTF8, 0, &str[0], (int)str.size(), wstrTo, size_needed);
+	wstrTo[size_needed] = '\0'; // null-terminate the string
+
+	return wstrTo;
+}
+
+std::vector<TInstDlg::PckKey> TInstDlg::ReadPckIni() {
+	std::vector<PckKey> pckKeys;
+	const std::string filename = "pck.ini";
+	mINI::INIFile file(filename);
+	mINI::INIStructure ini;
+	file.read(ini);
+
+	int keyIndex = 0;
+	while (true) {
+		std::string section = "pck_key_" + std::to_string(keyIndex);
+		if (ini.has(section)) {
+			PckKey pckKey;
+			pckKey.Name = ini.get(section).get("name");
+			pckKey.AlgorithmId = std::stoi(ini.get(section).get("algorithmid"));
+			pckKey.Version = std::stoi(ini.get(section).get("version"));
+			pckKey.KEY_1 = std::stoull(ini.get(section).get("key_1"));
+			pckKey.KEY_2 = std::stoull(ini.get(section).get("key_2"));
+
+			pckKeys.push_back(pckKey);
+			keyIndex++;
+
+			const wchar_t* wideString = StringToWideChar(pckKey.Name);
+			const int AlgorithmId = pckKey.AlgorithmId;
+			const int Version = pckKey.Version == 3 ? 0x00020003 : 0x00020002;
+			const wchar_t* wideCStr = wideString;
+			const int KEY_1 = pckKey.KEY_1;
+			const int KEY_2 = pckKey.KEY_2;
+			pck_addVersionAlgorithmIdByKeys(AlgorithmId, Version, wideCStr, 0, 0, KEY_1, KEY_2);
+		}
+		else {
+			break;
+		}
+	}
+
+	return pckKeys;
+}
+

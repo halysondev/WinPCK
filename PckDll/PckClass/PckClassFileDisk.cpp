@@ -33,7 +33,7 @@ CPckClassFileDisk::~CPckClassFileDisk()
 	Logger.OutputVsIde(__FUNCTION__"\r\n");
 }
 
-#pragma region ¥≈≈Ãø’º‰¥Û–°
+#pragma region Copy
 
 template <typename T>
 _inline T * __fastcall mystrcpy(T * dest, const T *src)

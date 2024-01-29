@@ -107,13 +107,13 @@ VOID TInstDlg::UpdatePckFile(VOID *pParam)
 		if (0 != pck_getUpdateResult_PrepareToAddFileCount()) {
 
 			swprintf_s(szPrintf,
-				L"The data for this update process is as follows£º\r\n"
-				L"Number of original files in the PCK package£º %d\r\n"
-				L"Number of files planned to be updated£º %d\r\n"
-				L"Actual number of updated files£º %d\r\n"
-				L"Number of files with duplicate names£º %d\r\n"
-				L"Number of files not updated£º %d\r\n"
-				L"The number of files in the PCK package after the update£º %d",
+				L"The data for this update process is as follows\r\n"
+				L"Number of original files in the PCK package %d\r\n"
+				L"Number of files planned to be updated %d\r\n"
+				L"Actual number of updated files %d\r\n"
+				L"Number of files with duplicate names %d\r\n"
+				L"Number of files not updated %d\r\n"
+				L"The number of files in the PCK package after the update %d",
 				pck_getUpdateResult_OldFileCount(),
 				pck_getUpdateResult_PrepareToAddFileCount(),
 				pck_getUpdateResult_ChangedFileCount(),

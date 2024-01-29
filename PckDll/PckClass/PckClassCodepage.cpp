@@ -1,6 +1,6 @@
 #include "PckClassCodepage.h"
 
-#pragma region 文件名转码
+#pragma region FileNameCodepage
 #include "CharsCodeConv.h"
 //ansi -> uc cp936
 size_t  CPckClassCodepage::PckFilenameCode2UCS(const char *_in, wchar_t *_out, size_t _outsize)

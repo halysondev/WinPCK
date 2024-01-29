@@ -31,7 +31,7 @@ BOOL CPriviewInDlg::AllocBuffer(PICFORMAT fmt, DWORD dwSize)
 #pragma endregion
 
 
-#pragma region ªÒ»°PICFORMAT
+#pragma region PICFORMAT
 PICFORMAT CPriviewInDlg::GetPicFormatFromFilename(LPCWSTR lpszFilename)
 {
 	LPCWSTR		lpszFileExt = wcsrchr(lpszFilename, L'.');

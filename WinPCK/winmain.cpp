@@ -90,6 +90,10 @@ BOOL TInstDlg::EvCreate(LPARAM lParam)
 	InitLogWindow();
 	//Initialize browsing path
 	initArgument();
+	//Initialize ini file
+	CheckAndCreatePckIni();
+	//
+	//WritePckIni();
 	//display window
 	Show();
 

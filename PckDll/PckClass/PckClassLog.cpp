@@ -39,8 +39,8 @@ void CPckClassLog::PckClassLog_func_register(ShowLogW _ShowLogW)
 
 wchar_t* CPckClassLog::GetErrorMsg(CONST DWORD dwError, wchar_t *szMessage)
 {
-	//static WCHAR szMessage[1024] = L"wrong reason£º";
-	wcscpy(szMessage, L"wrong reason£º");
+	//static WCHAR szMessage[1024] = L"wrong reason?;
+	wcscpy(szMessage, L"wrong reason");
 
 	size_t len = wcslen(szMessage);
 	WCHAR *lpszMessage = szMessage + len;
@@ -91,7 +91,7 @@ void CPckClassLog::e(const char *_text, ...)
 	PrintLog('E', _text, ap);
 	va_end(ap); 
 	PrintErrorLog();
-	assert(FALSE);
+	//assert(FALSE);
 }
 
 void CPckClassLog::w(const char *_text, ...)
@@ -133,7 +133,7 @@ void CPckClassLog::e(const wchar_t *_text, ...)
 	PrintLog('E', _text, ap);
 	va_end(ap);
 	PrintErrorLog();
-	assert(FALSE);
+	//assert(FALSE);
 }
 
 void CPckClassLog::w(const wchar_t *_text, ...)

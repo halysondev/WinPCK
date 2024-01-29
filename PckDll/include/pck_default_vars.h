@@ -32,14 +32,14 @@ typedef int ssize_t;
 
 //Scheduling output
 #ifdef _DEBUG
-#define PCK_DEBUG_OUTPUT		1
-#define PCK_DEBUG_OUTPUT_FILE	1
+#define PCK_DEBUG_OUTPUT		0
+#define PCK_DEBUG_OUTPUT_FILE	0
 #else
-#define PCK_DEBUG_OUTPUT		1
-#define PCK_DEBUG_OUTPUT_FILE	1
+#define PCK_DEBUG_OUTPUT		0
+#define PCK_DEBUG_OUTPUT_FILE	0
 #endif
 
-#define PCK_V2031_ENABLE		1
+#define PCK_V2031_ENABLE		0
 
 //Open, close, restore and other event registration
 #define PCK_FILE_OPEN_SUCESS		1

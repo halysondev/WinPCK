@@ -24,7 +24,7 @@ void CPckControlCenter::New()
 	m_lpClassPck = new CPckClass(&cParams);
 }
 
-#pragma region 打开关闭文件
+#pragma region PckTypeFromFilename
 
 FMTPCK	CPckControlCenter::GetPckTypeFromFilename(const wchar_t * lpszFile)
 {
@@ -135,7 +135,7 @@ BOOL CPckControlCenter::RenameSubmit()
 
 #pragma endregion
 
-#pragma region 预览解压文件
+#pragma region SingleFileOperation
 
 //Preview file
 BOOL CPckControlCenter::GetSingleFileData(LPCENTRY lpFileEntry, char *buffer, size_t sizeOfBuffer)

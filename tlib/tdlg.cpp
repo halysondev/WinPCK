@@ -43,9 +43,9 @@ BOOL TDlg::Create(HINSTANCE hInstance)
 	{
 		//char	sErr[40];
 		//DWORD dwError = GetLastError();
-		//wsprintfA(sErr, "对话框创建失败，错误码：0x08x%(%d)", dwError, dwError);
+		//wsprintfA(sErr, "0x08x%(%d)", dwError, dwError);
 
-		if(IDABORT == MessageBoxA("对话框创建失败！", "Error", MB_ABORTRETRYIGNORE))
+		if(IDABORT == MessageBoxA("error", "Error", MB_ABORTRETRYIGNORE))
 			::PostQuitMessage(0);
 		return	TApp::GetApp()->DelWin(this), FALSE;
 	}

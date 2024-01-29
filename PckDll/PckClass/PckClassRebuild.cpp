@@ -38,7 +38,7 @@ BOOL CPckClassWriteOperator::StripPck(const wchar_t * lpszStripedPckFile, int fl
 	//filter first*\textures\*.dds
 	CPckClassRebuildFilter cScriptFilter;
 
-	if (PCK_STRIP_DDS & flag) {
+	/*if (PCK_STRIP_DDS & flag) {
 		
 		cScriptFilter.StripModelTexture(
 			m_PckAllInfo.lpPckIndexTable, 
@@ -46,7 +46,7 @@ BOOL CPckClassWriteOperator::StripPck(const wchar_t * lpszStripedPckFile, int fl
 			m_PckAllInfo.cRootNode.child,
 			m_PckAllInfo.szFileTitle
 		);
-	}
+	}*/
 	return RecompressPckFile(lpszStripedPckFile, flag);
 }
 

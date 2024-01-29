@@ -73,7 +73,7 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 
 	m_PckAllInfo.dwFileCountToAdd = dwNewFileCount;
 #pragma endregion
-	//Parameter Description：
+	//Parameter Description
 	// mt_dwFileCount	Total number of files added, including duplicates
 	// dwFileCount		The calculation process uses parameters. This parameter will be used in the following calculation process to represent the total number of files added, excluding duplicates.
 
@@ -100,7 +100,7 @@ BOOL CPckClassWriteOperator::UpdatePckFile(const wchar_t * szPckFile, const vect
 	//log
 	Logger.i(TEXT_UPDATE_FILE_INFO, m_PckAllInfo.dwFileCountToAdd, cThreadParams.qwCompressTotalFileSize);
 
-#pragma region 创建目标文件
+#pragma region Save
 	CMapViewFileMultiPckWrite cFileWriter(m_PckAllInfo.lpSaveAsPckVerFunc->cPckXorKeys.dwMaxSinglePckSize);
 
 	//OPEN_ALWAYS, create a new pck (CREATE_ALWAYS) or update an existing pck (OPEN_EXISTING)
