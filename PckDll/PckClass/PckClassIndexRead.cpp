@@ -49,7 +49,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 
 			if(dwFileIndexTableCryptedDataLength[0] != dwFileIndexTableCryptedDataLength[1]) {
 
-				Logger_el(TEXT_READ_INDEX_FAIL);
+				//Logger_el(TEXT_READ_INDEX_FAIL);
 				return FALSE;
 			}
 
@@ -70,7 +70,7 @@ BOOL CPckClassIndex::ReadPckFileIndexes()
 
 			if(dwFileIndexTableCryptedDataLength[0] != dwFileIndexTableCryptedDataLength[1]) {
 
-				Logger_el(TEXT_READ_INDEX_FAIL);
+				//Logger_el(TEXT_READ_INDEX_FAIL);
 				return FALSE;
 			}
 			
