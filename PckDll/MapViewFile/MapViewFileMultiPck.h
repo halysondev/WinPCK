@@ -31,9 +31,6 @@ protected:
 	char	m_szPckFileName[ID_END][MAX_PATH];
 	wchar_t	m_tszPckFileName[ID_END][MAX_PATH];
 
-	UNQWORD m_uqwPckSize[ID_END];
-	//real file size
-	UNQWORD m_uqwPckFileSize;
 	//File size in PCK header structure
 	UNQWORD m_uqwPckStructSize;
 
