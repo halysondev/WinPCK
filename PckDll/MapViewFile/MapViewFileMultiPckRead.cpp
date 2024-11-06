@@ -10,41 +10,56 @@ CMapViewFileMultiPckRead::~CMapViewFileMultiPckRead()
 BOOL CMapViewFileMultiPckRead::OpenPck(LPCSTR lpszFilename)
 {
 	BOOL rtn = FALSE;
-	strcpy_s(m_szPckFileName[ID_PCK], lpszFilename);
-	GetPkXName(m_szPckFileName[ID_PKX], m_szPckFileName[ID_PCK], ID_PKX);
-	GetPkXName(m_szPckFileName[ID_PKG], m_szPckFileName[ID_PCK], ID_PKG);
-
-	for(int i = 0;i < ID_END;i++) {
-		if (!AddFile(m_szPckFileName[i])) {
-			if (0 < i)
+	
+	// Reads the .pck file
+	if (AddFile(lpszFilename)) {
+		UINT uiNum = 0;
+		CHAR lpszBaseName[MAX_PATH], lpszPkxPath[MAX_PATH];
+		
+		GetBaseName(lpszBaseName, lpszFilename);
+		
+		// Then the .pkx files while they exist
+		while (1) {
+			GetPkxPath(lpszPkxPath, lpszBaseName, uiNum++);
+			
+			if (!AddFile(lpszPkxPath)) {
 				SetLastError(NOERROR);
-			break;
+				break;
+			}
 		}
 
 		rtn = TRUE;
 	}
+	
 	m_uqwPckStructSize.qwValue = CMapViewFileMulti::GetFileSize();
+	
 	return rtn;
 }
 
 BOOL CMapViewFileMultiPckRead::OpenPck(LPCWSTR lpszFilename)
 {
 	BOOL rtn = FALSE;
-	wcscpy_s(m_tszPckFileName[ID_PCK], lpszFilename);
-	GetPkXName(m_tszPckFileName[ID_PKX], m_tszPckFileName[ID_PCK], ID_PKX);
-	GetPkXName(m_tszPckFileName[ID_PKG], m_tszPckFileName[ID_PCK], ID_PKG);
-
-	for(int i = 0;i < ID_END;i++) {
-
-		if (!AddFile(m_tszPckFileName[i])) {
-			if (0 < i)
+	
+	if (AddFile(lpszFilename)) {
+		UINT uiNum = 0;
+		WCHAR lpszBaseName[MAX_PATH], lpszPkxPath[MAX_PATH];
+		
+		GetBaseName(lpszBaseName, lpszFilename);
+		
+		while (1) {
+			GetPkxPath(lpszPkxPath, lpszBaseName, uiNum++);
+			
+			if (!AddFile(lpszPkxPath)) {
 				SetLastError(NOERROR);
-			break;
+				break;
+			}
 		}
+		
 		rtn = TRUE;
 	}
 
 	m_uqwPckStructSize.qwValue = CMapViewFileMulti::GetFileSize();
+	
 	return rtn;
 }
 
