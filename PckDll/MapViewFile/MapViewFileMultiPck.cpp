@@ -7,47 +7,22 @@ CMapViewFileMultiPck::CMapViewFileMultiPck()
 CMapViewFileMultiPck::~CMapViewFileMultiPck()
 {}
 
-void CMapViewFileMultiPck::GetPkXName(LPSTR dst, LPCSTR src, int _pckid)
+void CMapViewFileMultiPck::GetPkxPath(LPSTR lpszDest, LPCSTR lpszBaseName, UINT uiNum)
 {
+    if (uiNum == 0) {
+        sprintf(lpszDest, "%s.pkx", lpszBaseName);
+        return;
+    }
 
-	strcpy_s(dst, MAX_PATH, src);
-	int slen = strlen(dst);
-	char *lpszDst = strrchr(dst, '.');
-
-	//.pck -> .pkx
-	switch(_pckid) {
-
-	case ID_PKX:
-		strcpy(lpszDst, ".pkx");
-		break;
-	case ID_PKG:
-		strcpy(lpszDst, ".pkx1");
-		break;
-	default:
-		break;
-	}
-
+    sprintf(lpszDest, "%s.pkx%i", lpszBaseName, uiNum);
 }
 
-void CMapViewFileMultiPck::GetPkXName(LPWSTR dst, LPCWSTR src, int _pckid)
+void CMapViewFileMultiPck::GetPkxPath(LPWSTR lpszDest, LPCWSTR lpszBaseName, UINT uiNum)
 {
-	wcscpy_s(dst, MAX_PATH, src);
-	int slen = wcslen(dst);
-	wchar_t *lpszDst = wcsrchr(dst, L'.');
+    if (uiNum == 0) {
+        swprintf(lpszDest, MAX_PATH, L"%ls.pkx", lpszBaseName);
+        return;
+    }
 
-	//.pck -> .pkx
-	switch(_pckid) {
-
-	case ID_PKX:
-		wcscpy(lpszDst, L".pkx");
-		break;
-	case ID_PKG:
-		wcscpy(lpszDst, L".pkx1");
-		break;
-	default:
-		break;
-	}
-
+    swprintf(lpszDest, MAX_PATH, L"%ls.pkx%i", lpszBaseName, uiNum);
 }
-
-

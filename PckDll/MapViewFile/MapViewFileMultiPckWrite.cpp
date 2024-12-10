@@ -1,5 +1,7 @@
 #include "MapViewFileMultiPck.h"
 
+#define PKX_FILES_LIMIT	5	// The maximum number of pre-created .pkx files
+
 #if _TEST_MAX_PCK_CELL
 CMapViewFileMultiPckWrite::CMapViewFileMultiPckWrite(QWORD qwMaxPckSize):
 	//alcalm_Max_PckFile_Size(100 * 1024 * 1024)
@@ -20,25 +22,28 @@ CMapViewFileMultiPckWrite::~CMapViewFileMultiPckWrite()
 BOOL CMapViewFileMultiPckWrite::OpenPck(LPCSTR lpszFilename, DWORD dwCreationDisposition, BOOL isNTFSSparseFile)
 {
 	BOOL rtn = FALSE;
-	strcpy_s(m_szPckFileName[ID_PCK], lpszFilename);
-	GetPkXName(m_szPckFileName[ID_PKX], m_szPckFileName[ID_PCK], ID_PKX);
-	GetPkXName(m_szPckFileName[ID_PKG], m_szPckFileName[ID_PCK], ID_PKG);
+	
+	// Creates a .pck file first
+	if (AddFile(lpszFilename, dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile)) {
+		CHAR lpszBaseName[MAX_PATH], lpszPkxPath[MAX_PATH];
 
-	for(int i = 0;i < ID_END;i++) {
-		if (i >= 1)
-		{
-			if (!AddFile(m_szPckFileName[i], dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile));
-			break;
-		}
-		else
-		{
-			if (!AddFile(m_szPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile));
-			break;
+		GetBaseName(lpszBaseName, lpszFilename);
+
+		// Then creates .pkx files up to the limit
+		for (UINT i = 0; i < PKX_FILES_LIMIT; ++i) {
+			GetPkxPath(lpszPkxPath, lpszBaseName, i);
+
+			if (!AddFile(lpszPkxPath, dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile)) {
+				goto fin;
+			}
 		}
 
 		rtn = TRUE;
 	}
+
+fin:
 	m_uqwPckStructSize.qwValue = CMapViewFileMulti::GetFileSize();
+
 	return rtn;
 }
 
@@ -46,25 +51,26 @@ BOOL CMapViewFileMultiPckWrite::OpenPck(LPCSTR lpszFilename, DWORD dwCreationDis
 BOOL CMapViewFileMultiPckWrite::OpenPck(LPCWSTR lpszFilename, DWORD dwCreationDisposition, BOOL isNTFSSparseFile)
 {
 	BOOL rtn = FALSE;
-	wcscpy_s(m_tszPckFileName[ID_PCK], lpszFilename);
-	GetPkXName(m_tszPckFileName[ID_PKX], m_tszPckFileName[ID_PCK], ID_PKX);
-	GetPkXName(m_tszPckFileName[ID_PKG], m_tszPckFileName[ID_PCK], ID_PKG);
 
-	for(int i = 0;i < ID_END;i++) {
+	if (AddFile(lpszFilename, dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile)) {
+		WCHAR lpszBaseName[MAX_PATH], lpszPkxPath[MAX_PATH];
 
-		if (i >= 1)
-		{
-			if (!AddFile(m_tszPckFileName[i], dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile))
-				break;
+		GetBaseName(lpszBaseName, lpszFilename);
+
+		for (UINT i = 0; i < PKX_FILES_LIMIT; ++i) {
+			GetPkxPath(lpszPkxPath, lpszBaseName, i);
+
+			if (!AddFile(lpszPkxPath, dwCreationDisposition, m_Max_PkxFile_Size, isNTFSSparseFile)) {
+				goto fin;
+			}
 		}
-		else
-		{
-			if (!AddFile(m_tszPckFileName[i], dwCreationDisposition, m_Max_PckFile_Size, isNTFSSparseFile))
-				break;
-		}
+
 		rtn = TRUE;
 	}
+
+fin:
 	m_uqwPckStructSize.qwValue = CMapViewFileMulti::GetFileSize();
+
 	return rtn;
 }
 

@@ -409,8 +409,6 @@ VOID TInstDlg::CreateNewPckFile(VOID	*pParam)
 	if (!OpenFilesVistaUp(pThis->hWnd, pThis->m_CurrentPath))
 		return;
 
-	pThis->m_lpszFilePath.push_back(pThis->m_CurrentPath);
-
 	GetPckFileNameBySource(szFilenameToSave, pThis->m_CurrentPath, TRUE);
 
 	//Select the saved file name
@@ -436,9 +434,7 @@ VOID TInstDlg::CreateNewPckFile(VOID	*pParam)
 	pThis->SetTimer(WM_TIMER_PROGRESS_100, TIMER_PROGRESS, NULL);
 
 	pck_StringArrayReset();
-	for (int i = 0; i < pThis->m_lpszFilePath.size(); i++) {
-		pck_StringArrayAppend(pThis->m_lpszFilePath[i].c_str());
-	}
+	pck_StringArrayAppend(pThis->m_CurrentPath);
 
 	if (WINPCK_OK == pck_UpdatePckFileSubmit(szFilenameToSave, pThis->m_currentNodeOnShow)) {
 

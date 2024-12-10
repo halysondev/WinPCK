@@ -8,13 +8,6 @@
 #define _TEST_MAX_PCK_CELL 0
 #endif
 
-#define ID_PCK	0
-#define ID_PKX	1
-//#define ID_PKX1	2
-#define ID_PKG	2
-#define ID_END	3
-
-
 class CMapViewFileMultiPck
 {
 public:
@@ -24,23 +17,39 @@ public:
 	//BOOL	CheckPckPackSize(QWORD qwPckSize);
 	
 protected:
+	/**
+	 * @brief Returns the basename of the file. (path without file extension)
+	 * 
+	 * @param lpszDest		Destination buffer
+	 * @param lpszPckPath	Path to the file (.pck file)
+	 */
+	inline void GetBaseName(LPSTR lpszDest, LPCSTR lpszPckPath)
+	{
+	    SIZE_T ulLen = strrchr(lpszPckPath, '.') - lpszPckPath;
+	    strncpy(lpszDest, lpszPckPath, ulLen);
+	    lpszDest[ulLen] = '\0';
+	}
+	
+	inline void GetBaseName(LPWSTR lpszDest, LPCWSTR lpszPckPath)
+	{
+	    SIZE_T ulLen = wcsrchr(lpszPckPath, L'.') - lpszPckPath;
+	    wcsncpy(lpszDest, lpszPckPath, ulLen);
+	    lpszDest[ulLen] = L'\0';
+	}
+	
+	/**
+	 * @brief Returns the .pkxN path.
+	 *
+	 * @param lpszDest		Destination buffer
+	 * @param lpszBaseName	Basename of the (.pck) file
+	 * @param uiNum			The .pkx file number
+	 */
+	void GetPkxPath(LPSTR lpszDest, LPCSTR lpszBaseName, UINT uiNum);
+	void GetPkxPath(LPWSTR lpszDest, LPCWSTR lpszBaseName, UINT uiNum);
 
-	void GetPkXName(LPSTR dst, LPCSTR src, int _pckid);
-	void GetPkXName(LPWSTR dst, LPCWSTR src, int _pckid);
-
-	char	m_szPckFileName[ID_END][MAX_PATH];
-	wchar_t	m_tszPckFileName[ID_END][MAX_PATH];
-
-	UNQWORD m_uqwPckSize[ID_END];
-	//real file size
-	UNQWORD m_uqwPckFileSize;
+protected:
 	//File size in PCK header structure
 	UNQWORD m_uqwPckStructSize;
-
-private:
-
-
-
 };
 
 
